@@ -104,5 +104,50 @@ So, what&amp;rsquo;s the difference between the two? A library is nothing but a 
 ]]></content>
 		</item>
 		
+		<item>
+			<title>Enhacing ggplot2 with ggtext</title>
+			<link>/posts/enhacing-ggplot2-with-ggtext/</link>
+			<pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/enhacing-ggplot2-with-ggtext/</guid>
+			<description>I am super exciting to share with you my recent &amp;ldquo;discovery&amp;rdquo; of the ggtext R package.
+I had looked for a solution to color individual words in the title of a ggplot2 data visualization and ggtext provided me with a great solution for doing just that (and more).
+So, how does it work? Have a look at this example:
+library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&amp;gt;%filter(continent %in% c(&amp;#34;Africa&amp;#34;, &amp;#34;Europe&amp;#34;)) %&amp;gt;%group_by(continent, year) %&amp;gt;%summarise(population = sum(pop / 1e9)) %&amp;gt;%ggplot(aes(year, population, color = continent)) +geom_line(size = 1.</description>
+			<content type="html"><![CDATA[<p>I am super exciting to share with you my recent &ldquo;discovery&rdquo; of the <code>ggtext</code> <code>R</code> package.</p>
+<p>I had looked for a solution to color individual words in the title of a <code>ggplot2</code> data visualization and <code>ggtext</code> provided me with a great solution for doing just that (and more).</p>
+<p>So, how does it work? Have a look at this example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">gapminder</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">gapminder</span><span class="p">)</span>
+
+<span class="n">gapminder</span> <span class="o">%&gt;%</span>
+  <span class="nf">filter</span><span class="p">(</span><span class="n">continent</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Africa&#34;</span><span class="p">,</span> <span class="s">&#34;Europe&#34;</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="nf">group_by</span><span class="p">(</span><span class="n">continent</span><span class="p">,</span> <span class="n">year</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">summarise</span><span class="p">(</span><span class="n">population</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">pop</span> <span class="o">/</span> <span class="m">1e9</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">population</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">continent</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">geom_line</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">1.2</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">ggtitle</span><span class="p">(</span>
+    <span class="nf">paste0</span><span class="p">(</span>
+      <span class="s">&#34;&lt;span style = &#39;color:#FF7F0E&#39;&gt;**Africa**&lt;/span&gt;&#34;</span><span class="p">,</span>
+      <span class="s">&#34; outgrew &lt;span style = &#39;color:#1F77B4&#39;&gt;**Europe**&lt;/span&gt;&#34;</span><span class="p">,</span>
+      <span class="s">&#34; *dramtically* in the 20th Century&#34;</span>
+    <span class="p">)</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="nf">scale_color_manual</span><span class="p">(</span><span class="n">values</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Europe&#34;</span> <span class="o">=</span> <span class="s">&#34;#1F77B4&#34;</span><span class="p">,</span> <span class="s">&#34;Africa&#34;</span> <span class="o">=</span> <span class="s">&#34;#FF7F0E&#34;</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">theme</span><span class="p">(</span>
+    <span class="n">plot.title</span> <span class="o">=</span> <span class="n">ggtext</span><span class="o">::</span><span class="nf">element_markdown</span><span class="p">(),</span>
+    <span class="n">legend.position</span> <span class="o">=</span> <span class="s">&#34;none&#34;</span>
+  <span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Inside <code>theme()</code> I am assigning <code>ggtext::element_markdown()</code> to <code>plot.title</code>. This has the effect that the plot title I created using <code>ggtitle()</code> is interpreted as markdown/HTML. That made it possible to have the title of the plot act as a legend by coloring the appropriate keywords.</p>
+<p>Quite a neat solution, isn&rsquo;t it?</p>
+<p>While you need to revert to HTML for coloring the text you can use markdown for making individual words bold (e.g. <code>**Europe**</code>), italics (e.g. <code>*dramatically*</code>) and so forth. I love the flexibility this offers.</p>
+<p>The <code>ggtext</code> package is not yet available on CRAN but you can install it from GitHub using</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">remotes</span><span class="o">::</span><span class="nf">install_github</span><span class="p">(</span><span class="s">&#34;wilkelab/ggtext&#34;</span><span class="p">)</span>
+</code></pre></div>]]></content>
+		</item>
+		
 	</channel>
 </rss>

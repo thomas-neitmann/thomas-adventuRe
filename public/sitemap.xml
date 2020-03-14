@@ -53,6 +53,16 @@
   </url>
   
   <url>
+    <loc>/tags/datavisualization/</loc>
+    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/enhacing-ggplot2-with-ggtext/</loc>
+    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/about-hugo/</loc>
     <lastmod>2014-04-09T00:00:00+00:00</lastmod>
   </url>
