@@ -149,5 +149,33 @@ library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&a
 </code></pre></div>]]></content>
 		</item>
 		
+		<item>
+			<title>Creating excel files from R using openxlsx</title>
+			<link>/posts/creating-excel-files-from-r-using-openxlsx/</link>
+			<pubDate>Thu, 06 Feb 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/creating-excel-files-from-r-using-openxlsx/</guid>
+			<description>Yesterday I had to share data with some internal stakeholders in excel format. Why excel? Well, I guess if you are not a &amp;ldquo;data professional&amp;rdquo;, then that&amp;rsquo;s the easiest format to work with.
+So, I started R, read in the dataset, did some data wrangling and then wanted to write the data to a xlsx file. I heard great things about the openxlsx package so I used it for the first time.</description>
+			<content type="html"><![CDATA[<p>Yesterday I had to share data with some internal stakeholders in excel format. Why excel? Well, I guess if you are not a &ldquo;data professional&rdquo;, then that&rsquo;s the easiest format to work with.</p>
+<p>So, I started <code>R</code>, read in the dataset, did some data wrangling and then wanted to write the data to a xlsx file. I heard great things about the <code>openxlsx</code> package so I used it for the first time. My initial attempt was using the <code>write.xlsx()</code> function. That certainly did the job but the resulting file didn&rsquo;t look how I like my excel files. I am a fan of a freezed top row with bold and centered column headers.</p>
+<p>I digged a bit into the <code>openxlsx</code> documentation and it turned out that the package can do all of this. Great!</p>
+<p>Here is the code I used (obviously not exporting the mtcars dataset):</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">openxlsx</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="n">header_style</span> <span class="o">&lt;-</span> <span class="nf">createStyle</span><span class="p">(</span><span class="n">halign</span> <span class="o">=</span> <span class="s">&#34;center&#34;</span><span class="p">,</span> <span class="n">textDecoration</span> <span class="o">=</span> <span class="s">&#34;bold&#34;</span><span class="p">)</span>
+
+<span class="n">wb</span> <span class="o">&lt;-</span> <span class="nf">createWorkbook</span><span class="p">()</span>
+
+<span class="nf">addWorksheet</span><span class="p">(</span><span class="n">wb</span><span class="p">,</span> <span class="s">&#34;Data&#34;</span><span class="p">)</span>
+<span class="nf">writeData</span><span class="p">(</span><span class="n">wb</span><span class="p">,</span> <span class="s">&#34;Data&#34;</span><span class="p">,</span> <span class="n">mtcars</span><span class="p">,</span> <span class="n">headerStyle</span> <span class="o">=</span> <span class="n">header_style</span><span class="p">)</span>
+<span class="nf">freezePane</span><span class="p">(</span><span class="n">wb</span><span class="p">,</span> <span class="s">&#34;Data&#34;</span><span class="p">,</span> <span class="n">firstRow</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">setColWidths</span><span class="p">(</span><span class="n">wb</span><span class="p">,</span> <span class="s">&#34;Data&#34;</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="m">1</span><span class="o">:</span><span class="nf">ncol</span><span class="p">(</span><span class="n">mtcars</span><span class="p">),</span> <span class="n">widths</span> <span class="o">=</span> <span class="s">&#34;auto&#34;</span><span class="p">)</span>
+<span class="nf">saveWorkbook</span><span class="p">(</span><span class="n">wb</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&#34;mtcars.xlsx&#34;</span><span class="p">,</span> <span class="n">overwrite</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</code></pre></div><p>The only thing that didn&rsquo;t quite work was adjusting the column width to fit the content. While there is a <code>setColWidths()</code> function where you can set the <code>widths</code> parameter to <code>&quot;auto&quot;</code> that didn&rsquo;t work a 100%. It <em>did</em> look much better than having all columns in the standard width, though. In the end that was good enough for me.</p>
+]]></content>
+		</item>
+		
 	</channel>
 </rss>

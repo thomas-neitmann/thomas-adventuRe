@@ -71,6 +71,16 @@ library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&a
     </item>
     
     <item>
+      <title>Creating excel files from R using openxlsx</title>
+      <link>/posts/creating-excel-files-from-r-using-openxlsx/</link>
+      <pubDate>Thu, 06 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/creating-excel-files-from-r-using-openxlsx/</guid>
+      <description>Yesterday I had to share data with some internal stakeholders in excel format. Why excel? Well, I guess if you are not a &amp;ldquo;data professional&amp;rdquo;, then that&amp;rsquo;s the easiest format to work with.
+So, I started R, read in the dataset, did some data wrangling and then wanted to write the data to a xlsx file. I heard great things about the openxlsx package so I used it for the first time.</description>
+    </item>
+    
+    <item>
       <title>About Hugo</title>
       <link>/about-hugo/</link>
       <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
