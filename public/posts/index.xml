@@ -63,6 +63,23 @@ data(&amp;#34;mtcars&amp;#34;)ggplot(mtcars, aes(hp, mpg, color = wt)) +geom_p
 		</item>
 		
 		<item>
+			<title>Renaming files in a git repository</title>
+			<link>/posts/renaming-files-in-a-git-repository/</link>
+			<pubDate>Sun, 16 Feb 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/renaming-files-in-a-git-repository/</guid>
+			<description>If you are using git for your data science project (which you should!), you have to be careful when renaming a file.
+If you simply rename the file in your OS file browser, git would interpret this as deleting the file with the old name and creating a new one with the new name. They wouldn&amp;rsquo;t be linked in any way and you&amp;rsquo;d essentially loose the history of that file.</description>
+			<content type="html"><![CDATA[<p>If you are using <code>git</code> for your data science project (which you should!), you have to be careful when renaming a file.</p>
+<p>If you simply rename the file in your OS file browser, <code>git</code> would interpret this as deleting the file with the old name and creating a new one with the new name. They wouldn&rsquo;t be linked in any way and you&rsquo;d essentially loose the history of that file.</p>
+<p>So, how can you rename a file and keep its history? You need to use the <code>git mv</code> command and subsequently make a commit. Here&rsquo;s an example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">git mv old_name.ext new_name.ext
+git commit -m <span class="s1">&#39;Rename old_name.ext to new_name.txt&#39;</span>
+</code></pre></div><p>That&rsquo;s it! Don&rsquo;t be afraid to rename a file when using <code>git</code>. Just use the right command.</p>
+]]></content>
+		</item>
+		
+		<item>
 			<title>Is a library the same thing as a package?</title>
 			<link>/posts/is-a-library-the-same-thing-as-a-package/</link>
 			<pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>

@@ -33,6 +33,16 @@
   </url>
   
   <url>
+    <loc>/tags/git/</loc>
+    <lastmod>2020-02-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/renaming-files-in-a-git-repository/</loc>
+    <lastmod>2020-02-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/base/</loc>
     <lastmod>2020-02-13T00:00:00+00:00</lastmod>
   </url>

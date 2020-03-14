@@ -38,6 +38,16 @@ data(&amp;#34;mtcars&amp;#34;)ggplot(mtcars, aes(hp, mpg, color = wt)) +geom_p
     </item>
     
     <item>
+      <title>Renaming files in a git repository</title>
+      <link>/posts/renaming-files-in-a-git-repository/</link>
+      <pubDate>Sun, 16 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/renaming-files-in-a-git-repository/</guid>
+      <description>If you are using git for your data science project (which you should!), you have to be careful when renaming a file.
+If you simply rename the file in your OS file browser, git would interpret this as deleting the file with the old name and creating a new one with the new name. They wouldn&amp;rsquo;t be linked in any way and you&amp;rsquo;d essentially loose the history of that file.</description>
+    </item>
+    
+    <item>
       <title>Is a library the same thing as a package?</title>
       <link>/posts/is-a-library-the-same-thing-as-a-package/</link>
       <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
