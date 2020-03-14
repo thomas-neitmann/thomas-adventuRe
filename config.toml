@@ -1,4 +1,4 @@
-baseURL = "https://example.com"
+baseURL = "https://thomas-neitmann.netlify.com/"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "Hugo Hermit"
