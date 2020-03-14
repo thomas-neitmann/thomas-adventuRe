@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/about/</loc>
+    <lastmod>2020-03-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-03-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/dplyr/</loc>
     <lastmod>2020-03-08T22:01:16+01:00</lastmod>
   </url>
@@ -70,16 +80,6 @@
   <url>
     <loc>/tags/excel/</loc>
     <lastmod>2020-02-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/about-hugo/</loc>
-    <lastmod>2014-04-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2014-04-09T00:00:00+00:00</lastmod>
   </url>
   
 </urlset>
