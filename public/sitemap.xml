@@ -13,7 +13,7 @@
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>/posts/</loc>
     <lastmod>2020-03-08T22:01:16+01:00</lastmod>
   </url>
   
@@ -30,6 +30,16 @@
   <url>
     <loc>/tags/ggplot2/</loc>
     <lastmod>2020-02-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/base/</loc>
+    <lastmod>2020-02-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/is-a-library-the-same-thing-as-a-package/</loc>
+    <lastmod>2020-02-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -60,26 +70,6 @@
   <url>
     <loc>/posts/typography/</loc>
     <lastmod>2018-09-29T11:36:33+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/2015-07-23-r-rmarkdown/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/plot/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/r-markdown/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/regression/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
   </url>
   
   <url>
