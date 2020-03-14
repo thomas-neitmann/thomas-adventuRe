@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ggplot2 on Hugo Hermit</title>
+    <link>/tags/ggplot2/</link>
+    <description>Recent content in ggplot2 on Hugo Hermit</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Fri, 21 Feb 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Changing things up with ggplot2 themes</title>
+      <link>/posts/changing-things-up-with-ggplot2-themes/</link>
+      <pubDate>Fri, 21 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/changing-things-up-with-ggplot2-themes/</guid>
+      <description>Are you tired of adding your favorite ggplot2 theme to every data visualization you create in R? Then I have a solution for you!
+Before you start to create any plots call the theme_set() function with your favorite theme as first argument, e.g.
+library(ggplot2)theme_set(theme_minimal())That will ensure all plots you subsequently create will use this theme unless you add a different one.
+data(&amp;#34;mtcars&amp;#34;)ggplot(mtcars, aes(hp, mpg, color = wt)) +geom_point()Very handy for lazy people like me.</description>
+    </item>
+    
+  </channel>
+</rss>

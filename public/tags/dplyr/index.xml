@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dplyr on Hugo Hermit</title>
+    <link>/tags/dplyr/</link>
+    <description>Recent content in dplyr on Hugo Hermit</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Fri, 06 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/dplyr/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>dplyr::count()</title>
+      <link>/posts/dplyr-count/</link>
+      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/dplyr-count/</guid>
+      <description>If you frequently use chains like this
+data %&amp;gt;%group_by(var1, var2) %&amp;gt;%summarise(n = n())consider using
+count(data, var1, var2)instead. It produces the same output, you need to type less and the code is more expressive.
+By default, the column containing the count will be named n. Want to change that? Simply set the name parameter of count(), e.g.
+data(iris)dplyr::count(iris, Species, name = &amp;#34;n_flowers&amp;#34;)## # A tibble: 3 x 2## Species n_flowers## &amp;lt;fct&amp;gt; &amp;lt;int&amp;gt;## 1 setosa 50## 2 versicolor 50## 3 virginica 50</description>
+    </item>
+    
+  </channel>
+</rss>

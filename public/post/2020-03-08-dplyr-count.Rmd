@@ -1,0 +1,41 @@
+---
+title: dplyr::count()
+author: Thomas Neitmann
+date: '2020-03-06'
+slug: dplyr-count
+categories: [bytesized]
+tags: [dplyr]
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-03-08T22:01:16+01:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+If you frequently use chains like this
+
+```r
+data %>%
+  group_by(var1, var2) %>%
+  summarise(n = n())
+```
+
+consider using
+
+```r
+count(data, var1, var2)
+```
+
+instead. It produces the same output, you need to type less and the code is more expressive. 
+
+By default, the column containing the count will be named `n`. Want to change that? Simply set the `name` parameter of `count()`, e.g.
+
+```{r}
+data(iris)
+dplyr::count(iris, Species, name = "n_flowers")
+```
