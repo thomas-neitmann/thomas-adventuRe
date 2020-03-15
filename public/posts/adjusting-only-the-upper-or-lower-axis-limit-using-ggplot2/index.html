@@ -7,29 +7,26 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
-<meta itemprop="name" content="When things go wrong: how to amend a git commit?">
-<meta itemprop="description" content="While working on a data science project did you ever git commit a bunch of .R files only to realize a few seconds later that you forget to include something? I certainly did. Today alone 3 times.
-What can you do? The obvious solution is to make a second commit. But that&rsquo;s a bad one. Instead do the following:
-git add &lt;forgotten.file&gt;git commit --amend --no-editReplace &lt;forgotten.file&gt; with the actual file name, e.">
+<meta itemprop="name" content="Adjusting only the upper or lower axis limit using ggplot2">
+<meta itemprop="description" content="If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&rsquo;t want to set inside either xlim() or ylim().
+library(ggplot2)library(patchwork)data(mtcars)p1 &lt;- ggplot(mtcars, aes(factor(cyl), hp)) &#43;geom_boxplot()p2 &lt;- p1 &#43; ylim(0, NA)p3 &lt;- p1 &#43; ylim(NA, 400)p1 | p2 | p3">
 <meta itemprop="datePublished" content="2020-01-04T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-01-04T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="212">
+<meta itemprop="wordCount" content="57">
 
 
 
-<meta itemprop="keywords" content="git," /><meta property="og:title" content="When things go wrong: how to amend a git commit?" />
-<meta property="og:description" content="While working on a data science project did you ever git commit a bunch of .R files only to realize a few seconds later that you forget to include something? I certainly did. Today alone 3 times.
-What can you do? The obvious solution is to make a second commit. But that&rsquo;s a bad one. Instead do the following:
-git add &lt;forgotten.file&gt;git commit --amend --no-editReplace &lt;forgotten.file&gt; with the actual file name, e." />
+<meta itemprop="keywords" content="ggplot2,datavisualization," /><meta property="og:title" content="Adjusting only the upper or lower axis limit using ggplot2" />
+<meta property="og:description" content="If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&rsquo;t want to set inside either xlim() or ylim().
+library(ggplot2)library(patchwork)data(mtcars)p1 &lt;- ggplot(mtcars, aes(factor(cyl), hp)) &#43;geom_boxplot()p2 &lt;- p1 &#43; ylim(0, NA)p3 &lt;- p1 &#43; ylim(NA, 400)p1 | p2 | p3" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/posts/when-things-go-wrong-how-to-amend-a-git-commit/" />
+<meta property="og:url" content="/posts/adjusting-only-the-upper-or-lower-axis-limit-using-ggplot2/" />
 <meta property="article:published_time" content="2020-01-04T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-01-04T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="When things go wrong: how to amend a git commit?"/>
-<meta name="twitter:description" content="While working on a data science project did you ever git commit a bunch of .R files only to realize a few seconds later that you forget to include something? I certainly did. Today alone 3 times.
-What can you do? The obvious solution is to make a second commit. But that&rsquo;s a bad one. Instead do the following:
-git add &lt;forgotten.file&gt;git commit --amend --no-editReplace &lt;forgotten.file&gt; with the actual file name, e."/>
+<meta name="twitter:title" content="Adjusting only the upper or lower axis limit using ggplot2"/>
+<meta name="twitter:description" content="If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&rsquo;t want to set inside either xlim() or ylim().
+library(ggplot2)library(patchwork)data(mtcars)p1 &lt;- ggplot(mtcars, aes(factor(cyl), hp)) &#43;geom_boxplot()p2 &lt;- p1 &#43; ylim(0, NA)p3 &lt;- p1 &#43; ylim(NA, 400)p1 | p2 | p3"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -38,7 +35,7 @@ git add &lt;forgotten.file&gt;git commit --amend --no-editReplace &lt;forgotte
 	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
 	<link rel="shortcut icon" href="/favicon.ico">
 
-	<title>When things go wrong: how to amend a git commit?</title>
+	<title>Adjusting only the upper or lower axis limit using ggplot2</title>
 	<link rel="stylesheet" href="/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
 	
 </head>
@@ -77,34 +74,39 @@ git add &lt;forgotten.file&gt;git commit --amend --no-editReplace &lt;forgotte
 		<article class="thin">
 			<header class="post-header">
 				<div class="post-meta"><span>Jan 4, 2020</span></div>
-				<h1>When things go wrong: how to amend a git commit?</h1>
+				<h1>Adjusting only the upper or lower axis limit using ggplot2</h1>
 			</header>
 			<div class="content">
-				<p>While working on a data science project did you ever <code>git commit</code> a bunch of <code>.R</code> files only to realize a few seconds later that you forget to include something? I certainly did. Today alone 3 times.</p>
-<p>What can you do? The obvious solution is to make a second commit. But that&rsquo;s a bad one. Instead do the following:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">git add &lt;forgotten.file&gt;
-git commit --amend --no-edit
-</code></pre></div><p>Replace <code>&lt;forgotten.file&gt;</code> with the actual file name, e.g. <code>analysis.R</code>. This will add the file to your previous commit while keeping the commit message. If you want to change the commit message remove the <code>--no-edit</code> argument. When you do so a text editor will pop up where you can change the commit message.</p>
-<p>Another scenario: you committed all files but forgot to make a change in one file. In that case simply edit the respective file and run the exact same two commands as above. Make sure to replace <code>&lt;forgotten.file&gt;</code> with the name of the file you just edited.</p>
-<p>Finally to push the commit to GitHub run</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">git push -f origin &lt;your branch&gt;
-</code></pre></div><p>where <code>&lt;your branch&gt;</code> is the branch you are currently working in, e.g. <code>master</code>.</p>
-<p>A note to RStudio users: you need to run the <code>git</code> commands from the terminal instead of using the <code>git</code> GUI.</p>
+				<p>If you want to change only the lower or upper bound of your plot axis pass <code>NA</code> for the value you don&rsquo;t want to set inside either <code>xlim()</code> or <code>ylim()</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">patchwork</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="n">p1</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="nf">factor</span><span class="p">(</span><span class="n">cyl</span><span class="p">),</span> <span class="n">hp</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">geom_boxplot</span><span class="p">()</span>
+<span class="n">p2</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="nf">ylim</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
+<span class="n">p3</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="nf">ylim</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="m">400</span><span class="p">)</span>
+
+<span class="n">p1</span> <span class="o">|</span> <span class="n">p2</span> <span class="o">|</span> <span class="n">p3</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
 
 			</div>
 			<hr class="post-end">
 			<footer class="post-info">
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>Thomas Neitmann</p>
 				<p>
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/git">git</a></span>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/ggplot2">ggplot2</a></span><span class="tag"><a href="/tags/datavisualization">datavisualization</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>212 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>57 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-01-04 01:00 &#43;0100</p>
 			</footer>
 		</article>
 		<div class="post-nav thin">
-			<a class="next-post" href="/posts/adjusting-only-the-upper-or-lower-axis-limit-using-ggplot2/">
-				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;Newer</span><br><span>Adjusting only the upper or lower axis limit using ggplot2</span>
+			<a class="next-post" href="/posts/how-to-add-a-regression-line-to-a-ggplot/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;Newer</span><br><span>How to add a regression line to a ggplot?</span>
+			</a>
+			<a class="prev-post" href="/posts/when-things-go-wrong-how-to-amend-a-git-commit/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>When things go wrong: how to amend a git commit?</span>
 			</a>
 		</div>
 		<div id="comments" class="thin">

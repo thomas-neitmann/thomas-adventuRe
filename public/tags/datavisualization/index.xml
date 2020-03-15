@@ -45,5 +45,15 @@ library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&a
       <description>library(ggplot2)data(mtcars)Step 1 p &amp;lt;- ggplot(mtcars, aes(hp, wt)) +geom_point()pStep 2 p + geom_smooth()Step 3 p + geom_smooth(method = &amp;#34;lm&amp;#34;)Putting it all together ggplot(mtcars, aes(hp, wt)) +geom_point() +geom_smooth(method = &amp;#34;lm&amp;#34;)</description>
     </item>
     
+    <item>
+      <title>Adjusting only the upper or lower axis limit using ggplot2</title>
+      <link>/posts/adjusting-only-the-upper-or-lower-axis-limit-using-ggplot2/</link>
+      <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/adjusting-only-the-upper-or-lower-axis-limit-using-ggplot2/</guid>
+      <description>If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&amp;rsquo;t want to set inside either xlim() or ylim().
+library(ggplot2)library(patchwork)data(mtcars)p1 &amp;lt;- ggplot(mtcars, aes(factor(cyl), hp)) +geom_boxplot()p2 &amp;lt;- p1 + ylim(0, NA)p3 &amp;lt;- p1 + ylim(NA, 400)p1 | p2 | p3</description>
+    </item>
+    
   </channel>
 </rss>
