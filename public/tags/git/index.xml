@@ -22,5 +22,16 @@
 If you simply rename the file in your OS file browser, git would interpret this as deleting the file with the old name and creating a new one with the new name. They wouldn&amp;rsquo;t be linked in any way and you&amp;rsquo;d essentially loose the history of that file.</description>
     </item>
     
+    <item>
+      <title>When things go wrong: how to amend a git commit?</title>
+      <link>/posts/when-things-go-wrong-how-to-amend-a-git-commit/</link>
+      <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/when-things-go-wrong-how-to-amend-a-git-commit/</guid>
+      <description>While working on a data science project did you ever git commit a bunch of .R files only to realize a few seconds later that you forget to include something? I certainly did. Today alone 3 times.
+What can you do? The obvious solution is to make a second commit. But that&amp;rsquo;s a bad one. Instead do the following:
+git add &amp;lt;forgotten.file&amp;gt;git commit --amend --no-editReplace &amp;lt;forgotten.file&amp;gt; with the actual file name, e.</description>
+    </item>
+    
   </channel>
 </rss>

@@ -335,5 +335,27 @@ If you&amp;rsquo;ve ever used the :: operator, e.g. dplyr::filter(), you have lo
 ]]></content>
 		</item>
 		
+		<item>
+			<title>When things go wrong: how to amend a git commit?</title>
+			<link>/posts/when-things-go-wrong-how-to-amend-a-git-commit/</link>
+			<pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/when-things-go-wrong-how-to-amend-a-git-commit/</guid>
+			<description>While working on a data science project did you ever git commit a bunch of .R files only to realize a few seconds later that you forget to include something? I certainly did. Today alone 3 times.
+What can you do? The obvious solution is to make a second commit. But that&amp;rsquo;s a bad one. Instead do the following:
+git add &amp;lt;forgotten.file&amp;gt;git commit --amend --no-editReplace &amp;lt;forgotten.file&amp;gt; with the actual file name, e.</description>
+			<content type="html"><![CDATA[<p>While working on a data science project did you ever <code>git commit</code> a bunch of <code>.R</code> files only to realize a few seconds later that you forget to include something? I certainly did. Today alone 3 times.</p>
+<p>What can you do? The obvious solution is to make a second commit. But that&rsquo;s a bad one. Instead do the following:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">git add &lt;forgotten.file&gt;
+git commit --amend --no-edit
+</code></pre></div><p>Replace <code>&lt;forgotten.file&gt;</code> with the actual file name, e.g. <code>analysis.R</code>. This will add the file to your previous commit while keeping the commit message. If you want to change the commit message remove the <code>--no-edit</code> argument. When you do so a text editor will pop up where you can change the commit message.</p>
+<p>Another scenario: you committed all files but forgot to make a change in one file. In that case simply edit the respective file and run the exact same two commands as above. Make sure to replace <code>&lt;forgotten.file&gt;</code> with the name of the file you just edited.</p>
+<p>Finally to push the commit to GitHub run</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">git push -f origin &lt;your branch&gt;
+</code></pre></div><p>where <code>&lt;your branch&gt;</code> is the branch you are currently working in, e.g. <code>master</code>.</p>
+<p>A note to RStudio users: you need to run the <code>git</code> commands from the terminal instead of using the <code>git</code> GUI.</p>
+]]></content>
+		</item>
+		
 	</channel>
 </rss>
