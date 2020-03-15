@@ -23,5 +23,28 @@ Actually no, they are not!
 So, what&amp;rsquo;s the difference between the two? A library is nothing but a folder on your computer in which installed packages are saved. Just like a real library that contains books. It is merely a container. A library on its own is useless.</description>
     </item>
     
+    <item>
+      <title>The right way to check for NAs</title>
+      <link>/posts/the-right-way-to-check-for-nas/</link>
+      <pubDate>Mon, 03 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/the-right-way-to-check-for-nas/</guid>
+      <description>To check for missing values in R you might be tempted to use the equality operator == with your vector on one side and NA on the other. Don&amp;rsquo;t!
+If you insist, you&amp;rsquo;ll get a useless results.
+x &amp;lt;- c(1, NA, 3)x == NA## [1] NA NA NAInstead use the is.na() function.
+is.na(x)## [1] FALSE TRUE FALSE</description>
+    </item>
+    
+    <item>
+      <title>What does the &lt;&lt;- operator do?</title>
+      <link>/posts/what-does-the-operator-do/</link>
+      <pubDate>Sat, 25 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/what-does-the-operator-do/</guid>
+      <description>If you&amp;rsquo;ve been using R for a while, chances are high you came across the &amp;lt;&amp;lt;- operator. On several occasions I&amp;rsquo;ve heard or read people calling &amp;lt;&amp;lt;- the &amp;ldquo;global assignment operator&amp;rdquo;. However, this is wrong. Let me elaborate why.
+First, have a look at this example.
+x &amp;lt;- 0foo &amp;lt;- function() {x &amp;lt;&amp;lt;- x + 1x}foo()## [1] 1foo()## [1] 2x## [1] 2Here &amp;lt;&amp;lt;- truly behaves like a global assignment operator.</description>
+    </item>
+    
   </channel>
 </rss>
