@@ -84,8 +84,7 @@ scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; 
 </code></pre></div><p>That won&rsquo;t work though.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">scatter_plot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">mpg</span><span class="p">)</span>
 </code></pre></div><pre><code>## Error in FUN(X[[i]], ...): object 'hp' not found
-</code></pre><p><!-- raw HTML omitted --></p>
-<p>If you call this function, <code>R</code> will look for a variable called <code>hp</code> rather than looking for a column with that name inside the data frame you passed as the first argument.</p>
+</code></pre><p>If you call this function, <code>R</code> will look for a variable called <code>hp</code> rather than looking for a column with that name inside the data frame you passed as the first argument.</p>
 <p>So, maybe it works when putting the column names in quotes?</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">scatter_plot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="s">&#34;hp&#34;</span><span class="p">,</span> <span class="s">&#34;mpg&#34;</span><span class="p">)</span>
 </code></pre></div><p><!-- raw HTML omitted --></p>

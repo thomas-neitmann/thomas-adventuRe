@@ -35,7 +35,7 @@ scatter_plot <- function(data, x, y) {
 
 That won't work though.
 
-```{r, error=TRUE}
+```{r, error=TRUE, fig.keep='none'}
 scatter_plot(mtcars, hp, mpg)
 ```
 

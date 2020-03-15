@@ -43,8 +43,6 @@ scatter_plot(mtcars, hp, mpg)
 ## Error in FUN(X[[i]], ...): object 'hp' not found
 ```
 
-<img src="/posts/2020-02-18-turning-your-ggplot2-code-into-a-function_files/figure-html/unnamed-chunk-3-1.png" width="672" />
-
 If you call this function, `R` will look for a variable called `hp` rather than looking for a column with that name inside the data frame you passed as the first argument.
 
 So, maybe it works when putting the column names in quotes?
