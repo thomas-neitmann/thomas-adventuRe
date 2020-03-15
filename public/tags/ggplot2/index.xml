@@ -48,5 +48,14 @@ So, how does it work? Have a look at this example:
 library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&amp;gt;%filter(continent %in% c(&amp;#34;Africa&amp;#34;, &amp;#34;Europe&amp;#34;)) %&amp;gt;%group_by(continent, year) %&amp;gt;%summarise(population = sum(pop / 1e9)) %&amp;gt;%ggplot(aes(year, population, color = continent)) +geom_line(size = 1.</description>
     </item>
     
+    <item>
+      <title>How to add a regression line to a ggplot?</title>
+      <link>/posts/how-to-add-a-regression-line-to-a-ggplot/</link>
+      <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/how-to-add-a-regression-line-to-a-ggplot/</guid>
+      <description>library(ggplot2)data(mtcars)Step 1 p &amp;lt;- ggplot(mtcars, aes(hp, wt)) +geom_point()pStep 2 p + geom_smooth()Step 3 p + geom_smooth(method = &amp;#34;lm&amp;#34;)Putting it all together ggplot(mtcars, aes(hp, wt)) +geom_point() +geom_smooth(method = &amp;#34;lm&amp;#34;)</description>
+    </item>
+    
   </channel>
 </rss>

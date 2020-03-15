@@ -307,5 +307,33 @@ If you&amp;rsquo;ve ever used the :: operator, e.g. dplyr::filter(), you have lo
 ]]></content>
 		</item>
 		
+		<item>
+			<title>How to add a regression line to a ggplot?</title>
+			<link>/posts/how-to-add-a-regression-line-to-a-ggplot/</link>
+			<pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/how-to-add-a-regression-line-to-a-ggplot/</guid>
+			<description>library(ggplot2)data(mtcars)Step 1 p &amp;lt;- ggplot(mtcars, aes(hp, wt)) +geom_point()pStep 2 p + geom_smooth()Step 3 p + geom_smooth(method = &amp;#34;lm&amp;#34;)Putting it all together ggplot(mtcars, aes(hp, wt)) +geom_point() +geom_smooth(method = &amp;#34;lm&amp;#34;)</description>
+			<content type="html"><![CDATA[<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+</code></pre></div><h3 id="step-1">Step 1</h3>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">wt</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">geom_point</span><span class="p">()</span>
+<span class="n">p</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<h3 id="step-2">Step 2</h3>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">+</span> <span class="nf">geom_smooth</span><span class="p">()</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<h3 id="step-3">Step 3</h3>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">+</span> <span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">&#34;lm&#34;</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<h3 id="putting-it-all-together">Putting it all together</h3>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">ggplot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">wt</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">geom_point</span><span class="p">()</span> <span class="o">+</span>
+  <span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">&#34;lm&#34;</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+]]></content>
+		</item>
+		
 	</channel>
 </rss>
