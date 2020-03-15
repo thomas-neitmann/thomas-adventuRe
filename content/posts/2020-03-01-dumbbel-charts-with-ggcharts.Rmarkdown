@@ -56,7 +56,7 @@ chart
 To further customize the plot you can use `ggplot2` functions.
 
 ```{r customize_more, warning=FALSE}
-chart <- chart +
+chart +
   scale_y_continuous(expand = expand_scale(mult = .025)) +
   theme(
     text = element_text(size = 14),

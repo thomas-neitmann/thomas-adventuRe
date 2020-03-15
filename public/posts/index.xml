@@ -90,7 +90,7 @@ gapminder_wide &amp;lt;- gapminder %&amp;gt;%mutate(pop = pop / 1e6) %&amp;gt;%
 <span class="n">chart</span>
 </code></pre></div><p><!-- raw HTML omitted --></p>
 <p>To further customize the plot you can use <code>ggplot2</code> functions.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">&lt;-</span> <span class="n">chart</span> <span class="o">+</span>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
   <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">expand</span> <span class="o">=</span> <span class="nf">expand_scale</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="m">.025</span><span class="p">))</span> <span class="o">+</span>
   <span class="nf">theme</span><span class="p">(</span>
     <span class="n">text</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">14</span><span class="p">),</span>
@@ -103,7 +103,8 @@ gapminder_wide &amp;lt;- gapminder %&amp;gt;%mutate(pop = pop / 1e6) %&amp;gt;%
   <span class="p">)</span> <span class="o">+</span>
   <span class="nf">xlab</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span> <span class="o">+</span>
   <span class="nf">ylab</span><span class="p">(</span><span class="s">&#34;Population (Millions)&#34;</span><span class="p">)</span>
-</code></pre></div>]]></content>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+]]></content>
 		</item>
 		
 		<item>

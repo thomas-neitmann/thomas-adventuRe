@@ -82,7 +82,7 @@ To further customize the plot you can use `ggplot2` functions.
 
 
 ```r
-chart <- chart +
+chart +
   scale_y_continuous(expand = expand_scale(mult = .025)) +
   theme(
     text = element_text(size = 14),
@@ -96,4 +96,6 @@ chart <- chart +
   xlab(NULL) +
   ylab("Population (Millions)")
 ```
+
+<img src="/posts/2020-03-01-dumbbel-charts-with-ggcharts_files/figure-html/customize_more-1.png" width="672" />
 
