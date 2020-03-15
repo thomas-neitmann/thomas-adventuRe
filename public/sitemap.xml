@@ -43,6 +43,21 @@
   </url>
   
   <url>
+    <loc>/tags/datavisualization/</loc>
+    <lastmod>2020-02-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/rlang/</loc>
+    <lastmod>2020-02-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/turning-your-ggplot2-code-into-a-function/</loc>
+    <lastmod>2020-02-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/git/</loc>
     <lastmod>2020-02-16T00:00:00+00:00</lastmod>
   </url>
@@ -60,11 +75,6 @@
   <url>
     <loc>/posts/is-a-library-the-same-thing-as-a-package/</loc>
     <lastmod>2020-02-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/datavisualization/</loc>
-    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>

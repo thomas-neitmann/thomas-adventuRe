@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>datavisualization on Thomas&#39; AdventuRe</title>
-    <link>/tags/datavisualization/</link>
-    <description>Recent content in datavisualization on Thomas&#39; AdventuRe</description>
+    <title>rlang on Thomas&#39; AdventuRe</title>
+    <link>/tags/rlang/</link>
+    <description>Recent content in rlang on Thomas&#39; AdventuRe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Tue, 18 Feb 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/datavisualization/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/rlang/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -22,18 +22,6 @@
 You may start out with an implementation similar to this one.
 library(ggplot2)data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point()}That won&amp;rsquo;t work though.
 scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; not foundIf you call this function, R will look for a variable called hp rather than looking for a column with that name inside the data frame you passed as the first argument.</description>
-    </item>
-    
-    <item>
-      <title>Enhacing ggplot2 with ggtext</title>
-      <link>/posts/enhacing-ggplot2-with-ggtext/</link>
-      <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/enhacing-ggplot2-with-ggtext/</guid>
-      <description>I am super exciting to share with you my recent &amp;ldquo;discovery&amp;rdquo; of the ggtext R package.
-I had looked for a solution to color individual words in the title of a ggplot2 data visualization and ggtext provided me with a great solution for doing just that (and more).
-So, how does it work? Have a look at this example:
-library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&amp;gt;%filter(continent %in% c(&amp;#34;Africa&amp;#34;, &amp;#34;Europe&amp;#34;)) %&amp;gt;%group_by(continent, year) %&amp;gt;%summarise(population = sum(pop / 1e9)) %&amp;gt;%ggplot(aes(year, population, color = continent)) +geom_line(size = 1.</description>
     </item>
     
   </channel>

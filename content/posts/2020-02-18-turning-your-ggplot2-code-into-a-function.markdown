@@ -1,0 +1,78 @@
+---
+title: Turning your ggplot2 code into a function
+author: Thomas Neitmann
+date: '2020-02-18'
+slug: turning-your-ggplot2-code-into-a-function
+categories:
+  - bytesized
+tags:
+  - ggplot2
+  - datavisualization
+  - rlang
+toc: no
+images: ~
+---
+
+
+
+
+If you find yourself repeatedly writing the same `ggplot2` code to create a data visualization in `R`, then it's time to put your code into a function.
+
+You may start out with an implementation similar to this one.
+
+
+```r
+library(ggplot2)
+data("mtcars")
+
+scatter_plot <- function(data, x, y) {
+  ggplot(data, aes(x, y)) +
+    geom_point()
+}
+```
+
+
+That won't work though.
+
+
+```r
+scatter_plot(mtcars, hp, mpg)
+```
+
+```
+## Error in FUN(X[[i]], ...): object 'hp' not found
+```
+
+<img src="/posts/2020-02-18-turning-your-ggplot2-code-into-a-function_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
+If you call this function, `R` will look for a variable called `hp` rather than looking for a column with that name inside the data frame you passed as the first argument.
+
+So, maybe it works when putting the column names in quotes?
+
+
+```r
+scatter_plot(mtcars, "hp", "mpg")
+```
+
+<img src="/posts/2020-02-18-turning-your-ggplot2-code-into-a-function_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+
+
+Well, no error this time but that most likely did not produce what you expected.
+
+The key to making this work is to tell `R`  somehow that it should look for the `x` and `y` arguments inside data. How can you achieve this? Using `{{ }}` (speak curly-curly) from the `rlang` package.
+
+
+```r
+scatter_plot2 <- function(data, x, y) {
+  ggplot(data, aes({{x}}, {{y}})) +
+    geom_point()
+}
+scatter_plot2(mtcars, hp, mpg)
+```
+
+<img src="/posts/2020-02-18-turning-your-ggplot2-code-into-a-function_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
+
+There you have it: that's how you can create your own custom plotting function on top of `ggplot2`.
+
+Want to see the power of custom plotting functions in action? Make sure to check out my [`ggcharts`](https://github.com/thomas-neitmann/ggcharts) package.

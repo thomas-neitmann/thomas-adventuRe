@@ -25,6 +25,18 @@ data(&amp;#34;mtcars&amp;#34;)ggplot(mtcars, aes(hp, mpg, color = wt)) +geom_p
     </item>
     
     <item>
+      <title>Turning your ggplot2 code into a function</title>
+      <link>/posts/turning-your-ggplot2-code-into-a-function/</link>
+      <pubDate>Tue, 18 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/turning-your-ggplot2-code-into-a-function/</guid>
+      <description>If you find yourself repeatedly writing the same ggplot2 code to create a data visualization in R, then it&amp;rsquo;s time to put your code into a function.
+You may start out with an implementation similar to this one.
+library(ggplot2)data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point()}That won&amp;rsquo;t work though.
+scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; not foundIf you call this function, R will look for a variable called hp rather than looking for a column with that name inside the data frame you passed as the first argument.</description>
+    </item>
+    
+    <item>
       <title>Enhacing ggplot2 with ggtext</title>
       <link>/posts/enhacing-ggplot2-with-ggtext/</link>
       <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>

@@ -63,6 +63,46 @@ data(&amp;#34;mtcars&amp;#34;)ggplot(mtcars, aes(hp, mpg, color = wt)) +geom_p
 		</item>
 		
 		<item>
+			<title>Turning your ggplot2 code into a function</title>
+			<link>/posts/turning-your-ggplot2-code-into-a-function/</link>
+			<pubDate>Tue, 18 Feb 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/turning-your-ggplot2-code-into-a-function/</guid>
+			<description>If you find yourself repeatedly writing the same ggplot2 code to create a data visualization in R, then it&amp;rsquo;s time to put your code into a function.
+You may start out with an implementation similar to this one.
+library(ggplot2)data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point()}That won&amp;rsquo;t work though.
+scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; not foundIf you call this function, R will look for a variable called hp rather than looking for a column with that name inside the data frame you passed as the first argument.</description>
+			<content type="html"><![CDATA[<p>If you find yourself repeatedly writing the same <code>ggplot2</code> code to create a data visualization in <code>R</code>, then it&rsquo;s time to put your code into a function.</p>
+<p>You may start out with an implementation similar to this one.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="s">&#34;mtcars&#34;</span><span class="p">)</span>
+
+<span class="n">scatter_plot</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span> <span class="o">+</span>
+    <span class="nf">geom_point</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div><p>That won&rsquo;t work though.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">scatter_plot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">mpg</span><span class="p">)</span>
+</code></pre></div><pre><code>## Error in FUN(X[[i]], ...): object 'hp' not found
+</code></pre><p><!-- raw HTML omitted --></p>
+<p>If you call this function, <code>R</code> will look for a variable called <code>hp</code> rather than looking for a column with that name inside the data frame you passed as the first argument.</p>
+<p>So, maybe it works when putting the column names in quotes?</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">scatter_plot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="s">&#34;hp&#34;</span><span class="p">,</span> <span class="s">&#34;mpg&#34;</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Well, no error this time but that most likely did not produce what you expected.</p>
+<p>The key to making this work is to tell <code>R</code>  somehow that it should look for the <code>x</code> and <code>y</code> arguments inside data. How can you achieve this? Using <code>{{ }}</code> (speak curly-curly) from the <code>rlang</code> package.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">scatter_plot2</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nf">aes</span><span class="p">({{</span><span class="n">x</span><span class="p">}},</span> <span class="p">{{</span><span class="n">y</span><span class="p">}}))</span> <span class="o">+</span>
+    <span class="nf">geom_point</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="nf">scatter_plot2</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">mpg</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>There you have it: that&rsquo;s how you can create your own custom plotting function on top of <code>ggplot2</code>.</p>
+<p>Want to see the power of custom plotting functions in action? Make sure to check out my <a href="https://github.com/thomas-neitmann/ggcharts"><code>ggcharts</code></a> package.</p>
+]]></content>
+		</item>
+		
+		<item>
 			<title>Renaming files in a git repository</title>
 			<link>/posts/renaming-files-in-a-git-repository/</link>
 			<pubDate>Sun, 16 Feb 2020 00:00:00 +0000</pubDate>
