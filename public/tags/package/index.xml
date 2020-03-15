@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>package on Thomas&#39; AdventuRe</title>
+    <link>/tags/package/</link>
+    <description>Recent content in package on Thomas&#39; AdventuRe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 20 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/package/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Loading vs. attaching a package</title>
+      <link>/posts/loading-vs-attaching-a-package/</link>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/loading-vs-attaching-a-package/</guid>
+      <description>R users often talk of loading a package when they use library(). But technical library() doesn&amp;rsquo;t load the package but attaches it. So what&amp;rsquo;s the difference?
+If you&amp;rsquo;ve ever used the :: operator, e.g. dplyr::filter(), you have loaded a package. Loading a package does exactly what the name suggests: it loads all functions and datasets of a particular package. However, to access these functions and datasets you will still need to use :: every time you refer to something within the package.</description>
+    </item>
+    
+  </channel>
+</rss>

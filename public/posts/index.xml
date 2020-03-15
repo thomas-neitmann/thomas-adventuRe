@@ -283,5 +283,29 @@ x &amp;lt;- 0foo &amp;lt;- function() {x &amp;lt;&amp;lt;- x + 1x}foo()## 
 ]]></content>
 		</item>
 		
+		<item>
+			<title>Loading vs. attaching a package</title>
+			<link>/posts/loading-vs-attaching-a-package/</link>
+			<pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/loading-vs-attaching-a-package/</guid>
+			<description>R users often talk of loading a package when they use library(). But technical library() doesn&amp;rsquo;t load the package but attaches it. So what&amp;rsquo;s the difference?
+If you&amp;rsquo;ve ever used the :: operator, e.g. dplyr::filter(), you have loaded a package. Loading a package does exactly what the name suggests: it loads all functions and datasets of a particular package. However, to access these functions and datasets you will still need to use :: every time you refer to something within the package.</description>
+			<content type="html"><![CDATA[<p><code>R</code> users often talk of loading a package when they use <code>library()</code>. But technical <code>library()</code> doesn&rsquo;t load the package but attaches it. So what&rsquo;s the difference?</p>
+<p>If you&rsquo;ve ever used the <code>::</code> operator, e.g. <code>dplyr::filter()</code>, you have loaded a package. Loading a package does exactly what the name suggests: it loads all functions and datasets of a particular package. However, to access these functions and datasets you will still need to use <code>::</code> every time you refer to something within the package.</p>
+<p>When you use <code>library()</code> the package is attached to the search path. You can think of the search path as a queue of (literally) packages, each one filled with functions and datasets. Whenever you use a function without <code>::</code>, <code>R</code> looks for a function with that name in the first package. If it doesn&rsquo;t find it, <code>R</code> continues to look for it in the next package and so on until it finds the function.</p>
+<p>Importantly, calling <code>library(pkg)</code> will place <code>pkg</code> at the beginning of the queue. That&rsquo;s why after calling <code>library(dplyr)</code>, <code>filter()</code> will be <code>dplyr::filter()</code> and not <code>stats::filter()</code> any longer.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">args</span><span class="p">(</span><span class="n">filter</span><span class="p">)</span> <span class="c1"># stats::filter</span>
+</code></pre></div><pre><code>## function (x, filter, method = c(&quot;convolution&quot;, &quot;recursive&quot;), 
+##     sides = 2L, circular = FALSE, init = NULL) 
+## NULL
+</code></pre><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="nf">args</span><span class="p">(</span><span class="n">filter</span><span class="p">)</span> <span class="c1"># dplyr::filter</span>
+</code></pre></div><pre><code>## function (.data, ..., .preserve = FALSE) 
+## NULL
+</code></pre><p>This behavior can cause trouble, so if you know there&rsquo;s a function with the same name in multiple packages I&rsquo;d advice you to be explicit and use <code>::</code> every time you use that function.</p>
+]]></content>
+		</item>
+		
 	</channel>
 </rss>
