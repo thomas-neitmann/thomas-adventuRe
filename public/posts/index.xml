@@ -40,6 +40,73 @@ data(iris)dplyr::count(iris, Species, name = &amp;#34;n_flowers&amp;#34;)## # 
 		</item>
 		
 		<item>
+			<title>Dumbbell charts with ggcharts</title>
+			<link>/posts/dumbbel-charts-with-ggcharts/</link>
+			<pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/dumbbel-charts-with-ggcharts/</guid>
+			<description>library(ggcharts)library(dplyr)library(gapminder)data(gapminder)I am very pleased to announce that my ggcharts package has a new feature: dumbbell_chart().
+To showcase this new function I will use the gapminder dataset which contains countries&amp;rsquo; population counts from 1952 to 2017. This dataset is in long format. In order for dumbbell_chart() to work properly the data has to be in wide format, though. So, first a bit of data wrangling.
+gapminder_wide &amp;lt;- gapminder %&amp;gt;%mutate(pop = pop / 1e6) %&amp;gt;%filter(year %in% c(1952, 2007)) %&amp;gt;%tidyr::pivot_wider(id_cols = country,names_from = year,values_from = pop,names_prefix = &amp;#34;pop_&amp;#34;)gapminder_wide## # A tibble: 142 x 3## country pop_1952 pop_2007## &amp;lt;fct&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;## 1 Afghanistan 8.</description>
+			<content type="html"><![CDATA[<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggcharts</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">gapminder</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">gapminder</span><span class="p">)</span>
+</code></pre></div><p>I am very pleased to announce that my <a href="https://github.com/thomas-neitmann/ggcharts"><code>ggcharts</code></a> package has a new feature: <code>dumbbell_chart()</code>.</p>
+<p>To showcase this new function I will use the <code>gapminder</code> dataset which contains countries&rsquo; population counts from 1952 to 2017. This dataset is in long format. In order for <code>dumbbell_chart()</code> to work properly the data has to be in <em>wide</em> format, though. So, first a bit of data wrangling.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">gapminder_wide</span> <span class="o">&lt;-</span> <span class="n">gapminder</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">pop</span> <span class="o">=</span> <span class="n">pop</span> <span class="o">/</span> <span class="m">1e6</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">filter</span><span class="p">(</span><span class="n">year</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="m">1952</span><span class="p">,</span> <span class="m">2007</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="n">tidyr</span><span class="o">::</span><span class="nf">pivot_wider</span><span class="p">(</span>
+    <span class="n">id_cols</span> <span class="o">=</span> <span class="n">country</span><span class="p">,</span>
+    <span class="n">names_from</span> <span class="o">=</span> <span class="n">year</span><span class="p">,</span>
+    <span class="n">values_from</span> <span class="o">=</span> <span class="n">pop</span><span class="p">,</span>
+    <span class="n">names_prefix</span> <span class="o">=</span> <span class="s">&#34;pop_&#34;</span>
+  <span class="p">)</span>
+<span class="n">gapminder_wide</span>
+</code></pre></div><pre><code>## # A tibble: 142 x 3
+##    country     pop_1952 pop_2007
+##    &lt;fct&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+##  1 Afghanistan    8.43    31.9  
+##  2 Albania        1.28     3.60 
+##  3 Algeria        9.28    33.3  
+##  4 Angola         4.23    12.4  
+##  5 Argentina     17.9     40.3  
+##  6 Australia      8.69    20.4  
+##  7 Austria        6.93     8.20 
+##  8 Bahrain        0.120    0.709
+##  9 Bangladesh    46.9    150.   
+## 10 Belgium        8.73    10.4  
+## # ... with 132 more rows
+</code></pre><p>With the data being ready, let&rsquo;s create a simple chart.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">dumbbell_chart</span><span class="p">(</span><span class="n">gapminder_wide</span><span class="p">,</span> <span class="n">country</span><span class="p">,</span> <span class="n">pop_1952</span><span class="p">,</span> <span class="n">pop_2007</span><span class="p">,</span>
+               <span class="n">limit</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>That looks already quite nice but let&rsquo;s customize the plot to make it look even better. First, let&rsquo;s see which customizations can be done by changing the defaults of <code>dumbbell_chart()</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">&lt;-</span> <span class="nf">dumbbell_chart</span><span class="p">(</span><span class="n">gapminder_wide</span><span class="p">,</span> <span class="n">country</span><span class="p">,</span> <span class="n">pop_1952</span><span class="p">,</span> <span class="n">pop_2007</span><span class="p">,</span>
+                        <span class="n">limit</span> <span class="o">=</span> <span class="m">10</span><span class="p">,</span> <span class="n">point_size</span> <span class="o">=</span> <span class="m">5</span><span class="p">,</span>
+                        <span class="n">point_colors</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;lightgray&#34;</span><span class="p">,</span> <span class="s">&#34;black&#34;</span><span class="p">),</span>
+                        <span class="n">legend_labels</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;1952&#34;</span><span class="p">,</span> <span class="s">&#34;2007&#34;</span><span class="p">))</span>
+<span class="n">chart</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>To further customize the plot you can use <code>ggplot2</code> functions.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">&lt;-</span> <span class="n">chart</span> <span class="o">+</span>
+  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">expand</span> <span class="o">=</span> <span class="nf">expand_scale</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="m">.025</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">theme</span><span class="p">(</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">14</span><span class="p">),</span>
+    <span class="n">plot.caption</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">family</span> <span class="o">=</span> <span class="s">&#34;mono&#34;</span><span class="p">)</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="nf">labs</span><span class="p">(</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;The World is Growing&#34;</span><span class="p">,</span>
+    <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;Top 10 Most Populated Countries in 2007&#34;</span><span class="p">,</span>
+    <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Chart created using #ggcharts&#34;</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="nf">xlab</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">ylab</span><span class="p">(</span><span class="s">&#34;Population (Millions)&#34;</span><span class="p">)</span>
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
 			<title>Changing things up with ggplot2 themes</title>
 			<link>/posts/changing-things-up-with-ggplot2-themes/</link>
 			<pubDate>Fri, 21 Feb 2020 00:00:00 +0000</pubDate>

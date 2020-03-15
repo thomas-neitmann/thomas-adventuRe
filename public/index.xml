@@ -36,6 +36,17 @@ data(iris)dplyr::count(iris, Species, name = &amp;#34;n_flowers&amp;#34;)## # 
     </item>
     
     <item>
+      <title>Dumbbell charts with ggcharts</title>
+      <link>/posts/dumbbel-charts-with-ggcharts/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/dumbbel-charts-with-ggcharts/</guid>
+      <description>library(ggcharts)library(dplyr)library(gapminder)data(gapminder)I am very pleased to announce that my ggcharts package has a new feature: dumbbell_chart().
+To showcase this new function I will use the gapminder dataset which contains countries&amp;rsquo; population counts from 1952 to 2017. This dataset is in long format. In order for dumbbell_chart() to work properly the data has to be in wide format, though. So, first a bit of data wrangling.
+gapminder_wide &amp;lt;- gapminder %&amp;gt;%mutate(pop = pop / 1e6) %&amp;gt;%filter(year %in% c(1952, 2007)) %&amp;gt;%tidyr::pivot_wider(id_cols = country,names_from = year,values_from = pop,names_prefix = &amp;#34;pop_&amp;#34;)gapminder_wide## # A tibble: 142 x 3## country pop_1952 pop_2007## &amp;lt;fct&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;## 1 Afghanistan 8.</description>
+    </item>
+    
+    <item>
       <title>Changing things up with ggplot2 themes</title>
       <link>/posts/changing-things-up-with-ggplot2-themes/</link>
       <pubDate>Fri, 21 Feb 2020 00:00:00 +0000</pubDate>
@@ -112,17 +123,6 @@ So, I started R, read in the dataset, did some data wrangling and then wanted to
 If you insist, you&amp;rsquo;ll get a useless results.
 x &amp;lt;- c(1, NA, 3)x == NA## [1] NA NA NAInstead use the is.na() function.
 is.na(x)## [1] FALSE TRUE FALSE</description>
-    </item>
-    
-    <item>
-      <title>What does the &lt;&lt;- operator do?</title>
-      <link>/posts/what-does-the-operator-do/</link>
-      <pubDate>Sat, 25 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/what-does-the-operator-do/</guid>
-      <description>If you&amp;rsquo;ve been using R for a while, chances are high you came across the &amp;lt;&amp;lt;- operator. On several occasions I&amp;rsquo;ve heard or read people calling &amp;lt;&amp;lt;- the &amp;ldquo;global assignment operator&amp;rdquo;. However, this is wrong. Let me elaborate why.
-First, have a look at this example.
-x &amp;lt;- 0foo &amp;lt;- function() {x &amp;lt;&amp;lt;- x + 1x}foo()## [1] 1foo()## [1] 2x## [1] 2Here &amp;lt;&amp;lt;- truly behaves like a global assignment operator.</description>
     </item>
     
   </channel>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ggcharts on Thomas&#39; AdventuRe</title>
+    <link>/tags/ggcharts/</link>
+    <description>Recent content in ggcharts on Thomas&#39; AdventuRe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/ggcharts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dumbbell charts with ggcharts</title>
+      <link>/posts/dumbbel-charts-with-ggcharts/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/dumbbel-charts-with-ggcharts/</guid>
+      <description>library(ggcharts)library(dplyr)library(gapminder)data(gapminder)I am very pleased to announce that my ggcharts package has a new feature: dumbbell_chart().
+To showcase this new function I will use the gapminder dataset which contains countries&amp;rsquo; population counts from 1952 to 2017. This dataset is in long format. In order for dumbbell_chart() to work properly the data has to be in wide format, though. So, first a bit of data wrangling.
+gapminder_wide &amp;lt;- gapminder %&amp;gt;%mutate(pop = pop / 1e6) %&amp;gt;%filter(year %in% c(1952, 2007)) %&amp;gt;%tidyr::pivot_wider(id_cols = country,names_from = year,values_from = pop,names_prefix = &amp;#34;pop_&amp;#34;)gapminder_wide## # A tibble: 142 x 3## country pop_1952 pop_2007## &amp;lt;fct&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;## 1 Afghanistan 8.</description>
+    </item>
+    
+  </channel>
+</rss>
