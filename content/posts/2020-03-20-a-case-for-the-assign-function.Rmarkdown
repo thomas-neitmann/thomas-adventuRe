@@ -1,0 +1,82 @@
+---
+title: A case for the assign() function
+author: Thomas Neitmann
+date: '2020-03-20'
+slug: a-case-for-the-assign-function
+categories:
+  - bytesized
+tags:
+  - base
+toc: no
+images: ~
+---
+
+In `R`, `assign()` is one of those functions that common wisdom says you shouldn't be using. My aim in this blog post is to convince you that `assign()` can be very handy.
+
+The pharmaceutical industry, which I work in, is still `SAS` dominated so my primary data source at work are `.sas7bdat` files. Thus, whenever I use `R` the first thing I have to do is read in those files.
+
+Since the files have standard names, e.g. `ADAE` (Analysis Datasets Adverse Events), I want to read them into the global environment with exactly these names.
+
+For a single file that's easy. Just give the variable the same name as the file.
+
+```r
+adae <- haven::read_sas("data/adae.sas7bdat")
+```
+
+If you have a directory with multiple files in it this becomes tedious, though. Let's simulate this by creating a couple of `.csv` files with random numbers in it.
+
+```{r}
+dir <- tempdir()
+datasets <- c("adsl.csv", "adae.csv", "adrs.csv", "adtte.csv")
+for (dataset in datasets) {
+  data <- matrix(rnorm(100), nrow = 10)
+  write.csv(data, file = file.path(dir, dataset))
+}
+```
+
+With the data ready the first step is to get a list of all files. Note that I purposefully set `full.names = FALSE`.
+
+```{r}
+(files <- list.files(dir, pattern = "csv$", full.names = FALSE))
+```
+
+Next, to read in all those files I loop over each file and
+
+- remove the extension from `file`
+- construct the full path to the file with `file.path()`
+- read in the `.csv` file and `assign` it to its name.
+
+```{r}
+for (file in files) {
+  file_name <- tools::file_path_sans_ext(file)
+  full_path_to_file <- file.path(dir, file)
+  assign(file_name, read.csv(full_path_to_file), envir = .GlobalEnv)
+}
+```
+
+Note that `envir = .GlobalEnv` is redundant here but I like to be explicit. 
+Let's make sure that this actually worked as expected.
+
+```{r}
+ls()
+```
+
+Indeed, now there are five new variables in the global environment that have the names of the files created earlier.
+
+Without using `assign()` you'd end up putting all datasets in a `list`.
+
+```{r}
+data <- lapply(files, function(file) {
+  read.csv(file.path(dir, file))
+})
+```
+
+That may not be so bad but actually this list doesn't have names which is a problem.
+
+```{r}
+names(data)
+```
+
+I hope this convinced you that `assign()` is a useful function.
+
+Did you ever use `assign()`? I'd love to know in the comments.

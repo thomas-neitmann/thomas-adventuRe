@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>A case for the assign() function</title>
+      <link>/posts/a-case-for-the-assign-function/</link>
+      <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/a-case-for-the-assign-function/</guid>
+      <description>In R, assign() is one of those functions that common wisdom says you shouldn&amp;rsquo;t be using. My aim in this blog post is to convince you that assign() can be very handy.
+The pharmaceutical industry, which I work in, is still SAS dominated so my primary data source at work are .sas7bdat files. Thus, whenever I use R the first thing I have to do is read in those files.</description>
+    </item>
+    
+    <item>
       <title>About</title>
       <link>/about/</link>
       <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
@@ -111,18 +121,6 @@ library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&a
       <guid>/posts/creating-excel-files-from-r-using-openxlsx/</guid>
       <description>Yesterday I had to share data with some internal stakeholders in excel format. Why excel? Well, I guess if you are not a &amp;ldquo;data professional&amp;rdquo;, then that&amp;rsquo;s the easiest format to work with.
 So, I started R, read in the dataset, did some data wrangling and then wanted to write the data to a xlsx file. I heard great things about the openxlsx package so I used it for the first time.</description>
-    </item>
-    
-    <item>
-      <title>The right way to check for NAs</title>
-      <link>/posts/the-right-way-to-check-for-nas/</link>
-      <pubDate>Mon, 03 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/the-right-way-to-check-for-nas/</guid>
-      <description>To check for missing values in R you might be tempted to use the equality operator == with your vector on one side and NA on the other. Don&amp;rsquo;t!
-If you insist, you&amp;rsquo;ll get a useless results.
-x &amp;lt;- c(1, NA, 3)x == NA## [1] NA NA NAInstead use the is.na() function.
-is.na(x)## [1] FALSE TRUE FALSE</description>
     </item>
     
   </channel>

@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Thu, 13 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/base/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A case for the assign() function</title>
+      <link>/posts/a-case-for-the-assign-function/</link>
+      <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/a-case-for-the-assign-function/</guid>
+      <description>In R, assign() is one of those functions that common wisdom says you shouldn&amp;rsquo;t be using. My aim in this blog post is to convince you that assign() can be very handy.
+The pharmaceutical industry, which I work in, is still SAS dominated so my primary data source at work are .sas7bdat files. Thus, whenever I use R the first thing I have to do is read in those files.</description>
+    </item>
     
     <item>
       <title>Is a library the same thing as a package?</title>

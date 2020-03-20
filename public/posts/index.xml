@@ -6,8 +6,62 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Fri, 06 Mar 2020 00:00:00 +0000</lastBuildDate>
+		<lastBuildDate>Fri, 20 Mar 2020 00:00:00 +0000</lastBuildDate>
 		<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>A case for the assign() function</title>
+			<link>/posts/a-case-for-the-assign-function/</link>
+			<pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/a-case-for-the-assign-function/</guid>
+			<description>In R, assign() is one of those functions that common wisdom says you shouldn&amp;rsquo;t be using. My aim in this blog post is to convince you that assign() can be very handy.
+The pharmaceutical industry, which I work in, is still SAS dominated so my primary data source at work are .sas7bdat files. Thus, whenever I use R the first thing I have to do is read in those files.</description>
+			<content type="html"><![CDATA[<p>In <code>R</code>, <code>assign()</code> is one of those functions that common wisdom says you shouldn&rsquo;t be using. My aim in this blog post is to convince you that <code>assign()</code> can be very handy.</p>
+<p>The pharmaceutical industry, which I work in, is still <code>SAS</code> dominated so my primary data source at work are <code>.sas7bdat</code> files. Thus, whenever I use <code>R</code> the first thing I have to do is read in those files.</p>
+<p>Since the files have standard names, e.g. <code>ADAE</code> (Analysis Datasets Adverse Events), I want to read them into the global environment with exactly these names.</p>
+<p>For a single file that&rsquo;s easy. Just give the variable the same name as the file.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">adae</span> <span class="o">&lt;-</span> <span class="n">haven</span><span class="o">::</span><span class="nf">read_sas</span><span class="p">(</span><span class="s">&#34;data/adae.sas7bdat&#34;</span><span class="p">)</span>
+</code></pre></div><p>If you have a directory with multiple files in it this becomes tedious, though. Let&rsquo;s simulate this by creating a couple of <code>.csv</code> files with random numbers in it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">dir</span> <span class="o">&lt;-</span> <span class="nf">tempdir</span><span class="p">()</span>
+<span class="n">datasets</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;adsl.csv&#34;</span><span class="p">,</span> <span class="s">&#34;adae.csv&#34;</span><span class="p">,</span> <span class="s">&#34;adrs.csv&#34;</span><span class="p">,</span> <span class="s">&#34;adtte.csv&#34;</span><span class="p">)</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">dataset</span> <span class="n">in</span> <span class="n">datasets</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">),</span> <span class="n">nrow</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span>
+  <span class="nf">write.csv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">dataset</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div><p>With the data ready the first step is to get a list of all files. Note that I purposefully set <code>full.names = FALSE</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">files</span> <span class="o">&lt;-</span> <span class="nf">list.files</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&#34;csv$&#34;</span><span class="p">,</span> <span class="n">full.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">))</span>
+</code></pre></div><pre><code>## [1] &quot;adae.csv&quot;  &quot;adrs.csv&quot;  &quot;adsl.csv&quot;  &quot;adtte.csv&quot;
+</code></pre><p>Next, to read in all those files I loop over each file and</p>
+<ul>
+<li>remove the extension from <code>file</code></li>
+<li>construct the full path to the file with <code>file.path()</code></li>
+<li>read in the <code>.csv</code> file and <code>assign</code> it to its name.</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">for </span><span class="p">(</span><span class="n">file</span> <span class="n">in</span> <span class="n">files</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">file_name</span> <span class="o">&lt;-</span> <span class="n">tools</span><span class="o">::</span><span class="nf">file_path_sans_ext</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="n">full_path_to_file</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+  <span class="nf">assign</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">full_path_to_file</span><span class="p">),</span> <span class="n">envir</span> <span class="o">=</span> <span class="n">.GlobalEnv</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p>Note that <code>envir = .GlobalEnv</code> is redundant here but I like to be explicit. 
+Let&rsquo;s make sure that this actually worked as expected.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">ls</span><span class="p">()</span>
+</code></pre></div><pre><code>##  [1] &quot;adae&quot;              &quot;adrs&quot;              &quot;adsl&quot;             
+##  [4] &quot;adtte&quot;             &quot;data&quot;              &quot;dataset&quot;          
+##  [7] &quot;datasets&quot;          &quot;dir&quot;               &quot;file&quot;             
+## [10] &quot;file_name&quot;         &quot;files&quot;             &quot;full_path_to_file&quot;
+</code></pre><p>Indeed, now there are five new variables in the global environment that have the names of the files created earlier.</p>
+<p>Without using <code>assign()</code> you&rsquo;d end up putting all datasets in a <code>list</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">read.csv</span><span class="p">(</span><span class="nf">file.path</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span>
+<span class="p">})</span>
+</code></pre></div><p>That may not be so bad but actually this list doesn&rsquo;t have names which is a problem.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">names</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div><pre><code>## NULL
+</code></pre><p>I hope this convinced you that <code>assign()</code> is a useful function.</p>
+<p>Did you ever use <code>assign()</code>? I&rsquo;d love to know in the comments.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>dplyr::count()</title>
