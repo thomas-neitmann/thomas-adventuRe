@@ -1,5 +1,5 @@
 ---
-title: dplyr::count()
+title: Streamline your dplyr chains with count()
 author: Thomas Neitmann
 date: '2020-03-06'
 slug: dplyr-count

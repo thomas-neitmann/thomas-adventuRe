@@ -1,5 +1,5 @@
 ---
-title: Dumbbell charts with ggcharts
+title: Creating dumbbell charts with the ggcharts R package
 author: Thomas Neitmann
 date: '2020-03-01'
 slug: dumbbel-charts-with-ggcharts

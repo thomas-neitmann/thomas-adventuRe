@@ -37,7 +37,7 @@ scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; 
     </item>
     
     <item>
-      <title>Enhacing ggplot2 with ggtext</title>
+      <title>Enhance your ggplot2 data visualizations with ggtext</title>
       <link>/posts/enhacing-ggplot2-with-ggtext/</link>
       <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
       

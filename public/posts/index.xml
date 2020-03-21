@@ -87,7 +87,7 @@ Let&rsquo;s make sure that this actually worked as expected.</p>
 		</item>
 		
 		<item>
-			<title>dplyr::count()</title>
+			<title>Streamline your dplyr chains with count()</title>
 			<link>/posts/dplyr-count/</link>
 			<pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
 			
@@ -117,7 +117,7 @@ data(iris)dplyr::count(iris, Species, name = &amp;#34;n_flowers&amp;#34;)## # 
 		</item>
 		
 		<item>
-			<title>Dumbbell charts with ggcharts</title>
+			<title>Creating dumbbell charts with the ggcharts R package</title>
 			<link>/posts/dumbbel-charts-with-ggcharts/</link>
 			<pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
 			
@@ -289,7 +289,7 @@ So, what&amp;rsquo;s the difference between the two? A library is nothing but a 
 		</item>
 		
 		<item>
-			<title>Enhacing ggplot2 with ggtext</title>
+			<title>Enhance your ggplot2 data visualizations with ggtext</title>
 			<link>/posts/enhacing-ggplot2-with-ggtext/</link>
 			<pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
 			

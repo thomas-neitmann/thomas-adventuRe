@@ -1,5 +1,5 @@
 ---
-title: Enhacing ggplot2 with ggtext
+title: Enhance your ggplot2 data visualizations with ggtext
 author: Thomas Neitmann
 date: '2020-02-11'
 slug: enhacing-ggplot2-with-ggtext
