@@ -6,8 +6,31 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Fri, 20 Mar 2020 00:00:00 +0000</lastBuildDate>
+		<lastBuildDate>Sat, 21 Mar 2020 00:00:00 +0000</lastBuildDate>
 		<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Getting R to print English error messages</title>
+			<link>/posts/getting-r-to-print-english-error-messages/</link>
+			<pubDate>Sat, 21 Mar 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/getting-r-to-print-english-error-messages/</guid>
+			<description>If you live in a non-English locale such as I do, you&amp;rsquo;ll likely receive error messages in your locale language when things go wrong in R.
+1 + &amp;#34;r&amp;#34;## Error in 1 + &amp;quot;r&amp;quot;: nicht-numerisches Argument für binären OperatorThis is a problem because it highly limits the results when searching for error messages on Google. Have you ever read a stackoverflow post that was not in English? I haven&amp;rsquo;t.</description>
+			<content type="html"><![CDATA[<p>If you live in a non-English locale such as I do, you&rsquo;ll likely receive error messages in your locale language when things go wrong in <code>R</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="m">1</span> <span class="o">+</span> <span class="s">&#34;r&#34;</span>
+</code></pre></div><pre><code>## Error in 1 + &quot;r&quot;: nicht-numerisches Argument für binären Operator
+</code></pre><p>This is a problem because it highly limits the results when searching for error messages on Google. Have you ever read a stackoverflow post that was not in English? I haven&rsquo;t.</p>
+<p>So, how can you tell <code>R</code> to <em>not</em> translate error messages? By telling <code>R</code> that you are in an English locale.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">Sys.setenv</span><span class="p">(</span><span class="n">lang</span> <span class="o">=</span> <span class="s">&#34;en_US&#34;</span><span class="p">)</span>
+</code></pre></div><p>Your next error will be printed in English.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="m">1</span> <span class="o">+</span> <span class="s">&#34;r&#34;</span>
+</code></pre></div><pre><code>## Error in 1 + &quot;r&quot;: non-numeric argument to binary operator
+</code></pre><p>Great!</p>
+<p>The only problem with this approach is that the next time you start a new <code>R</code> session this change will be reverted. To make this change persistent add <code>Sys.setenv(lang = &quot;en_US&quot;)</code> to your <code>.Rprofile</code> file.</p>
+<p>Never heard of <code>.Rprofile</code>? It&rsquo;s basically an <code>R</code> script that - if present - gets executed whenever you start <code>R</code>. That makes it perfect for the purpose of changing your locale.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>A case for the assign() function</title>

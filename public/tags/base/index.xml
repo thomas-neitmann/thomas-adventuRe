@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 20 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/base/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Getting R to print English error messages</title>
+      <link>/posts/getting-r-to-print-english-error-messages/</link>
+      <pubDate>Sat, 21 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/getting-r-to-print-english-error-messages/</guid>
+      <description>If you live in a non-English locale such as I do, you&amp;rsquo;ll likely receive error messages in your locale language when things go wrong in R.
+1 + &amp;#34;r&amp;#34;## Error in 1 + &amp;quot;r&amp;quot;: nicht-numerisches Argument für binären OperatorThis is a problem because it highly limits the results when searching for error messages on Google. Have you ever read a stackoverflow post that was not in English? I haven&amp;rsquo;t.</description>
+    </item>
     
     <item>
       <title>A case for the assign() function</title>

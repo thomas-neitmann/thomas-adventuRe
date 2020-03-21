@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Getting R to print English error messages</title>
+      <link>/posts/getting-r-to-print-english-error-messages/</link>
+      <pubDate>Sat, 21 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/getting-r-to-print-english-error-messages/</guid>
+      <description>If you live in a non-English locale such as I do, you&amp;rsquo;ll likely receive error messages in your locale language when things go wrong in R.
+1 + &amp;#34;r&amp;#34;## Error in 1 + &amp;quot;r&amp;quot;: nicht-numerisches Argument für binären OperatorThis is a problem because it highly limits the results when searching for error messages on Google. Have you ever read a stackoverflow post that was not in English? I haven&amp;rsquo;t.</description>
+    </item>
+    
+    <item>
       <title>A case for the assign() function</title>
       <link>/posts/a-case-for-the-assign-function/</link>
       <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
@@ -111,16 +121,6 @@ So, what&amp;rsquo;s the difference between the two? A library is nothing but a 
 I had looked for a solution to color individual words in the title of a ggplot2 data visualization and ggtext provided me with a great solution for doing just that (and more).
 So, how does it work? Have a look at this example:
 library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&amp;gt;%filter(continent %in% c(&amp;#34;Africa&amp;#34;, &amp;#34;Europe&amp;#34;)) %&amp;gt;%group_by(continent, year) %&amp;gt;%summarise(population = sum(pop / 1e9)) %&amp;gt;%ggplot(aes(year, population, color = continent)) +geom_line(size = 1.</description>
-    </item>
-    
-    <item>
-      <title>Creating excel files from R using openxlsx</title>
-      <link>/posts/creating-excel-files-from-r-using-openxlsx/</link>
-      <pubDate>Thu, 06 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/creating-excel-files-from-r-using-openxlsx/</guid>
-      <description>Yesterday I had to share data with some internal stakeholders in excel format. Why excel? Well, I guess if you are not a &amp;ldquo;data professional&amp;rdquo;, then that&amp;rsquo;s the easiest format to work with.
-So, I started R, read in the dataset, did some data wrangling and then wanted to write the data to a xlsx file. I heard great things about the openxlsx package so I used it for the first time.</description>
     </item>
     
   </channel>
