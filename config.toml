@@ -23,7 +23,7 @@ disqusShortname = "thomas-adventure"
 
 [taxonomies]
   tag = "tags"
-  # Categories are disabled by default.
+  category = "categories"
 
 [params]
   dateform        = "Jan 2, 2006"
