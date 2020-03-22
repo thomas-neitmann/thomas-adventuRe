@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-03-20'
 slug: a-case-for-the-assign-function
 categories:
+  - R
   - bytesized
 tags:
   - base

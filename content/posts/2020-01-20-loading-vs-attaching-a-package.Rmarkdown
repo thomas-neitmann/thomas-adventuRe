@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-01-20'
 slug: loading-vs-attaching-a-package
 categories:
+  - R
   - bytesized
 tags:
   - base

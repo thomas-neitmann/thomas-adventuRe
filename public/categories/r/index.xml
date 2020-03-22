@@ -22,5 +22,108 @@
 1 + &amp;#34;r&amp;#34;## Error in 1 + &amp;quot;r&amp;quot;: nicht-numerisches Argument für binären OperatorThis is a problem because it highly limits the results when searching for error messages on Google. Have you ever read a stackoverflow post that was not in English? I haven&amp;rsquo;t.</description>
     </item>
     
+    <item>
+      <title>A case for the assign() function</title>
+      <link>/posts/a-case-for-the-assign-function/</link>
+      <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/a-case-for-the-assign-function/</guid>
+      <description>In R, assign() is one of those functions that common wisdom says you shouldn&amp;rsquo;t be using. My aim in this blog post is to convince you that assign() can be very handy.
+The pharmaceutical industry, which I work in, is still SAS dominated so my primary data source at work are .sas7bdat files. Thus, whenever I use R the first thing I have to do is read in those files.</description>
+    </item>
+    
+    <item>
+      <title>Streamline your dplyr chains with count()</title>
+      <link>/posts/dplyr-count/</link>
+      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/dplyr-count/</guid>
+      <description>If you frequently use chains like this
+data %&amp;gt;%group_by(var1, var2) %&amp;gt;%summarise(n = n())consider using
+count(data, var1, var2)instead. It produces the same output, you need to type less and the code is more expressive.
+By default, the column containing the count will be named n. Want to change that? Simply set the name parameter of count(), e.g.
+data(iris)dplyr::count(iris, Species, name = &amp;#34;n_flowers&amp;#34;)## # A tibble: 3 x 2## Species n_flowers## &amp;lt;fct&amp;gt; &amp;lt;int&amp;gt;## 1 setosa 50## 2 versicolor 50## 3 virginica 50</description>
+    </item>
+    
+    <item>
+      <title>Creating dumbbell charts with the ggcharts R package</title>
+      <link>/posts/dumbbel-charts-with-ggcharts/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/dumbbel-charts-with-ggcharts/</guid>
+      <description>library(ggcharts)library(dplyr)library(gapminder)data(gapminder)I am very pleased to announce that my ggcharts package has a new feature: dumbbell_chart().
+To showcase this new function I will use the gapminder dataset which contains countries&amp;rsquo; population counts from 1952 to 2017. This dataset is in long format. In order for dumbbell_chart() to work properly the data has to be in wide format, though. So, first a bit of data wrangling.
+gapminder_wide &amp;lt;- gapminder %&amp;gt;%mutate(pop = pop / 1e6) %&amp;gt;%filter(year %in% c(1952, 2007)) %&amp;gt;%tidyr::pivot_wider(id_cols = country,names_from = year,values_from = pop,names_prefix = &amp;#34;pop_&amp;#34;)gapminder_wide## # A tibble: 142 x 3## country pop_1952 pop_2007## &amp;lt;fct&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;## 1 Afghanistan 8.</description>
+    </item>
+    
+    <item>
+      <title>Changing things up with ggplot2 themes</title>
+      <link>/posts/changing-things-up-with-ggplot2-themes/</link>
+      <pubDate>Fri, 21 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/changing-things-up-with-ggplot2-themes/</guid>
+      <description>Are you tired of adding your favorite ggplot2 theme to every data visualization you create in R? Then I have a solution for you!
+Before you start to create any plots call the theme_set() function with your favorite theme as first argument, e.g.
+library(ggplot2)theme_set(theme_minimal())That will ensure all plots you subsequently create will use this theme unless you add a different one.
+data(&amp;#34;mtcars&amp;#34;)ggplot(mtcars, aes(hp, mpg, color = wt)) +geom_point()Very handy for lazy people like me.</description>
+    </item>
+    
+    <item>
+      <title>Turning your ggplot2 code into a function</title>
+      <link>/posts/turning-your-ggplot2-code-into-a-function/</link>
+      <pubDate>Tue, 18 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/turning-your-ggplot2-code-into-a-function/</guid>
+      <description>If you find yourself repeatedly writing the same ggplot2 code to create a data visualization in R, then it&amp;rsquo;s time to put your code into a function.
+You may start out with an implementation similar to this one.
+library(ggplot2)data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point()}That won&amp;rsquo;t work though.
+scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; not foundIf you call this function, R will look for a variable called hp rather than looking for a column with that name inside the data frame you passed as the first argument.</description>
+    </item>
+    
+    <item>
+      <title>Is a library the same thing as a package?</title>
+      <link>/posts/is-a-library-the-same-thing-as-a-package/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/is-a-library-the-same-thing-as-a-package/</guid>
+      <description>In R you use the library() function to load a package. Thus, surely a package and a library must be the same thing, right?
+Actually no, they are not!
+So, what&amp;rsquo;s the difference between the two? A library is nothing but a folder on your computer in which installed packages are saved. Just like a real library that contains books. It is merely a container. A library on its own is useless.</description>
+    </item>
+    
+    <item>
+      <title>Enhance your ggplot2 data visualizations with ggtext</title>
+      <link>/posts/enhacing-ggplot2-with-ggtext/</link>
+      <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/enhacing-ggplot2-with-ggtext/</guid>
+      <description>I am super exciting to share with you my recent &amp;ldquo;discovery&amp;rdquo; of the ggtext R package.
+I had looked for a solution to color individual words in the title of a ggplot2 data visualization and ggtext provided me with a great solution for doing just that (and more).
+So, how does it work? Have a look at this example:
+library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&amp;gt;%filter(continent %in% c(&amp;#34;Africa&amp;#34;, &amp;#34;Europe&amp;#34;)) %&amp;gt;%group_by(continent, year) %&amp;gt;%summarise(population = sum(pop / 1e9)) %&amp;gt;%ggplot(aes(year, population, color = continent)) +geom_line(size = 1.</description>
+    </item>
+    
+    <item>
+      <title>Creating excel files from R using openxlsx</title>
+      <link>/posts/creating-excel-files-from-r-using-openxlsx/</link>
+      <pubDate>Thu, 06 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/creating-excel-files-from-r-using-openxlsx/</guid>
+      <description>Yesterday I had to share data with some internal stakeholders in excel format. Why excel? Well, I guess if you are not a &amp;ldquo;data professional&amp;rdquo;, then that&amp;rsquo;s the easiest format to work with.
+So, I started R, read in the dataset, did some data wrangling and then wanted to write the data to a xlsx file. I heard great things about the openxlsx package so I used it for the first time.</description>
+    </item>
+    
+    <item>
+      <title>The right way to check for NAs</title>
+      <link>/posts/the-right-way-to-check-for-nas/</link>
+      <pubDate>Mon, 03 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/the-right-way-to-check-for-nas/</guid>
+      <description>To check for missing values in R you might be tempted to use the equality operator == with your vector on one side and NA on the other. Don&amp;rsquo;t!
+If you insist, you&amp;rsquo;ll get a useless results.
+x &amp;lt;- c(1, NA, 3)x == NA## [1] NA NA NAInstead use the is.na() function.
+is.na(x)## [1] FALSE TRUE FALSE</description>
+    </item>
+    
   </channel>
 </rss>

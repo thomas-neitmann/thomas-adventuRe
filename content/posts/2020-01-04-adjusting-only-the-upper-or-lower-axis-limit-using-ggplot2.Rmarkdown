@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-01-04'
 slug: adjusting-only-the-upper-or-lower-axis-limit-using-ggplot2
 categories:
+  - R
   - bytesized
 tags:
   - ggplot2

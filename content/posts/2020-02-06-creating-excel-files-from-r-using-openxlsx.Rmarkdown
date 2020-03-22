@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-02-06'
 slug: creating-excel-files-from-r-using-openxlsx
 categories:
+  - R
   - bytesized
 tags:
   - excel

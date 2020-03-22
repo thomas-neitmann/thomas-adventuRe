@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-02-11'
 slug: enhacing-ggplot2-with-ggtext
 categories:
+  - R
   - bytesized
 tags:
   - ggplot2

@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-02-03'
 slug: the-right-way-to-check-for-nas
 categories:
+  - R
   - bytesized
 tags:
   - base

@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-02-18'
 slug: turning-your-ggplot2-code-into-a-function
 categories:
+  - R
   - bytesized
 tags:
   - ggplot2

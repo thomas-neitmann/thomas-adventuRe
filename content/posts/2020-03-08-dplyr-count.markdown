@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-03-06'
 slug: dplyr-count
 categories:
+  - R
   - bytesized
 tags:
   - dplyr

@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-01-25'
 slug: what-does-the-operator-do
 categories:
+  - R
   - bytesized
 tags:
   - base

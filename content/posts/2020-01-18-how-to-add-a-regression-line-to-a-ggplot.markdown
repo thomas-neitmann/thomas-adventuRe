@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-01-18'
 slug: how-to-add-a-regression-line-to-a-ggplot
 categories:
+  - R
   - bytesized
 tags:
   - ggplot2

@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-02-21'
 slug: changing-things-up-with-ggplot2-themes
 categories:
+  - R
   - bytesized
 tags:
   - ggplot2

@@ -3,7 +3,8 @@ title: Is a library the same thing as a package?
 author: Thomas Neitmann
 date: '2020-02-13'
 slug: is-a-library-the-same-thing-as-a-package
-categories: []
+categories:
+  - R
 tags:
   - base
 toc: no

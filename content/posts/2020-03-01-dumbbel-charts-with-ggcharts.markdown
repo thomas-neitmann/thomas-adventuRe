@@ -4,6 +4,7 @@ author: Thomas Neitmann
 date: '2020-03-01'
 slug: dumbbel-charts-with-ggcharts
 categories:
+  - R
   - bytesized
 tags:
   - datavisualization
