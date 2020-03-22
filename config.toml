@@ -1,7 +1,7 @@
 baseURL = "https://thomas-neitmann.netlify.com/"
 languageCode = "en-us"
 defaultContentLanguage = "en"
-title = "Thomas' AdventuRe"
+title = "Thomas' adventuRe"
 theme = "hermit"
 # enableGitInfo = true
 pygmentsCodefences  = true
