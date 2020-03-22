@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 21 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Always display the current date in an Rmarkdown report</title>
+      <link>/posts/rmarkdown-current-date/</link>
+      <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/rmarkdown-current-date/</guid>
+      <description>Rmarkdown is a great tool for creating data-driven reports that have to be updated on a regular basis. To communicate to stakeholders that the report is indeed up to date it&amp;rsquo;s important to display the current date below the title.
+An obvious solution to display the current date is to update the date field in the YAML header manually before knitting. But this is both error prone and you are likely to forget about it.</description>
+    </item>
     
     <item>
       <title>Getting R to print English error messages</title>
@@ -111,18 +121,6 @@ library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&a
       <guid>/posts/creating-excel-files-from-r-using-openxlsx/</guid>
       <description>Yesterday I had to share data with some internal stakeholders in excel format. Why excel? Well, I guess if you are not a &amp;ldquo;data professional&amp;rdquo;, then that&amp;rsquo;s the easiest format to work with.
 So, I started R, read in the dataset, did some data wrangling and then wanted to write the data to a xlsx file. I heard great things about the openxlsx package so I used it for the first time.</description>
-    </item>
-    
-    <item>
-      <title>The right way to check for NAs</title>
-      <link>/posts/the-right-way-to-check-for-nas/</link>
-      <pubDate>Mon, 03 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/the-right-way-to-check-for-nas/</guid>
-      <description>To check for missing values in R you might be tempted to use the equality operator == with your vector on one side and NA on the other. Don&amp;rsquo;t!
-If you insist, you&amp;rsquo;ll get a useless results.
-x &amp;lt;- c(1, NA, 3)x == NA## [1] NA NA NAInstead use the is.na() function.
-is.na(x)## [1] FALSE TRUE FALSE</description>
     </item>
     
   </channel>
