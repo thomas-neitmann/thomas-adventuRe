@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/ggcharts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Transform a ggplot2 axis to a percentage scale</title>
+      <link>/posts/ggplot2-percentage-scale/</link>
+      <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/ggplot2-percentage-scale/</guid>
+      <description>When plotting a variable whose unit of measure is percent it&amp;rsquo;s best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages.
+To illustrate this let&amp;rsquo;s create an example dataset.
+library(dplyr)data(mtcars)cyl &amp;lt;- mtcars %&amp;gt;%count(cyl) %&amp;gt;%mutate(pct = n / sum(n) * 100) %&amp;gt;%print()## # A tibble: 3 x 3## cyl n pct## &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;## 1 4 11 34.</description>
+    </item>
     
     <item>
       <title>Creating dumbbell charts with the ggcharts R package</title>

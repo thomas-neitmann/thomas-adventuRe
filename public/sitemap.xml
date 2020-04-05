@@ -3,6 +3,46 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/categories/</loc>
+    <lastmod>2020-04-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/datavisualization/</loc>
+    <lastmod>2020-04-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/ggcharts/</loc>
+    <lastmod>2020-04-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/ggplot2/</loc>
+    <lastmod>2020-04-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/</loc>
+    <lastmod>2020-04-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2020-04-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-04-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/ggplot2-percentage-scale/</loc>
+    <lastmod>2020-04-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/posts/rmarkdown-current-date/</loc>
     <lastmod>2020-03-22T00:00:00+00:00</lastmod>
   </url>
@@ -13,32 +53,12 @@
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2020-03-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/knitr/</loc>
     <lastmod>2020-03-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/</loc>
-    <lastmod>2020-03-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2020-03-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/rmarkdown/</loc>
-    <lastmod>2020-03-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2020-03-22T00:00:00+00:00</lastmod>
   </url>
   
@@ -83,22 +103,7 @@
   </url>
   
   <url>
-    <loc>/tags/datavisualization/</loc>
-    <lastmod>2020-03-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/ggcharts/</loc>
-    <lastmod>2020-03-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/posts/changing-things-up-with-ggplot2-themes/</loc>
-    <lastmod>2020-02-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/ggplot2/</loc>
     <lastmod>2020-02-21T00:00:00+00:00</lastmod>
   </url>
   

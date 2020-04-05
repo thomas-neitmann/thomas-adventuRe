@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Transform a ggplot2 axis to a percentage scale">
+<meta itemprop="description" content="When plotting a variable whose unit of measure is percent it&rsquo;s best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages.
+To illustrate this let&rsquo;s create an example dataset.
+library(dplyr)data(mtcars)cyl &lt;- mtcars %&gt;%count(cyl) %&gt;%mutate(pct = n / sum(n) * 100) %&gt;%print()## # A tibble: 3 x 3## cyl n pct## &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;## 1 4 11 34.">
+<meta itemprop="datePublished" content="2020-04-05T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-04-05T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="567">
+
+
+
+<meta itemprop="keywords" content="ggcharts,ggplot2,datavisualization," /><meta property="og:title" content="Transform a ggplot2 axis to a percentage scale" />
+<meta property="og:description" content="When plotting a variable whose unit of measure is percent it&rsquo;s best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages.
+To illustrate this let&rsquo;s create an example dataset.
+library(dplyr)data(mtcars)cyl &lt;- mtcars %&gt;%count(cyl) %&gt;%mutate(pct = n / sum(n) * 100) %&gt;%print()## # A tibble: 3 x 3## cyl n pct## &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;## 1 4 11 34." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/ggplot2-percentage-scale/" />
+<meta property="article:published_time" content="2020-04-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-04-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Transform a ggplot2 axis to a percentage scale"/>
+<meta name="twitter:description" content="When plotting a variable whose unit of measure is percent it&rsquo;s best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages.
+To illustrate this let&rsquo;s create an example dataset.
+library(dplyr)data(mtcars)cyl &lt;- mtcars %&gt;%count(cyl) %&gt;%mutate(pct = n / sum(n) * 100) %&gt;%print()## # A tibble: 3 x 3## cyl n pct## &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;## 1 4 11 34."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Transform a ggplot2 axis to a percentage scale</title>
+	<link rel="stylesheet" href="/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Thomas&#39; adventuRe</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/tags/">Tags</a>
+				<a href="/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://linkedin.com/in/thomasneitmann" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://github.com/thomas-neitmann" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/tags/">Tags</a></li>
+			<li><a href="/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Apr 5, 2020</span></div>
+				<h1>Transform a ggplot2 axis to a percentage scale</h1>
+			</header>
+			<div class="content">
+				<p>When plotting a variable whose unit of measure is percent it&rsquo;s best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages.</p>
+<p>To illustrate this let&rsquo;s create an example dataset.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="n">cyl</span> <span class="o">&lt;-</span> <span class="n">mtcars</span> <span class="o">%&gt;%</span>
+  <span class="nf">count</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">pct</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="m">100</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">print</span><span class="p">()</span>
+</code></pre></div><pre><code>## # A tibble: 3 x 3
+##     cyl     n   pct
+##   &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;
+## 1     4    11  34.4
+## 2     6     7  21.9
+## 3     8    14  43.8
+</code></pre><p>To create a bar chart displaying these data I will use my <a href="https://thomas-neitmann.github.io/ggcharts/index.html"><code>ggcharts</code></a> package which provides a high-level interface to produce plots using <code>ggplot2</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggcharts</span><span class="p">)</span>
+<span class="p">(</span><span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Next, let&rsquo;s try to change the axis labels to include a percentage sign using the <code>percent()</code> function from the <code>scales</code> package.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">+</span> <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="n">percent</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Something is not right here! 4000%!? That seems a bit excessive. The problem here is that by default <code>scales::percent()</code> multiplies its input value by 100. This can be controlled by the <code>scale</code> parameter.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">scales</span><span class="o">::</span><span class="nf">percent</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></div><pre><code>## [1] &quot;100%&quot;
+</code></pre><p>However, <code>scale_y_continuous()</code> expects a function as input for its <code>labels</code> parameter not the actual labels itself. Thus, using <code>percent()</code> is not an option anymore. Fortunately, the <code>scales</code> package offers a function called <code>percent_format()</code> that returns the <code>percent()</code> function with changed defaults.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">pct1</span> <span class="o">&lt;-</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="nf">pct1</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
+</code></pre></div><pre><code>## [1] &quot;100%&quot;
+</code></pre><p>Passing this function to <code>labels</code> produces the desired result.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">+</span> <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Alternatively, one can simply calculate a fraction instead of the actual percentage.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">cyl2</span> <span class="o">&lt;-</span> <span class="n">mtcars</span> <span class="o">%&gt;%</span>
+  <span class="nf">count</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">pct</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+<span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl2</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="n">percent</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>However, notice that suddenly all labels are printed with one decimal place. I think that&rsquo;s undesireable given that the labels are all whole numbers.</p>
+<p>To change this the <code>percent_format()</code> function has a paramter called <code>accuracy</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl2</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">accuracy</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>To me all of this is confusing (to say the least). That&rsquo;s why I decided to come up with a better solution. After all, it should be possible to determine <code>scale</code> and <code>accuracy</code> directly from the data, right?</p>
+<p>My solution is the <code>scale_y_pct()</code> function which is part of my <a href="https://github.com/thomas-neitmann/scalesextra"><code>scalesextra</code></a> package.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">scalesextra</span><span class="p">)</span>
+<span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span> <span class="nf">scale_y_pct</span><span class="p">()</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl2</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span> <span class="nf">scale_y_pct</span><span class="p">()</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>As you can see, regardless of whether your data is a fraction of 1 or a true percentage the data is scaled correctly. Furthermore, in both cases no decimal is displayed as all labels are integers.</p>
+<p>You can pass any parameter of <code>scale_y_continuous()</code> to <code>scale_y_pct()</code>, e.g. <code>breaks</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span> <span class="nf">scale_y_pct</span><span class="p">(</span><span class="n">breaks</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">12.5</span><span class="p">,</span> <span class="m">30.75</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Notice that the number of decimal places displayed is consistent for all labels and automatically determined from the value with the highest number of decimal places. Again, this does not happen automatically when using <code>percent_format()</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">scale_y_continuous</span><span class="p">(</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">),</span>
+    <span class="n">breaks</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">12.5</span><span class="p">,</span> <span class="m">30.75</span><span class="p">)</span>
+  <span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p><code>scalesextra</code> is in very early development and thus only available from GitHub. You can install it by running these commands in you <code>R</code> console.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="s">&#34;remotes&#34;</span> <span class="o">%in%</span> <span class="nf">installed.packages</span><span class="p">())</span> <span class="p">{</span>
+  <span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;remotes&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">remotes</span><span class="o">::</span><span class="nf">install_github</span><span class="p">(</span><span class="s">&#34;thomas-neitmann/scalesextra&#34;</span><span class="p">)</span>
+</code></pre></div><p>Please test <code>scale_y_pct()</code> (and its sister <code>scale_x_pct()</code>) and let me know what you think in the comments. Should you find a bug (which is likely given the early stage of development), please open an issue on <a href="https://github.com/thomas-neitmann/scalesextra/issues">GitHub</a>.</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>Thomas Neitmann</p>
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/ggcharts">ggcharts</a></span><span class="tag"><a href="/tags/ggplot2">ggplot2</a></span><span class="tag"><a href="/tags/datavisualization">datavisualization</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>567 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-05 02:00 &#43;0200</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="/posts/rmarkdown-current-date/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Always display the current date in an Rmarkdown report</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "thomas-adventure" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="/">Thomas Neitmann</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://www.r-bloggers.com/" target="_blank" rel="noopener">R-bloggers</a> &#183; <a href="/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-161564352-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+
+</html>

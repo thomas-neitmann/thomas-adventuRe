@@ -6,8 +6,89 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Sun, 22 Mar 2020 00:00:00 +0000</lastBuildDate>
+		<lastBuildDate>Sun, 05 Apr 2020 00:00:00 +0000</lastBuildDate>
 		<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Transform a ggplot2 axis to a percentage scale</title>
+			<link>/posts/ggplot2-percentage-scale/</link>
+			<pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/ggplot2-percentage-scale/</guid>
+			<description>When plotting a variable whose unit of measure is percent it&amp;rsquo;s best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages.
+To illustrate this let&amp;rsquo;s create an example dataset.
+library(dplyr)data(mtcars)cyl &amp;lt;- mtcars %&amp;gt;%count(cyl) %&amp;gt;%mutate(pct = n / sum(n) * 100) %&amp;gt;%print()## # A tibble: 3 x 3## cyl n pct## &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;## 1 4 11 34.</description>
+			<content type="html"><![CDATA[<p>When plotting a variable whose unit of measure is percent it&rsquo;s best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages.</p>
+<p>To illustrate this let&rsquo;s create an example dataset.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="n">cyl</span> <span class="o">&lt;-</span> <span class="n">mtcars</span> <span class="o">%&gt;%</span>
+  <span class="nf">count</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">pct</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="m">100</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">print</span><span class="p">()</span>
+</code></pre></div><pre><code>## # A tibble: 3 x 3
+##     cyl     n   pct
+##   &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;
+## 1     4    11  34.4
+## 2     6     7  21.9
+## 3     8    14  43.8
+</code></pre><p>To create a bar chart displaying these data I will use my <a href="https://thomas-neitmann.github.io/ggcharts/index.html"><code>ggcharts</code></a> package which provides a high-level interface to produce plots using <code>ggplot2</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggcharts</span><span class="p">)</span>
+<span class="p">(</span><span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Next, let&rsquo;s try to change the axis labels to include a percentage sign using the <code>percent()</code> function from the <code>scales</code> package.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">+</span> <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="n">percent</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Something is not right here! 4000%!? That seems a bit excessive. The problem here is that by default <code>scales::percent()</code> multiplies its input value by 100. This can be controlled by the <code>scale</code> parameter.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">scales</span><span class="o">::</span><span class="nf">percent</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></div><pre><code>## [1] &quot;100%&quot;
+</code></pre><p>However, <code>scale_y_continuous()</code> expects a function as input for its <code>labels</code> parameter not the actual labels itself. Thus, using <code>percent()</code> is not an option anymore. Fortunately, the <code>scales</code> package offers a function called <code>percent_format()</code> that returns the <code>percent()</code> function with changed defaults.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">pct1</span> <span class="o">&lt;-</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="nf">pct1</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
+</code></pre></div><pre><code>## [1] &quot;100%&quot;
+</code></pre><p>Passing this function to <code>labels</code> produces the desired result.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">+</span> <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Alternatively, one can simply calculate a fraction instead of the actual percentage.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">cyl2</span> <span class="o">&lt;-</span> <span class="n">mtcars</span> <span class="o">%&gt;%</span>
+  <span class="nf">count</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">pct</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+<span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl2</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="n">percent</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>However, notice that suddenly all labels are printed with one decimal place. I think that&rsquo;s undesireable given that the labels are all whole numbers.</p>
+<p>To change this the <code>percent_format()</code> function has a paramter called <code>accuracy</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl2</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">accuracy</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>To me all of this is confusing (to say the least). That&rsquo;s why I decided to come up with a better solution. After all, it should be possible to determine <code>scale</code> and <code>accuracy</code> directly from the data, right?</p>
+<p>My solution is the <code>scale_y_pct()</code> function which is part of my <a href="https://github.com/thomas-neitmann/scalesextra"><code>scalesextra</code></a> package.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">scalesextra</span><span class="p">)</span>
+<span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span> <span class="nf">scale_y_pct</span><span class="p">()</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl2</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span> <span class="nf">scale_y_pct</span><span class="p">()</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>As you can see, regardless of whether your data is a fraction of 1 or a true percentage the data is scaled correctly. Furthermore, in both cases no decimal is displayed as all labels are integers.</p>
+<p>You can pass any parameter of <code>scale_y_continuous()</code> to <code>scale_y_pct()</code>, e.g. <code>breaks</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span> <span class="nf">scale_y_pct</span><span class="p">(</span><span class="n">breaks</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">12.5</span><span class="p">,</span> <span class="m">30.75</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Notice that the number of decimal places displayed is consistent for all labels and automatically determined from the value with the highest number of decimal places. Again, this does not happen automatically when using <code>percent_format()</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">scale_y_continuous</span><span class="p">(</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">),</span>
+    <span class="n">breaks</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">12.5</span><span class="p">,</span> <span class="m">30.75</span><span class="p">)</span>
+  <span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p><code>scalesextra</code> is in very early development and thus only available from GitHub. You can install it by running these commands in you <code>R</code> console.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="s">&#34;remotes&#34;</span> <span class="o">%in%</span> <span class="nf">installed.packages</span><span class="p">())</span> <span class="p">{</span>
+  <span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;remotes&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">remotes</span><span class="o">::</span><span class="nf">install_github</span><span class="p">(</span><span class="s">&#34;thomas-neitmann/scalesextra&#34;</span><span class="p">)</span>
+</code></pre></div><p>Please test <code>scale_y_pct()</code> (and its sister <code>scale_x_pct()</code>) and let me know what you think in the comments. Should you find a bug (which is likely given the early stage of development), please open an issue on <a href="https://github.com/thomas-neitmann/scalesextra/issues">GitHub</a>.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Always display the current date in an Rmarkdown report</title>

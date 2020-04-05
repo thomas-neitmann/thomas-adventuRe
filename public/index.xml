@@ -13,6 +13,17 @@
     
     
     <item>
+      <title>Transform a ggplot2 axis to a percentage scale</title>
+      <link>/posts/ggplot2-percentage-scale/</link>
+      <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/ggplot2-percentage-scale/</guid>
+      <description>When plotting a variable whose unit of measure is percent it&amp;rsquo;s best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages.
+To illustrate this let&amp;rsquo;s create an example dataset.
+library(dplyr)data(mtcars)cyl &amp;lt;- mtcars %&amp;gt;%count(cyl) %&amp;gt;%mutate(pct = n / sum(n) * 100) %&amp;gt;%print()## # A tibble: 3 x 3## cyl n pct## &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;## 1 4 11 34.</description>
+    </item>
+    
+    <item>
       <title>Always display the current date in an Rmarkdown report</title>
       <link>/posts/rmarkdown-current-date/</link>
       <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
@@ -108,17 +119,6 @@ scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; 
       <guid>/posts/renaming-files-in-a-git-repository/</guid>
       <description>If you are using git for your data science project (which you should!), you have to be careful when renaming a file.
 If you simply rename the file in your OS file browser, git would interpret this as deleting the file with the old name and creating a new one with the new name. They wouldn&amp;rsquo;t be linked in any way and you&amp;rsquo;d essentially loose the history of that file.</description>
-    </item>
-    
-    <item>
-      <title>Is a library the same thing as a package?</title>
-      <link>/posts/is-a-library-the-same-thing-as-a-package/</link>
-      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/is-a-library-the-same-thing-as-a-package/</guid>
-      <description>In R you use the library() function to load a package. Thus, surely a package and a library must be the same thing, right?
-Actually no, they are not!
-So, what&amp;rsquo;s the difference between the two? A library is nothing but a folder on your computer in which installed packages are saved. Just like a real library that contains books. It is merely a container. A library on its own is useless.</description>
     </item>
     
   </channel>
