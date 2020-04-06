@@ -19,7 +19,7 @@
       
       <guid>/posts/labels-ggplot2-bar-chart/</guid>
       <description>I often see bar charts where the bars are directly labeled with the value they represent. In this post I will walk you through how you can create such labeled bar charts using ggplot2.
-First, let&amp;rsquo;s load some data to work with and create a bar chart. To make this easier I will use the bar_chart() function from my ggcharts package which outputs a ggplot that can be customized further using any ggplot2 function.</description>
+The data I will use comes from the 2019 Stackoverflow Developer Survey. To make creating the plot easier I will use the bar_chart() function from my ggcharts package which outputs a ggplot that can be customized further using any ggplot2 function.</description>
     </item>
     
     <item>
