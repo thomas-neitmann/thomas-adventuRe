@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 05 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Adding labels to a ggplot2 bar chart</title>
+      <link>/posts/labels-ggplot2-bar-chart/</link>
+      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/labels-ggplot2-bar-chart/</guid>
+      <description>I often see bar charts where the bars are directly labeled with the value they represent. In this post I will walk you through how you can create such labeled bar charts using ggplot2.
+First, let&amp;rsquo;s load some data to work with and create a bar chart. To make this easier I will use the bar_chart() function from my ggcharts package which outputs a ggplot that can be customized further using any ggplot2 function.</description>
+    </item>
     
     <item>
       <title>Transform a ggplot2 axis to a percentage scale</title>

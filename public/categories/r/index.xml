@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 05 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Adding labels to a ggplot2 bar chart</title>
+      <link>/posts/labels-ggplot2-bar-chart/</link>
+      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/labels-ggplot2-bar-chart/</guid>
+      <description>I often see bar charts where the bars are directly labeled with the value they represent. In this post I will walk you through how you can create such labeled bar charts using ggplot2.
+First, let&amp;rsquo;s load some data to work with and create a bar chart. To make this easier I will use the bar_chart() function from my ggcharts package which outputs a ggplot that can be customized further using any ggplot2 function.</description>
+    </item>
     
     <item>
       <title>Transform a ggplot2 axis to a percentage scale</title>
@@ -110,18 +120,6 @@ scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; 
       <description>In R you use the library() function to load a package. Thus, surely a package and a library must be the same thing, right?
 Actually no, they are not!
 So, what&amp;rsquo;s the difference between the two? A library is nothing but a folder on your computer in which installed packages are saved. Just like a real library that contains books. It is merely a container. A library on its own is useless.</description>
-    </item>
-    
-    <item>
-      <title>Enhance your ggplot2 data visualizations with ggtext</title>
-      <link>/posts/enhacing-ggplot2-with-ggtext/</link>
-      <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/enhacing-ggplot2-with-ggtext/</guid>
-      <description>I am super exciting to share with you my recent &amp;ldquo;discovery&amp;rdquo; of the ggtext R package.
-I had looked for a solution to color individual words in the title of a ggplot2 data visualization and ggtext provided me with a great solution for doing just that (and more).
-So, how does it work? Have a look at this example:
-library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&amp;gt;%filter(continent %in% c(&amp;#34;Africa&amp;#34;, &amp;#34;Europe&amp;#34;)) %&amp;gt;%group_by(continent, year) %&amp;gt;%summarise(population = sum(pop / 1e9)) %&amp;gt;%ggplot(aes(year, population, color = continent)) +geom_line(size = 1.</description>
     </item>
     
   </channel>

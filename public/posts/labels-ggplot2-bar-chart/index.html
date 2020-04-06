@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Adding labels to a ggplot2 bar chart">
+<meta itemprop="description" content="I often see bar charts where the bars are directly labeled with the value they represent. In this post I will walk you through how you can create such labeled bar charts using ggplot2.
+First, let&rsquo;s load some data to work with and create a bar chart. To make this easier I will use the bar_chart() function from my ggcharts package which outputs a ggplot that can be customized further using any ggplot2 function.">
+<meta itemprop="datePublished" content="2020-04-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-04-06T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="587">
+
+
+
+<meta itemprop="keywords" content="datavisualization,ggplot2,ggcharts," /><meta property="og:title" content="Adding labels to a ggplot2 bar chart" />
+<meta property="og:description" content="I often see bar charts where the bars are directly labeled with the value they represent. In this post I will walk you through how you can create such labeled bar charts using ggplot2.
+First, let&rsquo;s load some data to work with and create a bar chart. To make this easier I will use the bar_chart() function from my ggcharts package which outputs a ggplot that can be customized further using any ggplot2 function." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/labels-ggplot2-bar-chart/" />
+<meta property="article:published_time" content="2020-04-06T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-04-06T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Adding labels to a ggplot2 bar chart"/>
+<meta name="twitter:description" content="I often see bar charts where the bars are directly labeled with the value they represent. In this post I will walk you through how you can create such labeled bar charts using ggplot2.
+First, let&rsquo;s load some data to work with and create a bar chart. To make this easier I will use the bar_chart() function from my ggcharts package which outputs a ggplot that can be customized further using any ggplot2 function."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Adding labels to a ggplot2 bar chart</title>
+	<link rel="stylesheet" href="/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Thomas&#39; adventuRe</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/tags/">Tags</a>
+				<a href="/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://linkedin.com/in/thomasneitmann" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://github.com/thomas-neitmann" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/tags/">Tags</a></li>
+			<li><a href="/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Apr 6, 2020</span></div>
+				<h1>Adding labels to a ggplot2 bar chart</h1>
+			</header>
+			<div class="content">
+				<p>I often see bar charts where the bars are directly labeled with the value they represent. In this post I will walk you through how you can create such labeled bar charts using <code>ggplot2</code>.</p>
+<p>First, let&rsquo;s load some data to work with and create a bar chart. To make this easier I will use the <code>bar_chart()</code> function from my <a href="https://thomas-neitmann.github.io/ggcharts/index.html"><code>ggcharts</code></a> package which outputs a <code>ggplot</code> that can be customized further using any <code>ggplot2</code> function.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggcharts</span><span class="p">)</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">biomedicalrevenue</span><span class="p">)</span>
+
+<span class="n">chart</span> <span class="o">&lt;-</span> <span class="n">biomedicalrevenue</span> <span class="o">%&gt;%</span>
+  <span class="nf">filter</span><span class="p">(</span><span class="n">year</span> <span class="o">==</span> <span class="m">2018</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">bar_chart</span><span class="p">(</span><span class="n">company</span><span class="p">,</span> <span class="n">revenue</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">print</span><span class="p">()</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>To add an annotation to the bars you&rsquo;ll have to use either <code>geom_text()</code> or <code>geom_label()</code>. I will start off with the former. Both require the <code>label</code> aesthetic which tells <code>ggplot2</code> which text to actually display. In addition, both functions require the <code>x</code> and <code>y</code> aesthetics but these are already set when using <code>bar_chart()</code> so I won&rsquo;t bother setting them explicitly after this first example.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
+  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">company</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">revenue</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">revenue</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>By default the labels are center-aligned directly at the <code>y</code> value. You will never want to leave it like that because it&rsquo;s quite hard to read. To left-align the labels set the <code>hjust</code> parameter to <code>0</code> or <code>&quot;left&quot;</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
+  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">revenue</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="s">&#34;left&#34;</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>That&rsquo;s still not ideal I would say. Let&rsquo;s move the labels a bit further away from the bars by setting <code>hjust</code> to a negative number and increase the axis limits to improve the legibility of the label of the top most bar.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
+  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">revenue</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">-0.2</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">ylim</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="m">100</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Alternatively, you may want to have the labels inside the bars.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
+  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">revenue</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Again, a bit close to the end of the bars. By increasing the <code>hjust</code> value the labels can be moved further to the left. In addition, black on blue is quite hard to read so let&rsquo;s change the text color to white. Notice that this happens outside of <code>aes()</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
+  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">revenue</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">1.2</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#34;white&#34;</span><span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Next, let&rsquo;s try <code>geom_label()</code> for once to see how it&rsquo;s different from <code>geom_text()</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
+  <span class="nf">geom_label</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">revenue</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">1.2</span><span class="p">))</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>I am not a fan of this look and will stick to <code>geom_text()</code> for the final plot.</p>
+<p>The data in the plot represents annual revenues in billion US dollars. Let&rsquo;s change the labels accordingly and beautify the plot.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">biomedicalrevenue</span> <span class="o">%&gt;%</span>
+  <span class="nf">filter</span><span class="p">(</span><span class="n">year</span> <span class="o">==</span> <span class="m">2018</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;$%1.2f B.&#34;</span><span class="p">,</span> <span class="n">revenue</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="nf">bar_chart</span><span class="p">(</span><span class="n">company</span><span class="p">,</span> <span class="n">revenue</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">-0.1</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">scale_y_continuous</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;Revenue (Billion USD)&#34;</span><span class="p">,</span>
+    <span class="n">limits</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">100</span><span class="p">),</span>
+    <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">()</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="nf">labs</span><span class="p">(</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Top 10 Biomedical Companies by 2018 Revenue&#34;</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="nf">theme</span><span class="p">(</span>
+    <span class="n">axis.text.x</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
+    <span class="n">panel.grid.major.x</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">()</span>
+  <span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<p>Notice that I removed the axis labels and grid lines. In my opinion you should <strong><em>never</em></strong> have an axis and labels in the same plot.</p>
+<p>To finish off this post, let&rsquo;s have a quick look at how to label a vertical bar chart. It&rsquo;s basically the same process but instead of using <code>hjust</code> you will need to use <code>vjust</code> to adjust the label position.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">biomedicalrevenue</span> <span class="o">%&gt;%</span>
+  <span class="nf">filter</span><span class="p">(</span><span class="n">company</span> <span class="o">==</span> <span class="s">&#34;Novartis&#34;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;$%1.2f B.&#34;</span><span class="p">,</span> <span class="n">revenue</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="nf">column_chart</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">revenue</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">,</span> <span class="n">vjust</span> <span class="o">=</span> <span class="m">-1</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">theme</span><span class="p">(</span>
+    <span class="n">axis.text.y</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
+    <span class="n">panel.grid.major.y</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">()</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="nf">scale_x_continuous</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;Fiscal Year&#34;</span><span class="p">,</span>
+    <span class="n">breaks</span> <span class="o">=</span> <span class="m">2011</span><span class="o">:</span><span class="m">2018</span>
+  <span class="p">)</span> <span class="o">+</span>
+  <span class="nf">scale_y_continuous</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;Revenue (Billion USD)&#34;</span><span class="p">,</span>
+    <span class="n">limits</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">70</span><span class="p">),</span>
+    <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">()</span>
+  <span class="p">)</span>
+</code></pre></div><p><!-- raw HTML omitted --></p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>Thomas Neitmann</p>
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/datavisualization">datavisualization</a></span><span class="tag"><a href="/tags/ggplot2">ggplot2</a></span><span class="tag"><a href="/tags/ggcharts">ggcharts</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>587 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-06 02:00 &#43;0200</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="/posts/ggplot2-percentage-scale/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Transform a ggplot2 axis to a percentage scale</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "thomas-adventure" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="/">Thomas Neitmann</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://www.r-bloggers.com/" target="_blank" rel="noopener">R-bloggers</a> &#183; <a href="/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-161564352-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+
+</html>
