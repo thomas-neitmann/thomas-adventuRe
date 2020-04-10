@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 06 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Analyzing the ggcharts CRAN Downloads. Part 1: Getting Data</title>
+      <link>/posts/ggcharts-cran-downloads-part-1/</link>
+      <pubDate>Fri, 10 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/ggcharts-cran-downloads-part-1/</guid>
+      <description>Introduction It&amp;rsquo;s been a little over two weeks since my ggcharts package has been published on CRAN. As you can imagine I am curious to see how many people actually use the package. While there is no way to actually measure the usage, the number of package downloads seems like a good proxy to me.
+CRAN Logs Getting data on the number of package downloads is fairly easy thanks to the cranlogs package.</description>
+    </item>
     
     <item>
       <title>Adding labels to a ggplot2 bar chart</title>
@@ -109,17 +119,6 @@ data(&amp;#34;mtcars&amp;#34;)ggplot(mtcars, aes(hp, mpg, color = wt)) +geom_p
 You may start out with an implementation similar to this one.
 library(ggplot2)data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point()}That won&amp;rsquo;t work though.
 scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; not foundIf you call this function, R will look for a variable called hp rather than looking for a column with that name inside the data frame you passed as the first argument.</description>
-    </item>
-    
-    <item>
-      <title>Is a library the same thing as a package?</title>
-      <link>/posts/is-a-library-the-same-thing-as-a-package/</link>
-      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/is-a-library-the-same-thing-as-a-package/</guid>
-      <description>In R you use the library() function to load a package. Thus, surely a package and a library must be the same thing, right?
-Actually no, they are not!
-So, what&amp;rsquo;s the difference between the two? A library is nothing but a folder on your computer in which installed packages are saved. Just like a real library that contains books. It is merely a container. A library on its own is useless.</description>
     </item>
     
   </channel>

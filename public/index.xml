@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Analyzing the ggcharts CRAN Downloads. Part 1: Getting Data</title>
+      <link>/posts/ggcharts-cran-downloads-part-1/</link>
+      <pubDate>Fri, 10 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/ggcharts-cran-downloads-part-1/</guid>
+      <description>Introduction It&amp;rsquo;s been a little over two weeks since my ggcharts package has been published on CRAN. As you can imagine I am curious to see how many people actually use the package. While there is no way to actually measure the usage, the number of package downloads seems like a good proxy to me.
+CRAN Logs Getting data on the number of package downloads is fairly easy thanks to the cranlogs package.</description>
+    </item>
+    
+    <item>
       <title>Adding labels to a ggplot2 bar chart</title>
       <link>/posts/labels-ggplot2-bar-chart/</link>
       <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
@@ -107,18 +117,6 @@ gapminder_wide &amp;lt;- gapminder %&amp;gt;%mutate(pop = pop / 1e6) %&amp;gt;%
 Before you start to create any plots call the theme_set() function with your favorite theme as first argument, e.g.
 library(ggplot2)theme_set(theme_minimal())That will ensure all plots you subsequently create will use this theme unless you add a different one.
 data(&amp;#34;mtcars&amp;#34;)ggplot(mtcars, aes(hp, mpg, color = wt)) +geom_point()Very handy for lazy people like me.</description>
-    </item>
-    
-    <item>
-      <title>Turning your ggplot2 code into a function</title>
-      <link>/posts/turning-your-ggplot2-code-into-a-function/</link>
-      <pubDate>Tue, 18 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/turning-your-ggplot2-code-into-a-function/</guid>
-      <description>If you find yourself repeatedly writing the same ggplot2 code to create a data visualization in R, then it&amp;rsquo;s time to put your code into a function.
-You may start out with an implementation similar to this one.
-library(ggplot2)data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point()}That won&amp;rsquo;t work though.
-scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; not foundIf you call this function, R will look for a variable called hp rather than looking for a column with that name inside the data frame you passed as the first argument.</description>
     </item>
     
   </channel>
