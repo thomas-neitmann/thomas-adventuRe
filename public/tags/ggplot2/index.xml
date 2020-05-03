@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 06 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Analyzing the ggcharts CRAN Downloads. Part 2: Data Visualization</title>
+      <link>/posts/ggcharts-cran-downloads-part-2/</link>
+      <pubDate>Sun, 03 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/ggcharts-cran-downloads-part-2/</guid>
+      <description>Introduction In part 1 of this post I described how I got data about the ggcharts CRAN downloads. In this follow-up post I will walk you through how to turn this data into an informative visualization using ggplot2 and patchwork.
+library(ggplot2)library(patchwork)Daily Downloads The first plot will show the daily downloads over time. I will use a line chart for that purpose. Remember from part 1 that the daily_downloads dataset contains the aggregated number of downloads per day.</description>
+    </item>
     
     <item>
       <title>Adding labels to a ggplot2 bar chart</title>
