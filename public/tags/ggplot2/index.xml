@@ -66,7 +66,7 @@ scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; 
       <description>I am super exciting to share with you my recent &amp;ldquo;discovery&amp;rdquo; of the ggtext R package.
 I had looked for a solution to color individual words in the title of a ggplot2 data visualization and ggtext provided me with a great solution for doing just that (and more).
 So, how does it work? Have a look at this example:
-library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&amp;gt;%filter(continent %in% c(&amp;#34;Africa&amp;#34;, &amp;#34;Europe&amp;#34;)) %&amp;gt;%group_by(continent, year) %&amp;gt;%summarise(population = sum(pop / 1e9)) %&amp;gt;%ggplot(aes(year, population, color = continent)) +geom_line(size = 1.</description>
+library(ggplot2)library(dplyr)data(biomedicalrevenue, package = &amp;#34;ggcharts&amp;#34;)plot &amp;lt;- biomedicalrevenue %&amp;gt;%filter(company %in% c(&amp;#34;Roche&amp;#34;, &amp;#34;Novartis&amp;#34;)) %&amp;gt;%ggplot(aes(year, revenue, color = company)) +geom_line(size = 1.</description>
     </item>
     
     <item>
