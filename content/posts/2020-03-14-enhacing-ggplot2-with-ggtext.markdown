@@ -34,12 +34,13 @@ gapminder %>%
   geom_line(size = 1.2) +
   ggtitle(
     paste0(
-      "<span style = 'color:#FF7F0E'>**Africa**</span>",
-      " outgrew <span style = 'color:#1F77B4'>**Europe**</span>",
+      "<span style = 'color:darkorange'>**Africa**</span>",
+      " outgrew <span style = 'color:#93C1DE'>**Europe**</span>",
       " *dramtically* in the 20th Century"
     )
   ) +
-  scale_color_manual(values = c("Europe" = "#1F77B4", "Africa" = "#FF7F0E")) +
+  scale_color_manual(values = c("Europe" = "#93C1DE", "Africa" = "darkorange")) +
+  ggcharts::theme_hermit(axis = "xy", ticks = "xy")  +
   theme(
     plot.title = ggtext::element_markdown(),
     legend.position = "none"

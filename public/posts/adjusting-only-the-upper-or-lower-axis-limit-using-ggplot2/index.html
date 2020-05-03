@@ -9,16 +9,16 @@
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="Adjusting only the upper or lower axis limit using ggplot2">
 <meta itemprop="description" content="If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&rsquo;t want to set inside either xlim() or ylim().
-library(ggplot2)library(patchwork)data(mtcars)p1 &lt;- ggplot(mtcars, aes(factor(cyl), hp)) &#43;geom_boxplot()p2 &lt;- p1 &#43; ylim(0, NA)p3 &lt;- p1 &#43; ylim(NA, 400)p1 | p2 | p3">
+library(ggplot2)library(patchwork)theme_set(ggcharts::theme_hermit(grid = &#34;XY&#34;))data(mtcars)p1 &lt;- ggplot(mtcars, aes(factor(cyl), hp)) &#43;geom_boxplot(color = &#34;#D6DDE1&#34;, fill = &#34;steelblue&#34;)p2 &lt;- p1 &#43; ylim(0, NA)p3 &lt;- p1 &#43; ylim(NA, 500)p1 | p2 | p3">
 <meta itemprop="datePublished" content="2020-01-04T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-01-04T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="57">
+<meta itemprop="wordCount" content="65">
 
 
 
 <meta itemprop="keywords" content="ggplot2,datavisualization," /><meta property="og:title" content="Adjusting only the upper or lower axis limit using ggplot2" />
 <meta property="og:description" content="If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&rsquo;t want to set inside either xlim() or ylim().
-library(ggplot2)library(patchwork)data(mtcars)p1 &lt;- ggplot(mtcars, aes(factor(cyl), hp)) &#43;geom_boxplot()p2 &lt;- p1 &#43; ylim(0, NA)p3 &lt;- p1 &#43; ylim(NA, 400)p1 | p2 | p3" />
+library(ggplot2)library(patchwork)theme_set(ggcharts::theme_hermit(grid = &#34;XY&#34;))data(mtcars)p1 &lt;- ggplot(mtcars, aes(factor(cyl), hp)) &#43;geom_boxplot(color = &#34;#D6DDE1&#34;, fill = &#34;steelblue&#34;)p2 &lt;- p1 &#43; ylim(0, NA)p3 &lt;- p1 &#43; ylim(NA, 500)p1 | p2 | p3" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/posts/adjusting-only-the-upper-or-lower-axis-limit-using-ggplot2/" />
 <meta property="article:published_time" content="2020-01-04T00:00:00+00:00" />
@@ -26,7 +26,7 @@ library(ggplot2)library(patchwork)data(mtcars)p1 &lt;- ggplot(mtcars, aes(fac
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Adjusting only the upper or lower axis limit using ggplot2"/>
 <meta name="twitter:description" content="If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&rsquo;t want to set inside either xlim() or ylim().
-library(ggplot2)library(patchwork)data(mtcars)p1 &lt;- ggplot(mtcars, aes(factor(cyl), hp)) &#43;geom_boxplot()p2 &lt;- p1 &#43; ylim(0, NA)p3 &lt;- p1 &#43; ylim(NA, 400)p1 | p2 | p3"/>
+library(ggplot2)library(patchwork)theme_set(ggcharts::theme_hermit(grid = &#34;XY&#34;))data(mtcars)p1 &lt;- ggplot(mtcars, aes(factor(cyl), hp)) &#43;geom_boxplot(color = &#34;#D6DDE1&#34;, fill = &#34;steelblue&#34;)p2 &lt;- p1 &#43; ylim(0, NA)p3 &lt;- p1 &#43; ylim(NA, 500)p1 | p2 | p3"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -81,12 +81,13 @@ library(ggplot2)library(patchwork)data(mtcars)p1 &lt;- ggplot(mtcars, aes(fac
 				<p>If you want to change only the lower or upper bound of your plot axis pass <code>NA</code> for the value you don&rsquo;t want to set inside either <code>xlim()</code> or <code>ylim()</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">patchwork</span><span class="p">)</span>
+<span class="nf">theme_set</span><span class="p">(</span><span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;XY&#34;</span><span class="p">))</span>
 <span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
 
 <span class="n">p1</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="nf">factor</span><span class="p">(</span><span class="n">cyl</span><span class="p">),</span> <span class="n">hp</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_boxplot</span><span class="p">()</span>
+  <span class="nf">geom_boxplot</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#D6DDE1&#34;</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="s">&#34;steelblue&#34;</span><span class="p">)</span>
 <span class="n">p2</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="nf">ylim</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
-<span class="n">p3</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="nf">ylim</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="m">400</span><span class="p">)</span>
+<span class="n">p3</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="nf">ylim</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="m">500</span><span class="p">)</span>
 
 <span class="n">p1</span> <span class="o">|</span> <span class="n">p2</span> <span class="o">|</span> <span class="n">p3</span>
 </code></pre></div><p><!-- raw HTML omitted --></p>
@@ -98,7 +99,7 @@ library(ggplot2)library(patchwork)data(mtcars)p1 &lt;- ggplot(mtcars, aes(fac
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/ggplot2">ggplot2</a></span><span class="tag"><a href="/tags/datavisualization">datavisualization</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>57 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>65 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-01-04 01:00 &#43;0100</p>
 			</footer>
 		</article>

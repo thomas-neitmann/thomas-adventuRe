@@ -20,7 +20,7 @@
       <guid>/posts/turning-your-ggplot2-code-into-a-function/</guid>
       <description>If you find yourself repeatedly writing the same ggplot2 code to create a data visualization in R, then it&amp;rsquo;s time to put your code into a function.
 You may start out with an implementation similar to this one.
-library(ggplot2)data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point()}That won&amp;rsquo;t work though.
+library(ggplot2)theme_set(ggcharts::theme_hermit(grid = &amp;#34;XY&amp;#34;))data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point(color = &amp;#34;yellow&amp;#34;)}That won&amp;rsquo;t work though.
 scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; not foundIf you call this function, R will look for a variable called hp rather than looking for a column with that name inside the data frame you passed as the first argument.</description>
     </item>
     

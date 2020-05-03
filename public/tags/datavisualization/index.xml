@@ -52,7 +52,7 @@ gapminder_wide &amp;lt;- gapminder %&amp;gt;%mutate(pop = pop / 1e6) %&amp;gt;%
       <guid>/posts/turning-your-ggplot2-code-into-a-function/</guid>
       <description>If you find yourself repeatedly writing the same ggplot2 code to create a data visualization in R, then it&amp;rsquo;s time to put your code into a function.
 You may start out with an implementation similar to this one.
-library(ggplot2)data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point()}That won&amp;rsquo;t work though.
+library(ggplot2)theme_set(ggcharts::theme_hermit(grid = &amp;#34;XY&amp;#34;))data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point(color = &amp;#34;yellow&amp;#34;)}That won&amp;rsquo;t work though.
 scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; not foundIf you call this function, R will look for a variable called hp rather than looking for a column with that name inside the data frame you passed as the first argument.</description>
     </item>
     
@@ -84,7 +84,7 @@ library(ggplot2)library(dplyr)library(gapminder)data(gapminder)gapminder %&a
       
       <guid>/posts/adjusting-only-the-upper-or-lower-axis-limit-using-ggplot2/</guid>
       <description>If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&amp;rsquo;t want to set inside either xlim() or ylim().
-library(ggplot2)library(patchwork)data(mtcars)p1 &amp;lt;- ggplot(mtcars, aes(factor(cyl), hp)) +geom_boxplot()p2 &amp;lt;- p1 + ylim(0, NA)p3 &amp;lt;- p1 + ylim(NA, 400)p1 | p2 | p3</description>
+library(ggplot2)library(patchwork)theme_set(ggcharts::theme_hermit(grid = &amp;#34;XY&amp;#34;))data(mtcars)p1 &amp;lt;- ggplot(mtcars, aes(factor(cyl), hp)) +geom_boxplot(color = &amp;#34;#D6DDE1&amp;#34;, fill = &amp;#34;steelblue&amp;#34;)p2 &amp;lt;- p1 + ylim(0, NA)p3 &amp;lt;- p1 + ylim(NA, 500)p1 | p2 | p3</description>
     </item>
     
   </channel>

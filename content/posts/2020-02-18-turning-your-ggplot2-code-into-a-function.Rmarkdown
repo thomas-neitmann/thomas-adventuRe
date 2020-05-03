@@ -25,11 +25,12 @@ You may start out with an implementation similar to this one.
 
 ```{r}
 library(ggplot2)
+theme_set(ggcharts::theme_hermit(grid = "XY"))
 data("mtcars")
 
 scatter_plot <- function(data, x, y) {
   ggplot(data, aes(x, y)) +
-    geom_point()
+    geom_point(color = "yellow")
 }
 ```
 
@@ -56,7 +57,7 @@ The key to making this work is to tell `R`  somehow that it should look for the 
 ```{r}
 scatter_plot2 <- function(data, x, y) {
   ggplot(data, aes({{x}}, {{y}})) +
-    geom_point()
+    geom_point(color = "yellow")
 }
 scatter_plot2(mtcars, hp, mpg)
 ```
