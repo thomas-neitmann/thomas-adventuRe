@@ -911,7 +911,7 @@ library(ggplot2)library(dplyr)data(biomedicalrevenue, package = &amp;#34;ggcha
   <span class="nf">ggtitle</span><span class="p">(</span>
     <span class="nf">paste0</span><span class="p">(</span>
       <span class="s">&#34;&lt;span style = &#39;color:#93C1DE&#39;&gt;**Roche**&lt;/span&gt;&#34;</span><span class="p">,</span>
-      <span class="s">&#34; *overtook* &lt;span style = &#39;color:darkorange&#39;&gt;**Novarits**&lt;/span&gt;&#34;</span><span class="p">,</span>
+      <span class="s">&#34; *overtook* &lt;span style = &#39;color:darkorange&#39;&gt;**Novartis**&lt;/span&gt;&#34;</span><span class="p">,</span>
       <span class="s">&#34; in 2016&#34;</span>
     <span class="p">)</span>
   <span class="p">)</span> <span class="o">+</span>

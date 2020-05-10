@@ -32,7 +32,7 @@ plot <- biomedicalrevenue %>%
   ggtitle(
     paste0(
       "<span style = 'color:#93C1DE'>**Roche**</span>",
-      " *overtook* <span style = 'color:darkorange'>**Novarits**</span>",
+      " *overtook* <span style = 'color:darkorange'>**Novartis**</span>",
       " in 2016"
     )
   ) +
