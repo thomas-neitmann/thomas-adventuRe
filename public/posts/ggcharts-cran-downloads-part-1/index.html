@@ -84,13 +84,13 @@ CRAN Logs Getting data on the number of package downloads is fairly easy thanks 
 <p>Getting data on the number of package downloads is fairly easy thanks to the <code>cranlogs</code> package.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">cranlogs</span><span class="o">::</span><span class="nf">cran_downloads</span><span class="p">(</span><span class="s">&#34;ggcharts&#34;</span><span class="p">,</span> <span class="s">&#34;last-week&#34;</span><span class="p">)</span>
 </code></pre></div><pre><code>##         date count  package
-## 1 2020-04-08    35 ggcharts
-## 2 2020-04-09    27 ggcharts
-## 3 2020-04-10    18 ggcharts
-## 4 2020-04-11    16 ggcharts
-## 5 2020-04-12    19 ggcharts
-## 6 2020-04-13    18 ggcharts
-## 7 2020-04-14    17 ggcharts
+## 1 2020-05-03    35 ggcharts
+## 2 2020-05-04    43 ggcharts
+## 3 2020-05-05    43 ggcharts
+## 4 2020-05-06    31 ggcharts
+## 5 2020-05-07    43 ggcharts
+## 6 2020-05-08    34 ggcharts
+## 7 2020-05-09    33 ggcharts
 </code></pre><p>Notably, only downloads from RStudio&rsquo;s CRAN mirror are counted here. But I would guess that more than 90% of userRs also use RStudio so it shouldn&rsquo;t be too far off the actual number of downloads.</p>
 <p>I was curious why for some days the number of downloads suddenly dropped to <code>0</code>. As it turned out this is a <a href="https://github.com/r-hub/cranlogs/issues/54">known bug</a>. Thus, I decided to &ldquo;manually&rdquo; download the CRAN logs from <a href="http://cran-logs.rstudio.com/">cran-logs.rstudio.com</a>.</p>
 <h2 id="downloading-a-single-log-file">Downloading a Single Log File<a href="#downloading-a-single-log-file" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
@@ -199,7 +199,7 @@ CRAN Logs Getting data on the number of package downloads is fairly easy thanks 
 ## 6:      CN  12
 </code></pre><p>The countries are coded according to the <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> standard. Transforming these two letter codes into more readable country names can be done with the <code>countrycode</code> package.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads_by_country[</span><span class="p">,</span> <span class="n">country</span> <span class="o">:=</span> <span class="n">countrycode</span><span class="o">::</span><span class="nf">countrycode</span><span class="p">(</span><span class="n">country</span><span class="p">,</span> <span class="s">&#34;iso2c&#34;</span><span class="p">,</span> <span class="s">&#34;country.name&#34;</span><span class="p">)</span><span class="n">]</span>
-</code></pre></div><p>That&rsquo;s it for part 1. In part 2 I will continue with creating a data visualization of the downloads. In the meantime feel free to ask me any question you may have about this post in the comments below.</p>
+</code></pre></div><p>That&rsquo;s it for part 1. In <a href="/posts/ggcharts-cran-downloads-part-2/">part 2</a> I will continue with creating a data visualization of the downloads. In the meantime feel free to ask me any question you may have about this post in the comments below.</p>
 
 			</div>
 			<hr class="post-end">

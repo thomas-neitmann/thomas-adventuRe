@@ -27,13 +27,13 @@ cranlogs::cran_downloads("ggcharts", "last-week")
 
 ```
 ##         date count  package
-## 1 2020-04-08    35 ggcharts
-## 2 2020-04-09    27 ggcharts
-## 3 2020-04-10    18 ggcharts
-## 4 2020-04-11    16 ggcharts
-## 5 2020-04-12    19 ggcharts
-## 6 2020-04-13    18 ggcharts
-## 7 2020-04-14    17 ggcharts
+## 1 2020-05-03    35 ggcharts
+## 2 2020-05-04    43 ggcharts
+## 3 2020-05-05    43 ggcharts
+## 4 2020-05-06    31 ggcharts
+## 5 2020-05-07    43 ggcharts
+## 6 2020-05-08    34 ggcharts
+## 7 2020-05-09    33 ggcharts
 ```
 
 Notably, only downloads from RStudio's CRAN mirror are counted here. But I would guess that more than 90% of userRs also use RStudio so it shouldn't be too far off the actual number of downloads.
@@ -224,4 +224,4 @@ The countries are coded according to the [ISO 3166-1 alpha-2](https://en.wikiped
 downloads_by_country[, country := countrycode::countrycode(country, "iso2c", "country.name")]
 ```
 
-That's it for part 1. In part 2 I will continue with creating a data visualization of the downloads. In the meantime feel free to ask me any question you may have about this post in the comments below.
+That's it for part 1. In [part 2](/posts/ggcharts-cran-downloads-part-2/) I will continue with creating a data visualization of the downloads. In the meantime feel free to ask me any question you may have about this post in the comments below.

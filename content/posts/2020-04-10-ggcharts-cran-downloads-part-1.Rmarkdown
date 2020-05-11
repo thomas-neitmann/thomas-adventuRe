@@ -167,4 +167,4 @@ The countries are coded according to the [ISO 3166-1 alpha-2](https://en.wikiped
 downloads_by_country[, country := countrycode::countrycode(country, "iso2c", "country.name")]
 ```
 
-That's it for part 1. In part 2 I will continue with creating a data visualization of the downloads. In the meantime feel free to ask me any question you may have about this post in the comments below.
+That's it for part 1. In [part 2](/posts/ggcharts-cran-downloads-part-2/) I will continue with creating a data visualization of the downloads. In the meantime feel free to ask me any question you may have about this post in the comments below.
