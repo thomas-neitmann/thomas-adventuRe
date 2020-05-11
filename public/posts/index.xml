@@ -18,11 +18,11 @@
 			<description>Introduction In part 1 of this post I described how I got data about the ggcharts CRAN downloads. In this follow-up post I will walk you through how to turn this data into an informative visualization using ggplot2 and patchwork.
 library(ggplot2)library(patchwork)Daily Downloads The first plot will show the daily downloads over time. I will use a line chart for that purpose. Remember from part 1 that the daily_downloads dataset contains the aggregated number of downloads per day.</description>
 			<content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
-<p>In <a href="https://thomas-neitmann.netlify.app/posts/ggcharts-cran-downloads-part-1/">part 1</a> of this post I described how I got data about the ggcharts CRAN downloads. In this follow-up post I will walk you through how to turn this data into an informative visualization using <code>ggplot2</code> and <code>patchwork</code>.</p>
+<p>In <a href="/posts/ggcharts-cran-downloads-part-1/">part 1</a> of this post I described how I got data about the ggcharts CRAN downloads. In this follow-up post I will walk you through how to turn this data into an informative visualization using <code>ggplot2</code> and <code>patchwork</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">patchwork</span><span class="p">)</span>
 </code></pre></div><h2 id="daily-downloads">Daily Downloads</h2>
-<p>The first plot will show the daily downloads over time. I will use a line chart for that purpose. Remember from <a href="https://thomas-neitmann.netlify.app/posts/ggcharts-cran-downloads-part-1/">part 1</a> that the <code>daily_downloads</code> dataset contains the aggregated number of downloads per day.</p>
+<p>The first plot will show the daily downloads over time. I will use a line chart for that purpose. Remember from <a href="/posts/ggcharts-cran-downloads-part-1/">part 1</a> that the <code>daily_downloads</code> dataset contains the aggregated number of downloads per day.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span> <span class="o">+</span>
   <span class="nf">geom_line</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">1.25</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;X&#34;</span><span class="p">)</span> <span class="o">+</span> 
@@ -62,7 +62,8 @@ library(ggplot2)library(patchwork)Daily Downloads The first plot will show the
   <span class="p">)</span>
 </code></pre></div><p>When putting the plots side-by-side they now create an harmonious picture.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
+</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre><p><!-- raw HTML omitted --></p>
 <h2 id="distribution-of-daily-downloads">Distribution of Daily Downloads</h2>
 <p>The third plot will show the distribution of daily downloads.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">ggplot</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">N</span><span class="p">))</span> <span class="o">+</span>
@@ -86,7 +87,7 @@ library(ggplot2)library(patchwork)Daily Downloads The first plot will show the
 <span class="n">p3</span>
 </code></pre></div><p><!-- raw HTML omitted --></p>
 <h2 id="downloads-by-country">Downloads by Country</h2>
-<p>The last plot will display the number of downloads by country. Remember from <a href="https://thomas-neitmann.netlify.app/posts/ggcharts-cran-downloads-part-1/">part 1</a> that this data is stored in the <code>downloads_by_countries</code> dataset.</p>
+<p>The last plot will display the number of downloads by country. Remember from <a href="/posts/ggcharts-cran-downloads-part-1/">part 1</a> that this data is stored in the <code>downloads_by_countries</code> dataset.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p4</span> <span class="o">&lt;-</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">bar_chart</span><span class="p">(</span><span class="n">downloads_by_country</span><span class="p">,</span> <span class="n">country</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">bar_color</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;y&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;Y&#34;</span><span class="p">)</span> <span class="o">+</span>
   <span class="nf">labs</span><span class="p">(</span>
@@ -111,7 +112,7 @@ library(ggplot2)library(patchwork)Daily Downloads The first plot will show the
   <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">.15</span><span class="p">)))</span>
 <span class="n">p4</span>
 </code></pre></div><p><!-- raw HTML omitted --></p>
-<p>If you have no idea what I just did check out <a href="https://thomas-neitmann.netlify.app/posts/labels-ggplot2-bar-chart/">this post</a> to learn more about labeling bar charts.</p>
+<p>If you have no idea what I just did check out <a href="/posts/labels-ggplot2-bar-chart/">this post</a> to learn more about labeling bar charts.</p>
 <p>When labeling the bars I prefer not to display the x axis and remove the grid lines as well.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p4</span> <span class="o">&lt;-</span> <span class="n">p4</span> <span class="o">+</span>
   <span class="nf">theme</span><span class="p">(</span>
@@ -123,11 +124,13 @@ library(ggplot2)library(patchwork)Daily Downloads The first plot will show the
 <h2 id="putting-it-all-together">Putting it All Together</h2>
 <p>Combining these four plots into one data visualization is a piece of cake thanks to the <code>patchwork</code> package. Simply add them together.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span> <span class="o">+</span> <span class="n">p4</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
+</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre><p><!-- raw HTML omitted --></p>
 <p>That looks quite nice. What makes this plot a bit messy though is the axis labels. I think they are redundant. It&rsquo;s very clear from the titles what is displayed so having axis labels only adds visual clutter.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span> <span class="o">+</span> <span class="n">p4</span> <span class="o">&amp;</span> <span class="nf">labs</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
 <span class="n">plot</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
+</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre><p><!-- raw HTML omitted --></p>
 <p>Notice that I used <code>&amp;</code> instead of the usual <code>+</code>. By using <code>&amp;</code> the labels of all plots in the patchwork are adjusted. When using <code>+</code> only the labels of the last plot, i.e. <code>p4</code>, would be changed.</p>
 <p>Finally, let&rsquo;s add an overall title, subtitle and a caption.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">+</span>
@@ -136,7 +139,8 @@ library(ggplot2)library(patchwork)Daily Downloads The first plot will show the
     <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;A Summary of Downloads from the RStudio CRAN Mirror&#34;</span><span class="p">,</span>
     <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Source: RStudio CRAN Logs&#34;</span>
   <span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
+</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre><p><!-- raw HTML omitted --></p>
 <p>Ok, that looks awful! Fortunately, this can be fixed by passing the same theme used for the individual plots to the patchwork.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">+</span>
   <span class="nf">plot_annotation</span><span class="p">(</span>
@@ -145,7 +149,8 @@ library(ggplot2)library(patchwork)Daily Downloads The first plot will show the
     <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Source: RStudio CRAN Logs&#34;</span><span class="p">,</span>
     <span class="n">theme</span> <span class="o">=</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">()</span>
   <span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
+</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre><p><!-- raw HTML omitted --></p>
 <p>Much better, but I would prefer the overall title to be (much) larger than the titles of the individual plots. That can be achieved by tweaking the theme passed to <code>plot_annotation()</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot_theme</span> <span class="o">&lt;-</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">()</span> <span class="o">+</span>
   <span class="nf">theme</span><span class="p">(</span>
@@ -161,10 +166,12 @@ library(ggplot2)library(patchwork)Daily Downloads The first plot will show the
     <span class="n">theme</span> <span class="o">=</span> <span class="n">plot_theme</span>
   <span class="p">)</span>
 <span class="n">plot</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
+</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre><p><!-- raw HTML omitted --></p>
 <p>I am almost satisfied with this data visualization. One thing that bothers me is the position of the individual titles, though. They are aligned with the edge of the plot which I think is great for a stand alone plot but not for a patchwork. Let&rsquo;s align them with the panel, i.e. the part of the plot that actually shows the data.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">&amp;</span> <span class="nf">theme</span><span class="p">(</span><span class="n">plot.title.position</span> <span class="o">=</span> <span class="s">&#34;panel&#34;</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
+</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre><p><!-- raw HTML omitted --></p>
 <p>It took quite some effort to get here but I really like the end results.</p>
 <h2 id="just-the-code">Just the Code</h2>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>

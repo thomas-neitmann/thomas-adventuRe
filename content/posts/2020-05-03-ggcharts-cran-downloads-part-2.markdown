@@ -18,7 +18,7 @@ images: ~
 
 ## Introduction
 
-In [part 1](https://thomas-neitmann.netlify.app/posts/ggcharts-cran-downloads-part-1/) of this post I described how I got data about the ggcharts CRAN downloads. In this follow-up post I will walk you through how to turn this data into an informative visualization using `ggplot2` and `patchwork`.
+In [part 1](/posts/ggcharts-cran-downloads-part-1/) of this post I described how I got data about the ggcharts CRAN downloads. In this follow-up post I will walk you through how to turn this data into an informative visualization using `ggplot2` and `patchwork`.
 
 
 ```r
@@ -29,7 +29,7 @@ library(patchwork)
 
 ## Daily Downloads
 
-The first plot will show the daily downloads over time. I will use a line chart for that purpose. Remember from [part 1](https://thomas-neitmann.netlify.app/posts/ggcharts-cran-downloads-part-1/) that the `daily_downloads` dataset contains the aggregated number of downloads per day.
+The first plot will show the daily downloads over time. I will use a line chart for that purpose. Remember from [part 1](/posts/ggcharts-cran-downloads-part-1/) that the `daily_downloads` dataset contains the aggregated number of downloads per day.
 
 
 ```r
@@ -112,6 +112,10 @@ When putting the plots side-by-side they now create an harmonious picture.
 p1 + p2
 ```
 
+```
+## Warning: Removed 5 row(s) containing missing values (geom_path).
+```
+
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-9-1.png" width="100%" />
 
 
@@ -162,7 +166,7 @@ p3
 
 ## Downloads by Country
 
-The last plot will display the number of downloads by country. Remember from [part 1](https://thomas-neitmann.netlify.app/posts/ggcharts-cran-downloads-part-1/) that this data is stored in the `downloads_by_countries` dataset.
+The last plot will display the number of downloads by country. Remember from [part 1](/posts/ggcharts-cran-downloads-part-1/) that this data is stored in the `downloads_by_countries` dataset.
 
 
 ```r
@@ -205,7 +209,7 @@ p4
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-15-1.png" width="100%" />
 
-If you have no idea what I just did check out [this post](https://thomas-neitmann.netlify.app/posts/labels-ggplot2-bar-chart/) to learn more about labeling bar charts.
+If you have no idea what I just did check out [this post](/posts/labels-ggplot2-bar-chart/) to learn more about labeling bar charts.
 
 When labeling the bars I prefer not to display the x axis and remove the grid lines as well.
 
@@ -231,6 +235,10 @@ Combining these four plots into one data visualization is a piece of cake thanks
 p1 + p2 + p3 + p4
 ```
 
+```
+## Warning: Removed 5 row(s) containing missing values (geom_path).
+```
+
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-17-1.png" width="100%" />
 
 That looks quite nice. What makes this plot a bit messy though is the axis labels. I think they are redundant. It's very clear from the titles what is displayed so having axis labels only adds visual clutter.
@@ -239,6 +247,10 @@ That looks quite nice. What makes this plot a bit messy though is the axis label
 ```r
 plot <- p1 + p2 + p3 + p4 & labs(x = NULL, y = NULL)
 plot
+```
+
+```
+## Warning: Removed 5 row(s) containing missing values (geom_path).
 ```
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-18-1.png" width="100%" />
@@ -257,6 +269,10 @@ plot +
   )
 ```
 
+```
+## Warning: Removed 5 row(s) containing missing values (geom_path).
+```
+
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-19-1.png" width="100%" />
 
 Ok, that looks awful! Fortunately, this can be fixed by passing the same theme used for the individual plots to the patchwork.
@@ -270,6 +286,10 @@ plot +
     caption = "Source: RStudio CRAN Logs",
     theme = ggcharts::theme_hermit()
   )
+```
+
+```
+## Warning: Removed 5 row(s) containing missing values (geom_path).
 ```
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-20-1.png" width="100%" />
@@ -294,6 +314,10 @@ plot <- plot +
 plot
 ```
 
+```
+## Warning: Removed 5 row(s) containing missing values (geom_path).
+```
+
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-21-1.png" width="100%" />
 
 I am almost satisfied with this data visualization. One thing that bothers me is the position of the individual titles, though. They are aligned with the edge of the plot which I think is great for a stand alone plot but not for a patchwork. Let's align them with the panel, i.e. the part of the plot that actually shows the data.
@@ -301,6 +325,10 @@ I am almost satisfied with this data visualization. One thing that bothers me is
 
 ```r
 plot & theme(plot.title.position = "panel")
+```
+
+```
+## Warning: Removed 5 row(s) containing missing values (geom_path).
 ```
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-22-1.png" width="100%" />

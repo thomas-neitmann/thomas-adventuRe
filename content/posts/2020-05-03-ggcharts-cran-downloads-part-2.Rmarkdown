@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-In [part 1](https://thomas-neitmann.netlify.app/posts/ggcharts-cran-downloads-part-1/) of this post I described how I got data about the ggcharts CRAN downloads. In this follow-up post I will walk you through how to turn this data into an informative visualization using `ggplot2` and `patchwork`.
+In [part 1](/posts/ggcharts-cran-downloads-part-1/) of this post I described how I got data about the ggcharts CRAN downloads. In this follow-up post I will walk you through how to turn this data into an informative visualization using `ggplot2` and `patchwork`.
 
 ```{r}
 library(ggplot2)
@@ -38,7 +38,7 @@ library(patchwork)
 
 ## Daily Downloads
 
-The first plot will show the daily downloads over time. I will use a line chart for that purpose. Remember from [part 1](https://thomas-neitmann.netlify.app/posts/ggcharts-cran-downloads-part-1/) that the `daily_downloads` dataset contains the aggregated number of downloads per day.
+The first plot will show the daily downloads over time. I will use a line chart for that purpose. Remember from [part 1](/posts/ggcharts-cran-downloads-part-1/) that the `daily_downloads` dataset contains the aggregated number of downloads per day.
 
 ```{r}
 p1 <- ggplot(daily_downloads, aes(date, N)) +
@@ -139,7 +139,7 @@ p3
 
 ## Downloads by Country
 
-The last plot will display the number of downloads by country. Remember from [part 1](https://thomas-neitmann.netlify.app/posts/ggcharts-cran-downloads-part-1/) that this data is stored in the `downloads_by_countries` dataset.
+The last plot will display the number of downloads by country. Remember from [part 1](/posts/ggcharts-cran-downloads-part-1/) that this data is stored in the `downloads_by_countries` dataset.
 
 ```{r}
 p4 <- ggcharts::bar_chart(downloads_by_country, country, N, bar_color = "#94C1E0", top_n = 10) +
@@ -173,7 +173,7 @@ p4 <- p4 +
 p4
 ```
 
-If you have no idea what I just did check out [this post](https://thomas-neitmann.netlify.app/posts/labels-ggplot2-bar-chart/) to learn more about labeling bar charts.
+If you have no idea what I just did check out [this post](/posts/labels-ggplot2-bar-chart/) to learn more about labeling bar charts.
 
 When labeling the bars I prefer not to display the x axis and remove the grid lines as well.
 
