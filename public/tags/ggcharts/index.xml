@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 03 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/ggcharts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>{ggcharts 0.2.0} is on CRAN</title>
+      <link>/posts/ggcharts-0-2-0-is-on-cran/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/ggcharts-0-2-0-is-on-cran/</guid>
+      <description>Introduction A week ago the second release of my {ggcharts} package was published on CRAN. {ggcharts} aims to get you to your desired plot faster. It provides a high-level interface for creating common plots using {ggplot2} and does the heavy lifting for you. The resulting plots are ggplot objects so you can further tweak them using any {ggplot2} function.
+Major new feature: themes The major focus of version 0.2.0 was adding themes to the package.</description>
+    </item>
     
     <item>
       <title>Analyzing the ggcharts CRAN Downloads. Part 2: Data Visualization</title>

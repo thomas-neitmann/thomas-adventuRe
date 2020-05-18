@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 03 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>datavisualization</title>
       <link>/tags/datavisualization/</link>
-      <pubDate>Sun, 03 May 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/tags/datavisualization/</guid>
       <description></description>
@@ -24,9 +24,18 @@
     <item>
       <title>ggcharts</title>
       <link>/tags/ggcharts/</link>
-      <pubDate>Sun, 03 May 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/tags/ggcharts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>package</title>
+      <link>/tags/package/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/package/</guid>
       <description></description>
     </item>
     
@@ -90,15 +99,6 @@
       <pubDate>Sun, 16 Feb 2020 00:00:00 +0000</pubDate>
       
       <guid>/tags/git/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>excel</title>
-      <link>/tags/excel/</link>
-      <pubDate>Thu, 06 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/excel/</guid>
       <description></description>
     </item>
     

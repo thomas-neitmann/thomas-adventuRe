@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>{ggcharts 0.2.0} is on CRAN</title>
+      <link>/posts/ggcharts-0-2-0-is-on-cran/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/ggcharts-0-2-0-is-on-cran/</guid>
+      <description>Introduction A week ago the second release of my {ggcharts} package was published on CRAN. {ggcharts} aims to get you to your desired plot faster. It provides a high-level interface for creating common plots using {ggplot2} and does the heavy lifting for you. The resulting plots are ggplot objects so you can further tweak them using any {ggplot2} function.
+Major new feature: themes The major focus of version 0.2.0 was adding themes to the package.</description>
+    </item>
+    
+    <item>
       <title>Analyzing the ggcharts CRAN Downloads. Part 2: Data Visualization</title>
       <link>/posts/ggcharts-cran-downloads-part-2/</link>
       <pubDate>Sun, 03 May 2020 00:00:00 +0000</pubDate>
@@ -104,17 +114,6 @@ data %&amp;gt;%group_by(var1, var2) %&amp;gt;%summarise(n = n())consider usin
 count(data, var1, var2)instead. It produces the same output, you need to type less and the code is more expressive.
 By default, the column containing the count will be named n. Want to change that? Simply set the name parameter of count(), e.g.
 data(iris)dplyr::count(iris, Species, name = &amp;#34;n_flowers&amp;#34;)## # A tibble: 3 x 2## Species n_flowers## &amp;lt;fct&amp;gt; &amp;lt;int&amp;gt;## 1 setosa 50## 2 versicolor 50## 3 virginica 50</description>
-    </item>
-    
-    <item>
-      <title>Creating dumbbell charts with the ggcharts R package</title>
-      <link>/posts/dumbbel-charts-with-ggcharts/</link>
-      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/dumbbel-charts-with-ggcharts/</guid>
-      <description>library(ggcharts)library(dplyr)library(gapminder)data(gapminder)I am very pleased to announce that my ggcharts package has a new feature: dumbbell_chart().
-To showcase this new function I will use the gapminder dataset which contains countries&amp;rsquo; population counts from 1952 to 2017. This dataset is in long format. In order for dumbbell_chart() to work properly the data has to be in wide format, though. So, first a bit of data wrangling.
-gapminder_wide &amp;lt;- gapminder %&amp;gt;%mutate(pop = pop / 1e6) %&amp;gt;%filter(year %in% c(1952, 2007)) %&amp;gt;%tidyr::pivot_wider(id_cols = country,names_from = year,values_from = pop,names_prefix = &amp;#34;pop_&amp;#34;)gapminder_wide## # A tibble: 142 x 3## country pop_1952 pop_2007## &amp;lt;fct&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;## 1 Afghanistan 8.</description>
     </item>
     
   </channel>
