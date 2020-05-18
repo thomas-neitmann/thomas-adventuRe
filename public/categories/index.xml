@@ -16,7 +16,6 @@
 			
 			<guid>/categories/r/</guid>
 			<description></description>
-			<content type="html"><![CDATA[]]></content>
 		</item>
 		
 		<item>
@@ -26,7 +25,6 @@
 			
 			<guid>/categories/article/</guid>
 			<description></description>
-			<content type="html"><![CDATA[]]></content>
 		</item>
 		
 		<item>
@@ -36,7 +34,6 @@
 			
 			<guid>/categories/bytesized/</guid>
 			<description></description>
-			<content type="html"><![CDATA[]]></content>
 		</item>
 		
 	</channel>

@@ -253,244 +253,6 @@
   &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;plot&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;theme&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;plot.title.position&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;panel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-			<content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
-<p>In <a href="/posts/ggcharts-cran-downloads-part-1/">part 1</a> of this post I described how I got data about the ggcharts CRAN downloads. In this follow-up post I will walk you through how to turn this data into an informative visualization using <code>ggplot2</code> and <code>patchwork</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">patchwork</span><span class="p">)</span>
-</code></pre></div><h2 id="daily-downloads">Daily Downloads</h2>
-<p>The first plot will show the daily downloads over time. I will use a line chart for that purpose. Remember from <a href="/posts/ggcharts-cran-downloads-part-1/">part 1</a> that the <code>daily_downloads</code> dataset contains the aggregated number of downloads per day.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_line</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">1.25</span><span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;X&#34;</span><span class="p">)</span> <span class="o">+</span> 
-  <span class="nf">ggtitle</span><span class="p">(</span><span class="s">&#34;Daily Downloads&#34;</span><span class="p">)</span>
-<span class="n">p1</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Currently the y axis does not include 0. In addition, the line exceeds the highest values on the y axis which I don&rsquo;t particularly like. Let&rsquo;s change this.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">+</span> <span class="nf">ylim</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">80</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>That&rsquo;s not quite what I wanted to achieve. Notice the gap between the x axis line and the grid line for 0. <code>ggplot2</code> automatically adds 5% space around the axis limits. This can be changes like this.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span>
-    <span class="n">limits</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">80</span><span class="p">),</span>
-    <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">.05</span><span class="p">))</span>
-  <span class="p">)</span>
-<span class="n">p1</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Neat!</p>
-<h2 id="cumulative-downloads">Cumulative Downloads</h2>
-<p>Next, let&rsquo;s continue with plotting the cumulative downloads over time. This will be a line chart as well.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p2</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">cumulative_N</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_line</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">1.25</span><span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;X&#34;</span><span class="p">)</span> <span class="o">+</span> 
-  <span class="nf">ggtitle</span><span class="p">(</span><span class="s">&#34;Cumulative Downloads&#34;</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">.05</span><span class="p">)))</span>
-<span class="n">p2</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Doesn&rsquo;t look too bad. However, notice that when I put <code>p1</code> and <code>p2</code> next to each other the grid lines and axis annotations don&rsquo;t align with each other which is very unsightly.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Let&rsquo;s change this by tweaking the y scale.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p2</span> <span class="o">&lt;-</span> <span class="n">p2</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span>
-    <span class="n">limits</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1200</span><span class="p">),</span>
-    <span class="n">breaks</span> <span class="o">=</span> <span class="nf">seq</span><span class="p">(</span><span class="n">from</span> <span class="o">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="m">1200</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="m">300</span><span class="p">),</span>
-    <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">.05</span><span class="p">))</span>
-  <span class="p">)</span>
-</code></pre></div><p>When putting the plots side-by-side they now create an harmonious picture.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span>
-</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
-</code></pre><p><!-- raw HTML omitted --></p>
-<h2 id="distribution-of-daily-downloads">Distribution of Daily Downloads</h2>
-<p>The third plot will show the distribution of daily downloads.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">ggplot</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">N</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_histogram</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#494F5C&#34;</span><span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;X&#34;</span><span class="p">)</span>
-</code></pre></div><pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-</code></pre><p><!-- raw HTML omitted --></p>
-<p>When using <code>geom_histogram()</code> by default 30 bins are drawn. You almost never want to leave it like this but rather tweak it by setting the <code>bins</code> argument. After some trial-and-error I chose to go with 10 bins.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p3</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">N</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_histogram</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#494F5C&#34;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;X&#34;</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">ggtitle</span><span class="p">(</span><span class="s">&#34;Distribution of Daily Downloads&#34;</span><span class="p">)</span>
-<span class="n">p3</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Daily downloads are counts and counts are integers. Thus, to me having decimal numbers in the y axis looks odd. Let&rsquo;s fix this and in addition get rid of the gap between the bars and the x axis.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p3</span> <span class="o">&lt;-</span> <span class="n">p3</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span>
-    <span class="n">breaks</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">8</span><span class="p">),</span>
-    <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">.05</span><span class="p">))</span>
-  <span class="p">)</span>
-<span class="n">p3</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<h2 id="downloads-by-country">Downloads by Country</h2>
-<p>The last plot will display the number of downloads by country. Remember from <a href="/posts/ggcharts-cran-downloads-part-1/">part 1</a> that this data is stored in the <code>downloads_by_countries</code> dataset.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p4</span> <span class="o">&lt;-</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">bar_chart</span><span class="p">(</span><span class="n">downloads_by_country</span><span class="p">,</span> <span class="n">country</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">bar_color</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;y&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;Y&#34;</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">labs</span><span class="p">(</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Downloads by Country&#34;</span><span class="p">,</span>
-    <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;Top 10&#34;</span>
-  <span class="p">)</span>
-<span class="n">p4</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Apparently, there are quite a lot of downloads for which the country is unknown. Let&rsquo;s turn the <code>NA</code> values into <code>&quot;Unknown&quot;</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads_by_country</span><span class="nf">[is.na</span><span class="p">(</span><span class="n">country</span><span class="p">),</span> <span class="n">country</span> <span class="o">:=</span> <span class="s">&#34;Unknown&#34;</span><span class="n">]</span>
-<span class="n">p4</span> <span class="o">&lt;-</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">bar_chart</span><span class="p">(</span><span class="n">downloads_by_country</span><span class="p">,</span> <span class="n">country</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">bar_color</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;y&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;Y&#34;</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">labs</span><span class="p">(</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Downloads by Country&#34;</span><span class="p">,</span>
-    <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;Top 10&#34;</span>
-  <span class="p">)</span>
-<span class="n">p4</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Next, let&rsquo;s label the bars with the values they actually represent.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p4</span> <span class="o">&lt;-</span> <span class="n">p4</span> <span class="o">+</span>
-  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">N</span><span class="p">),</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">-.2</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#D6DDE1&#34;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">5</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">.15</span><span class="p">)))</span>
-<span class="n">p4</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>If you have no idea what I just did check out <a href="/posts/labels-ggplot2-bar-chart/">this post</a> to learn more about labeling bar charts.</p>
-<p>When labeling the bars I prefer not to display the x axis and remove the grid lines as well.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p4</span> <span class="o">&lt;-</span> <span class="n">p4</span> <span class="o">+</span>
-  <span class="nf">theme</span><span class="p">(</span>
-    <span class="n">axis.text.x</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
-    <span class="n">panel.grid.major.x</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">()</span>
-  <span class="p">)</span>
-<span class="n">p4</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<h2 id="putting-it-all-together">Putting it All Together</h2>
-<p>Combining these four plots into one data visualization is a piece of cake thanks to the <code>patchwork</code> package. Simply add them together.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span> <span class="o">+</span> <span class="n">p4</span>
-</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
-</code></pre><p><!-- raw HTML omitted --></p>
-<p>That looks quite nice. What makes this plot a bit messy though is the axis labels. I think they are redundant. It&rsquo;s very clear from the titles what is displayed so having axis labels only adds visual clutter.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span> <span class="o">+</span> <span class="n">p4</span> <span class="o">&amp;</span> <span class="nf">labs</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
-<span class="n">plot</span>
-</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
-</code></pre><p><!-- raw HTML omitted --></p>
-<p>Notice that I used <code>&amp;</code> instead of the usual <code>+</code>. By using <code>&amp;</code> the labels of all plots in the patchwork are adjusted. When using <code>+</code> only the labels of the last plot, i.e. <code>p4</code>, would be changed.</p>
-<p>Finally, let&rsquo;s add an overall title, subtitle and a caption.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">+</span>
-  <span class="nf">plot_annotation</span><span class="p">(</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;ggcharts is on the Rise&#34;</span><span class="p">,</span>
-    <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;A Summary of Downloads from the RStudio CRAN Mirror&#34;</span><span class="p">,</span>
-    <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Source: RStudio CRAN Logs&#34;</span>
-  <span class="p">)</span>
-</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
-</code></pre><p><!-- raw HTML omitted --></p>
-<p>Ok, that looks awful! Fortunately, this can be fixed by passing the same theme used for the individual plots to the patchwork.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">+</span>
-  <span class="nf">plot_annotation</span><span class="p">(</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;ggcharts is on the Rise&#34;</span><span class="p">,</span>
-    <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;A Summary of Downloads from the RStudio CRAN Mirror&#34;</span><span class="p">,</span>
-    <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Source: RStudio CRAN Logs&#34;</span><span class="p">,</span>
-    <span class="n">theme</span> <span class="o">=</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">()</span>
-  <span class="p">)</span>
-</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
-</code></pre><p><!-- raw HTML omitted --></p>
-<p>Much better, but I would prefer the overall title to be (much) larger than the titles of the individual plots. That can be achieved by tweaking the theme passed to <code>plot_annotation()</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot_theme</span> <span class="o">&lt;-</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">()</span> <span class="o">+</span>
-  <span class="nf">theme</span><span class="p">(</span>
-    <span class="n">plot.title</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">face</span> <span class="o">=</span> <span class="s">&#34;bold&#34;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">30</span><span class="p">),</span>
-    <span class="n">plot.subtitle</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">24</span><span class="p">),</span>
-    <span class="n">plot.caption</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">12</span><span class="p">)</span>
-  <span class="p">)</span>
-<span class="n">plot</span> <span class="o">&lt;-</span> <span class="n">plot</span> <span class="o">+</span>
-  <span class="nf">plot_annotation</span><span class="p">(</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;ggcharts is on the Rise&#34;</span><span class="p">,</span>
-    <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;A Summary of Downloads from the RStudio CRAN Mirror&#34;</span><span class="p">,</span>
-    <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Source: RStudio CRAN Logs&#34;</span><span class="p">,</span>
-    <span class="n">theme</span> <span class="o">=</span> <span class="n">plot_theme</span>
-  <span class="p">)</span>
-<span class="n">plot</span>
-</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
-</code></pre><p><!-- raw HTML omitted --></p>
-<p>I am almost satisfied with this data visualization. One thing that bothers me is the position of the individual titles, though. They are aligned with the edge of the plot which I think is great for a stand alone plot but not for a patchwork. Let&rsquo;s align them with the panel, i.e. the part of the plot that actually shows the data.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">&amp;</span> <span class="nf">theme</span><span class="p">(</span><span class="n">plot.title.position</span> <span class="o">=</span> <span class="s">&#34;panel&#34;</span><span class="p">)</span>
-</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
-</code></pre><p><!-- raw HTML omitted --></p>
-<p>It took quite some effort to get here but I really like the end results. How about you? Let me know in the comments.</p>
-<h2 id="just-the-code">Just the Code</h2>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">patchwork</span><span class="p">)</span>
-
-<span class="n">p1</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_line</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">1.25</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span>
-    <span class="n">limits</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">80</span><span class="p">),</span>
-    <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">.05</span><span class="p">))</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;X&#34;</span><span class="p">)</span> <span class="o">+</span> 
-    <span class="nf">labs</span><span class="p">(</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Daily Downloads&#34;</span>
-  <span class="p">)</span>
-
-<span class="n">p2</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">cumulative_N</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_line</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">1.25</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span>
-    <span class="n">limits</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1200</span><span class="p">),</span>
-    <span class="n">breaks</span> <span class="o">=</span> <span class="nf">seq</span><span class="p">(</span><span class="n">from</span> <span class="o">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="m">1200</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="m">300</span><span class="p">),</span>
-    <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">.05</span><span class="p">))</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;X&#34;</span><span class="p">)</span> <span class="o">+</span> 
-  <span class="nf">labs</span><span class="p">(</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Cumulative Downloads&#34;</span>
-  <span class="p">)</span>
-
-<span class="n">p3</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">N</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_histogram</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#494F5C&#34;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span>
-    <span class="n">breaks</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">8</span><span class="p">),</span>
-    <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">.05</span><span class="p">))</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;X&#34;</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">labs</span><span class="p">(</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Distribution of Daily Downloads&#34;</span>
-  <span class="p">)</span>
-
-<span class="n">p4</span> <span class="o">&lt;-</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">bar_chart</span><span class="p">(</span>
-  <span class="n">downloads_by_country</span><span class="p">,</span> 
-  <span class="n">country</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> 
-  <span class="n">bar_color</span> <span class="o">=</span> <span class="s">&#34;#94C1E0&#34;</span><span class="p">,</span> 
-  <span class="n">top_n</span> <span class="o">=</span> <span class="m">10</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="nf">geom_text</span><span class="p">(</span>
-    <span class="n">mapping</span> <span class="o">=</span> <span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">N</span><span class="p">),</span>
-    <span class="n">hjust</span> <span class="o">=</span> <span class="m">-.2</span><span class="p">,</span>
-    <span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#D6DDE1&#34;</span><span class="p">,</span>
-    <span class="n">size</span> <span class="o">=</span> <span class="m">5</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">.15</span><span class="p">)))</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="s">&#34;y&#34;</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">theme</span><span class="p">(</span><span class="n">axis.text.x</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">())</span> <span class="o">+</span>
-  <span class="nf">labs</span><span class="p">(</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Downloads by Country&#34;</span><span class="p">,</span>
-    <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;Top 10&#34;</span>
-  <span class="p">)</span>
-
-
-<span class="n">plot_theme</span> <span class="o">&lt;-</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">()</span> <span class="o">+</span>
-  <span class="nf">theme</span><span class="p">(</span>
-    <span class="n">plot.title</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">face</span> <span class="o">=</span> <span class="s">&#34;bold&#34;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">30</span><span class="p">),</span>
-    <span class="n">plot.subtitle</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">24</span><span class="p">),</span>
-    <span class="n">plot.caption</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">12</span><span class="p">)</span>
-  <span class="p">)</span>
-<span class="n">plot</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span> <span class="o">+</span> <span class="n">p4</span> <span class="o">+</span>
-  <span class="nf">plot_annotation</span><span class="p">(</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;ggcharts is on the Rise&#34;</span><span class="p">,</span>
-    <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;A Summary of Downloads from the RStudio CRAN Mirror&#34;</span><span class="p">,</span>
-    <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Source: RStudio CRAN Logs&#34;</span><span class="p">,</span>
-    <span class="n">theme</span> <span class="o">=</span> <span class="n">plot_theme</span>
-  <span class="p">)</span>
-<span class="n">plot</span> <span class="o">&amp;</span> <span class="nf">theme</span><span class="p">(</span><span class="n">plot.title.position</span> <span class="o">=</span> <span class="s">&#34;panel&#34;</span><span class="p">)</span>
-</code></pre></div>]]></content>
 		</item>
 		
 		<item>
@@ -622,129 +384,6 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;downloads_by_country[&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;country&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;countrycode&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;countrycode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;country&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;iso2c&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;country.name&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;That&amp;rsquo;s it for part 1. In &lt;a href=&#34;/posts/ggcharts-cran-downloads-part-2/&#34;&gt;part 2&lt;/a&gt; I will continue with creating a data visualization of the downloads. In the meantime feel free to ask me any question you may have about this post in the comments below.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
-<p>It&rsquo;s been a little over two weeks since my <a href="https://thomas-neitmann.github.io/ggcharts/index.html"><code>ggcharts</code></a> package has been published on CRAN. As you can imagine I am curious to see how many people actually use the package. While there is no way to actually measure the usage, the number of package downloads seems like a good proxy to me.</p>
-<h2 id="cran-logs">CRAN Logs</h2>
-<p>Getting data on the number of package downloads is fairly easy thanks to the <code>cranlogs</code> package.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">cranlogs</span><span class="o">::</span><span class="nf">cran_downloads</span><span class="p">(</span><span class="s">&#34;ggcharts&#34;</span><span class="p">,</span> <span class="s">&#34;last-week&#34;</span><span class="p">)</span>
-</code></pre></div><pre><code>##         date count  package
-## 1 2020-05-03    35 ggcharts
-## 2 2020-05-04    43 ggcharts
-## 3 2020-05-05    43 ggcharts
-## 4 2020-05-06    31 ggcharts
-## 5 2020-05-07    43 ggcharts
-## 6 2020-05-08    34 ggcharts
-## 7 2020-05-09    33 ggcharts
-</code></pre><p>Notably, only downloads from RStudio&rsquo;s CRAN mirror are counted here. But I would guess that more than 90% of userRs also use RStudio so it shouldn&rsquo;t be too far off the actual number of downloads.</p>
-<p>I was curious why for some days the number of downloads suddenly dropped to <code>0</code>. As it turned out this is a <a href="https://github.com/r-hub/cranlogs/issues/54">known bug</a>. Thus, I decided to &ldquo;manually&rdquo; download the CRAN logs from <a href="http://cran-logs.rstudio.com/">cran-logs.rstudio.com</a>.</p>
-<h2 id="downloading-a-single-log-file">Downloading a Single Log File</h2>
-<p>If you visit this CRAN logs website you&rsquo;ll see that it contains one file per day. The data is stored in <code>.csv</code> files compressed with <code>gzip</code>. Let&rsquo;s have a look at a single file.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">url</span> <span class="o">&lt;-</span> <span class="s">&#34;http://cran-logs.rstudio.com/2020/2020-04-01.csv.gz&#34;</span>
-<span class="n">file</span> <span class="o">&lt;-</span> <span class="s">&#34;2020-04-01.csv.gz&#34;</span>
-<span class="nf">download.file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
-<span class="n">downloads</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">downloads</span><span class="p">)</span>
-</code></pre></div><pre><code>##         date     time     size r_version r_arch    r_os    package  version
-## 1 2020-04-01 18:40:53   813724      &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;    rgenoud  5.8-3.0
-## 2 2020-04-01 18:40:58   258505      &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt; rstudioapi     0.11
-## 3 2020-04-01 18:40:51    13426      &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;        AUC    0.3.0
-## 4 2020-04-01 18:40:54   745075     3.6.3 x86_64 mingw32      Hmisc    4.4-0
-## 5 2020-04-01 18:40:58  1154641      &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;    ggrepel    0.8.2
-## 6 2020-04-01 18:40:56 18271283      &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         BH 1.72.0-3
-##   country ip_id
-## 1      NL     1
-## 2      HK     2
-## 3      US     3
-## 4      GB     4
-## 5      CO     5
-## 6      US     6
-</code></pre><p>If you run this code yourself you will note that the file is quite large (~60 MB) and downloading plus reading the file is slow. But compared to the <code>cran_downloads()</code> output it does contain more information so I think its worth the effort. Personally, I am especially interested in the <code>country</code> column.</p>
-<h2 id="downloading-multiple-log-files">Downloading Multiple Log Files</h2>
-<p>Downloading a single file is nice but I was interested to see data on all downloads since the package was published on CRAN on March 26th. Downloading multiple files is not too difficult because all files follow the same naming structure, namely the date in ISO 8601 format, e.g. <code>2020-02-13.csv.gz</code>. Thus, below I am creating a vector of dates to subsequently loop over.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">start_date</span> <span class="o">&lt;-</span> <span class="nf">as.Date</span><span class="p">(</span><span class="s">&#34;2020-03-26&#34;</span><span class="p">)</span>
-<span class="n">end_date</span> <span class="o">&lt;-</span> <span class="nf">as.Date</span><span class="p">(</span><span class="s">&#34;2020-4-08&#34;</span><span class="p">)</span>
-<span class="n">dates</span> <span class="o">&lt;-</span> <span class="nf">as.Date</span><span class="p">(</span><span class="n">start_date</span><span class="o">:</span><span class="n">end_date</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s">&#34;1970-01-01&#34;</span><span class="p">)</span>
-</code></pre></div><p>Inside <code>lapply()</code> I build the proper URL of the file, download it and read it into <code>R</code>. Next, I delete the file and finally filter only the records of <code>ggcharts</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">base_url</span> <span class="o">&lt;-</span> <span class="s">&#34;http://cran-logs.rstudio.com/2020/&#34;</span>
-<span class="n">downloads</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">dates</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">file</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">date</span><span class="p">),</span> <span class="s">&#34;.csv.gz&#34;</span><span class="p">)</span>
-  <span class="n">url</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
-  
-  <span class="nf">download.file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
-  <span class="n">downloads</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-  <span class="nf">file.remove</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-  
-  <span class="n">downloads[downloads</span><span class="o">$</span><span class="n">package</span> <span class="o">==</span> <span class="s">&#34;ggcharts&#34;</span><span class="p">,</span> <span class="n">]</span>
-<span class="p">})</span>
-</code></pre></div><p>If you want to run this code yourself, you&rsquo;d better step away from your desk and grep yourself a coffee. It will feel like an eternity until all files are downloaded and read into <code>R</code>.</p>
-<p>So, you may ask, is there a way to speed this up? Sure enough, there is!</p>
-<p>For one, instead of downloading and reading the files sequentially you can do this in parallel thanks to <code>R</code>'s build-in <code>parallel</code> package. In addition, using <code>data.table</code> and its <code>fread()</code> function will dramatically reduce the time it takes to read a single file.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">cl</span> <span class="o">&lt;-</span> <span class="n">parallel</span><span class="o">::</span><span class="nf">makeCluster</span><span class="p">(</span><span class="n">parallel</span><span class="o">::</span><span class="nf">detectCores</span><span class="p">())</span>
-<span class="n">downloads</span> <span class="o">&lt;-</span> <span class="n">parallel</span><span class="o">::</span><span class="nf">parLapply</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="n">dates</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">base_url</span> <span class="o">&lt;-</span> <span class="s">&#34;http://cran-logs.rstudio.com/2020/&#34;</span>
-  <span class="n">file</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">date</span><span class="p">),</span> <span class="s">&#34;.csv.gz&#34;</span><span class="p">)</span>
-  <span class="n">url</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
-  
-  <span class="nf">download.file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
-  <span class="n">downloads</span> <span class="o">&lt;-</span> <span class="n">data.table</span><span class="o">::</span><span class="nf">fread</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-  <span class="nf">file.remove</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-  
-  <span class="n">downloads[package</span> <span class="o">==</span> <span class="s">&#34;ggcharts&#34;</span><span class="n">]</span>
-<span class="p">})</span>
-<span class="n">parallel</span><span class="o">::</span><span class="nf">stopCluster</span><span class="p">(</span><span class="n">cl</span><span class="p">)</span>
-</code></pre></div><p>This code will only run on Windows. If you are using <code>R</code> on macOS or Linux this will do the trick instead.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads</span> <span class="o">&lt;-</span> <span class="n">parallel</span><span class="o">::</span><span class="nf">mclapply</span><span class="p">(</span><span class="n">dates</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">base_url</span> <span class="o">&lt;-</span> <span class="s">&#34;http://cran-logs.rstudio.com/2020/&#34;</span>
-  <span class="n">file</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">date</span><span class="p">),</span> <span class="s">&#34;.csv.gz&#34;</span><span class="p">)</span>
-  <span class="n">url</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
-  
-  <span class="nf">download.file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
-  <span class="n">downloads</span> <span class="o">&lt;-</span> <span class="n">data.table</span><span class="o">::</span><span class="nf">fread</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-  <span class="nf">file.remove</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-  
-  <span class="n">downloads[package</span> <span class="o">==</span> <span class="s">&#34;ggcharts&#34;</span><span class="n">]</span>
-<span class="p">})</span>
-</code></pre></div><p>Note that I moved the <code>base_url</code> assignment inside of the lambda function. Not doing so will result in an error because the function is executed in its own environment which does not have access to <code>base_url</code> in the global environment.</p>
-<p>Running this code will still take some time but is <strong><em>much</em></strong> faster than the solution with <code>lapply()</code> and <code>read.csv()</code>.</p>
-<p>Just like <code>lapply()</code>, <code>parallel::parLapply()</code> and <code>parallel::mclapply()</code> return a list. Combining the individual datasets inside the list is easy.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads</span> <span class="o">&lt;-</span> <span class="n">data.table</span><span class="o">::</span><span class="nf">rbindlist</span><span class="p">(</span><span class="n">downloads</span><span class="p">)</span>
-</code></pre></div><h2 id="aggregating-the-data">Aggregating the Data</h2>
-<p>At this point <code>downloads</code> contains one row per download of <code>ggcharts</code>. Getting the daily downloads can be achieved like this.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">daily_downloads</span> <span class="o">&lt;-</span> <span class="n">downloads[</span><span class="p">,</span> <span class="n">.N</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="n">date]</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">)</span>
-</code></pre></div><pre><code>##          date  N
-## 1: 2020-03-26 11
-## 2: 2020-03-27 29
-## 3: 2020-03-28 30
-## 4: 2020-03-29 39
-## 5: 2020-03-30 35
-## 6: 2020-03-31 31
-</code></pre><p>This is <code>data.table</code> syntax. The equivalent <code>dplyr</code> code looks like this.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads</span> <span class="o">%&gt;%</span>
-  <span class="nf">group_by</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="nf">summarise</span><span class="p">(</span><span class="n">N</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span>
-</code></pre></div><p>The <code>date</code> column is still a <code>character</code> at this point. Let&rsquo;s change that and in addition calculate the cumulative downloads.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">daily_downloads[</span><span class="p">,</span> <span class="n">date</span> <span class="o">:=</span> <span class="nf">as.Date</span><span class="p">(</span><span class="n">date</span><span class="p">)</span><span class="n">]</span>
-<span class="n">daily_downloads[</span><span class="p">,</span> <span class="n">cumulative_N</span> <span class="o">:=</span> <span class="nf">cumsum</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="n">]</span>
-</code></pre></div><p>If you are not used to working with <code>data.table</code> then you may wonder what this strange looking syntax is about. With <code>dplyr</code> you&rsquo;d do something like this instead.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">daily_downloads</span> <span class="o">&lt;-</span> <span class="n">daily_downloads</span> <span class="o">%&gt;%</span>
-  <span class="nf">mutate</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="nf">as.Date</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">cumulative_N</span> <span class="o">=</span> <span class="nf">cumsum</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
-</code></pre></div><p>Notice that when using <code>dplyr</code> you have to re-assign the result to <code>daily_downloads</code> because you are copying the original dataset and only after that modify it. This is <code>R</code>'s standard behavior and is called copy-on-modify.</p>
-<p>Using <code>data.table</code>'s special <code>:=</code> operator you can avoid the copying and instead directly add a new column to the existing dataset <em>in place</em>. This can save you a lot of time and memory when working with large datasets. Arguably, this is overkill here but since I was using <code>data.table</code> already I wanted to stick with it rather than switching to <code>dplyr</code>.</p>
-<p>Next, let&rsquo;s calculate the total downloads by country.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads_by_country</span> <span class="o">&lt;-</span> <span class="n">downloads[</span><span class="p">,</span> <span class="n">.N</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="n">country]</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">downloads_by_country</span><span class="p">)</span>
-</code></pre></div><pre><code>##    country   N
-## 1:      ES   5
-## 2:      CZ   1
-## 3:      US 204
-## 4:      CA   7
-## 5:      VE   3
-## 6:      CN  12
-</code></pre><p>The countries are coded according to the <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> standard. Transforming these two letter codes into more readable country names can be done with the <code>countrycode</code> package.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads_by_country[</span><span class="p">,</span> <span class="n">country</span> <span class="o">:=</span> <span class="n">countrycode</span><span class="o">::</span><span class="nf">countrycode</span><span class="p">(</span><span class="n">country</span><span class="p">,</span> <span class="s">&#34;iso2c&#34;</span><span class="p">,</span> <span class="s">&#34;country.name&#34;</span><span class="p">)</span><span class="n">]</span>
-</code></pre></div><p>That&rsquo;s it for part 1. In <a href="/posts/ggcharts-cran-downloads-part-2/">part 2</a> I will continue with creating a data visualization of the downloads. In the meantime feel free to ask me any question you may have about this post in the comments below.</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -850,103 +489,6 @@
   &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>I often see bar charts where the bars are directly labeled with the value they represent. In this post I will walk you through how you can create such labeled bar charts using <code>ggplot2</code>.</p>
-<p>The data I will use comes from the <a href="https://insights.stackoverflow.com/survey/2019#most-loved-dreaded-and-wanted">2019 Stackoverflow Developer Survey</a>. To make creating the plot easier I will use the <code>bar_chart()</code> function from my <a href="https://thomas-neitmann.github.io/ggcharts/index.html"><code>ggcharts</code></a> package which outputs a <code>ggplot</code> that can be customized further using any <code>ggplot2</code> function.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">ggcharts</span><span class="p">)</span>
-
-<span class="n">dreaded_lang</span> <span class="o">&lt;-</span> <span class="n">tibble</span><span class="o">::</span><span class="nf">tribble</span><span class="p">(</span>
-  <span class="o">~</span><span class="n">language</span><span class="p">,</span> <span class="o">~</span><span class="n">pct</span><span class="p">,</span>
-  <span class="s">&#34;VBA&#34;</span><span class="p">,</span> <span class="m">75.2</span><span class="p">,</span>
-  <span class="s">&#34;Objective-C&#34;</span><span class="p">,</span> <span class="m">68.7</span><span class="p">,</span>
-  <span class="s">&#34;Assembly&#34;</span><span class="p">,</span> <span class="m">64.4</span><span class="p">,</span>
-  <span class="s">&#34;C&#34;</span><span class="p">,</span> <span class="m">57.5</span><span class="p">,</span>
-  <span class="s">&#34;PHP&#34;</span><span class="p">,</span> <span class="m">54.2</span><span class="p">,</span>
-  <span class="s">&#34;Erlang&#34;</span><span class="p">,</span> <span class="m">52.6</span><span class="p">,</span>
-  <span class="s">&#34;Ruby&#34;</span><span class="p">,</span> <span class="m">49.7</span><span class="p">,</span>
-  <span class="s">&#34;R&#34;</span><span class="p">,</span> <span class="m">48.3</span><span class="p">,</span>
-  <span class="s">&#34;C++&#34;</span><span class="p">,</span> <span class="m">48.0</span><span class="p">,</span>
-  <span class="s">&#34;Java&#34;</span><span class="p">,</span> <span class="m">46.6</span>
-<span class="p">)</span>
-
-<span class="n">chart</span> <span class="o">&lt;-</span> <span class="n">dreaded_lang</span> <span class="o">%&gt;%</span>
-  <span class="nf">bar_chart</span><span class="p">(</span><span class="n">language</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="nf">print</span><span class="p">()</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>To add an annotation to the bars you&rsquo;ll have to use either <code>geom_text()</code> or <code>geom_label()</code>. I will start off with the former. Both require the <code>label</code> aesthetic which tells <code>ggplot2</code> which text to actually display. In addition, both functions require the <code>x</code> and <code>y</code> aesthetics but these are already set when using <code>bar_chart()</code> so I won&rsquo;t bother setting them explicitly after this first example.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
-  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">language</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pct</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">pct</span><span class="p">))</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>By default the labels are center-aligned directly at the <code>y</code> value. You will never want to leave it like that because it&rsquo;s quite hard to read. To left-align the labels set the <code>hjust</code> parameter to <code>0</code> or <code>&quot;left&quot;</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
-  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">pct</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="s">&#34;left&#34;</span><span class="p">))</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>That&rsquo;s still not ideal I would say. Let&rsquo;s move the labels a bit further away from the bars by setting <code>hjust</code> to a negative number and increase the axis limits to improve the legibility of the label of the top most bar.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
-  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">pct</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">-0.2</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">ylim</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="m">100</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Alternatively, you may want to have the labels inside the bars.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
-  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">pct</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Again, a bit close to the end of the bars. By increasing the <code>hjust</code> value the labels can be moved further to the left. In addition, black on blue is quite hard to read so let&rsquo;s change the text color to white. Notice that this happens outside of <code>aes()</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
-  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">pct</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">1.2</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#34;white&#34;</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Next, let&rsquo;s try <code>geom_label()</code> for once to see how it&rsquo;s different from <code>geom_text()</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
-  <span class="nf">geom_label</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">pct</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">1.2</span><span class="p">))</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>I am not a fan of this look and will stick to <code>geom_text()</code> for the final plot.</p>
-<p>As the data in the plot represents percentages it&rsquo;s best practice to have the labels include the percentage sign. In addition, let&rsquo;s highlight our favorite language <code>R</code> and add title, footnotes etc.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">dreaded_lang</span> <span class="o">%&gt;%</span>
-  <span class="nf">mutate</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;%1.1f%%&#34;</span><span class="p">,</span> <span class="n">pct</span><span class="p">))</span> <span class="o">%&gt;%</span>
-  <span class="nf">bar_chart</span><span class="p">(</span><span class="n">language</span><span class="p">,</span> <span class="n">pct</span><span class="p">,</span> <span class="n">highlight</span> <span class="o">=</span> <span class="s">&#34;R&#34;</span><span class="p">,</span> <span class="n">bar_color</span> <span class="o">=</span> <span class="s">&#34;black&#34;</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">-0.1</span><span class="p">),</span> <span class="n">size</span> <span class="o">=</span> <span class="m">5</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span>
-    <span class="n">limits</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">100</span><span class="p">),</span>
-    <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">()</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="nf">labs</span><span class="p">(</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="s">&#34;Developers Who are Developing with the Language but&lt;br&gt;Have not Expressed Interest in Continuing to Do so&#34;</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Top 10 Most Dreaded Programming Languages&#34;</span><span class="p">,</span>
-    <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;*R Placed 8th*&#34;</span><span class="p">,</span>
-    <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Source: Stackoverflow Developer Survey 2019&#34;</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="n">mdthemes</span><span class="o">::</span><span class="nf">md_theme_classic</span><span class="p">(</span><span class="n">base_size</span> <span class="o">=</span> <span class="m">14</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">theme</span><span class="p">(</span>
-    <span class="n">axis.text.x</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
-    <span class="n">axis.line.x</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
-    <span class="n">axis.ticks.x</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">()</span>
-  <span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Notice how easy it was to highlight a single bar thanks to <a href="https://thomas-neitmann.github.io/ggcharts/index.html"><code>ggcharts</code></a>. In addition, I used my <a href="https://github.com/thomas-neitmann/mdthemes"><code>mdthemes</code></a> package which provides themes that interpret text as markdown. That way is was super easy to get the subtitle in <em>italics</em>. Furthermore, I removed the axis labels and grid lines. In my opinion you should <strong><em>never</em></strong> have an axis and labels in the same plot.</p>
-<p>To finish off this post, let&rsquo;s have a quick look at how to label a vertical bar chart. It&rsquo;s basically the same process but instead of using <code>hjust</code> you will need to use <code>vjust</code> to adjust the label position.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">data</span><span class="p">(</span><span class="s">&#34;biomedicalrevenue&#34;</span><span class="p">)</span>
-
-<span class="n">biomedicalrevenue</span> <span class="o">%&gt;%</span>
-  <span class="nf">filter</span><span class="p">(</span><span class="n">company</span> <span class="o">==</span> <span class="s">&#34;Novartis&#34;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="nf">mutate</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;$%1.2f B.&#34;</span><span class="p">,</span> <span class="n">revenue</span><span class="p">))</span> <span class="o">%&gt;%</span>
-  <span class="nf">column_chart</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">revenue</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">,</span> <span class="n">vjust</span> <span class="o">=</span> <span class="m">-1</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">theme</span><span class="p">(</span>
-    <span class="n">axis.text.y</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
-    <span class="n">panel.grid.major.y</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">()</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_x_continuous</span><span class="p">(</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;Fiscal Year&#34;</span><span class="p">,</span>
-    <span class="n">breaks</span> <span class="o">=</span> <span class="m">2011</span><span class="o">:</span><span class="m">2018</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;Revenue (Billion USD)&#34;</span><span class="p">,</span>
-    <span class="n">limits</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">70</span><span class="p">),</span>
-    <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">()</span>
-  <span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1025,76 +567,6 @@
 &lt;span class=&#34;n&#34;&gt;remotes&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;install_github&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;thomas-neitmann/scalesextra&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Please test &lt;code&gt;scale_y_pct()&lt;/code&gt; (and its sister &lt;code&gt;scale_x_pct()&lt;/code&gt;) and let me know what you think in the comments. Should you find a bug (which is likely given the early stage of development), please open an issue on &lt;a href=&#34;https://github.com/thomas-neitmann/scalesextra/issues&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>When plotting a variable whose unit of measure is percent it&rsquo;s best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages.</p>
-<p>To illustrate this let&rsquo;s create an example dataset.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
-<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-
-<span class="n">cyl</span> <span class="o">&lt;-</span> <span class="n">mtcars</span> <span class="o">%&gt;%</span>
-  <span class="nf">count</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="nf">mutate</span><span class="p">(</span><span class="n">pct</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="m">100</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="nf">print</span><span class="p">()</span>
-</code></pre></div><pre><code>## # A tibble: 3 x 3
-##     cyl     n   pct
-##   &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;
-## 1     4    11  34.4
-## 2     6     7  21.9
-## 3     8    14  43.8
-</code></pre><p>To create a bar chart displaying these data I will use my <a href="https://thomas-neitmann.github.io/ggcharts/index.html"><code>ggcharts</code></a> package which provides a high-level interface to produce plots using <code>ggplot2</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggcharts</span><span class="p">)</span>
-<span class="p">(</span><span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">))</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Next, let&rsquo;s try to change the axis labels to include a percentage sign using the <code>percent()</code> function from the <code>scales</code> package.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">+</span> <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="n">percent</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Something is not right here! 4000%!? That seems a bit excessive. The problem here is that by default <code>scales::percent()</code> multiplies its input value by 100. This can be controlled by the <code>scale</code> parameter.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">scales</span><span class="o">::</span><span class="nf">percent</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
-</code></pre></div><pre><code>## [1] &quot;100%&quot;
-</code></pre><p>However, <code>scale_y_continuous()</code> expects a function as input for its <code>labels</code> parameter not the actual labels itself. Thus, using <code>percent()</code> is not an option anymore. Fortunately, the <code>scales</code> package offers a function called <code>percent_format()</code> that returns the <code>percent()</code> function with changed defaults.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">pct1</span> <span class="o">&lt;-</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
-<span class="nf">pct1</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
-</code></pre></div><pre><code>## [1] &quot;100%&quot;
-</code></pre><p>Passing this function to <code>labels</code> produces the desired result.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">+</span> <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Alternatively, one can simply calculate a fraction instead of the actual percentage.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">cyl2</span> <span class="o">&lt;-</span> <span class="n">mtcars</span> <span class="o">%&gt;%</span>
-  <span class="nf">count</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="nf">mutate</span><span class="p">(</span><span class="n">pct</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-
-<span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl2</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="n">percent</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>However, notice that suddenly all labels are printed with one decimal place. I think that&rsquo;s undesireable given that the labels are all whole numbers.</p>
-<p>To change this the <code>percent_format()</code> function has a paramter called <code>accuracy</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl2</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">accuracy</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>To me all of this is confusing (to say the least). That&rsquo;s why I decided to come up with a better solution. After all, it should be possible to determine <code>scale</code> and <code>accuracy</code> directly from the data, right?</p>
-<p>My solution is the <code>scale_y_pct()</code> function which is part of my <a href="https://github.com/thomas-neitmann/scalesextra"><code>scalesextra</code></a> package.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">scalesextra</span><span class="p">)</span>
-<span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span> <span class="nf">scale_y_pct</span><span class="p">()</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl2</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span> <span class="nf">scale_y_pct</span><span class="p">()</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>As you can see, regardless of whether your data is a fraction of 1 or a true percentage the data is scaled correctly. Furthermore, in both cases no decimal is displayed as all labels are integers.</p>
-<p>You can pass any parameter of <code>scale_y_continuous()</code> to <code>scale_y_pct()</code>, e.g. <code>breaks</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span> <span class="nf">scale_y_pct</span><span class="p">(</span><span class="n">breaks</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">12.5</span><span class="p">,</span> <span class="m">30.75</span><span class="p">))</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Notice that the number of decimal places displayed is consistent for all labels and automatically determined from the value with the highest number of decimal places. Again, this does not happen automatically when using <code>percent_format()</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">bar_chart</span><span class="p">(</span><span class="n">cyl</span><span class="p">,</span> <span class="n">cyl</span><span class="p">,</span> <span class="n">pct</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">percent_format</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="m">1</span><span class="p">),</span>
-    <span class="n">breaks</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">12.5</span><span class="p">,</span> <span class="m">30.75</span><span class="p">)</span>
-  <span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p><code>scalesextra</code> is in very early development and thus only available from GitHub. You can install it by running these commands in you <code>R</code> console.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="s">&#34;remotes&#34;</span> <span class="o">%in%</span> <span class="nf">installed.packages</span><span class="p">())</span> <span class="p">{</span>
-  <span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;remotes&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="n">remotes</span><span class="o">::</span><span class="nf">install_github</span><span class="p">(</span><span class="s">&#34;thomas-neitmann/scalesextra&#34;</span><span class="p">)</span>
-</code></pre></div><p>Please test <code>scale_y_pct()</code> (and its sister <code>scale_x_pct()</code>) and let me know what you think in the comments. Should you find a bug (which is likely given the early stage of development), please open an issue on <a href="https://github.com/thomas-neitmann/scalesextra/issues">GitHub</a>.</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1129,32 +601,6 @@
 &lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;`r format(Sys.Date(), &amp;#34;%d. %B %Y&amp;#34;)`&lt;/span&gt;
 &lt;span class=&#34;o&#34;&gt;---&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-			<content type="html"><![CDATA[<p><code>Rmarkdown</code> is a great tool for creating data-driven reports that have to be updated on a regular basis. To communicate to stakeholders that the report is indeed up to date it&rsquo;s important to display the current date below the title.</p>
-<p>An obvious solution to display the current date is to update the date field in the YAML header manually before knitting. But this is both error prone and you are likely to forget about it. Instead you can dislay the current date in an automatic way using the method below.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="o">---</span>
-<span class="n">title</span><span class="o">:</span> <span class="s">&#34;Super Important Report&#34;</span>
-<span class="n">author</span><span class="o">:</span> <span class="s">&#34;Thomas Neitmann&#34;</span>
-<span class="n">date</span><span class="o">:</span> <span class="n">`r Sys.Date()`</span>
-<span class="o">---</span>
-</code></pre></div><p>When knitting the <code>Rmarkdown</code> document <code>Sys.Date()</code> will be evaluated and  display the current date.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">Sys.Date</span><span class="p">()</span>
-<span class="c1">## [1] &#34;2020-03-22&#34;</span>
-</code></pre></div><p>A caveat is the date format, though. <code>Sys.Date()</code> returns the current date in ISO 8601 format, i.e. <code>yyyy-mm-dd</code>. Your audience is likely not used to this format so you might want to use a date format that&rsquo;s common in your locale.</p>
-<p>How to achieve that? Using the <code>format()</code> function. Here are some examples.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">current_date</span> <span class="o">&lt;-</span> <span class="nf">Sys.Date</span><span class="p">()</span>
-<span class="nf">format</span><span class="p">(</span><span class="n">current_date</span><span class="p">,</span> <span class="s">&#34;%d.%m.%Y&#34;</span><span class="p">)</span>
-<span class="c1">## [1] &#34;22.03.2020&#34;</span>
-<span class="nf">format</span><span class="p">(</span><span class="n">current_date</span><span class="p">,</span> <span class="s">&#34;%d. %B %Y&#34;</span><span class="p">)</span>
-<span class="c1">## [1] &#34;22. März 2020&#34;</span>
-<span class="nf">format</span><span class="p">(</span><span class="n">current_date</span><span class="p">,</span> <span class="s">&#34;%m/%d/%Y&#34;</span><span class="p">)</span>
-<span class="c1">## [1] &#34;03/22/2020&#34;</span>
-</code></pre></div><p>After deciding which format to use make sure to wrap <code>Sys.Date()</code> inside of <code>format()</code> in your YAML header.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="o">---</span>
-<span class="n">title</span><span class="o">:</span> <span class="s">&#34;Super Important Report&#34;</span>
-<span class="n">author</span><span class="o">:</span> <span class="s">&#34;Thomas Neitmann&#34;</span>
-<span class="n">date</span><span class="o">:</span> <span class="n">`r format(Sys.Date(), &#34;%d. %B %Y&#34;)`</span>
-<span class="o">---</span>
-</code></pre></div>]]></content>
 		</item>
 		
 		<item>
@@ -1176,19 +622,6 @@
 &lt;p&gt;The only problem with this approach is that the next time you start a new &lt;code&gt;R&lt;/code&gt; session this change will be reverted. To make this change persistent add &lt;code&gt;Sys.setenv(lang = &amp;quot;en_US&amp;quot;)&lt;/code&gt; to your &lt;code&gt;.Rprofile&lt;/code&gt; file.&lt;/p&gt;
 &lt;p&gt;Never heard of &lt;code&gt;.Rprofile&lt;/code&gt;? It&amp;rsquo;s basically an &lt;code&gt;R&lt;/code&gt; script that - if present - gets executed whenever you start &lt;code&gt;R&lt;/code&gt;. That makes it perfect for the purpose of changing your locale.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>If you live in a non-English locale such as I do, you&rsquo;ll likely receive error messages in your locale language when things go wrong in <code>R</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="m">1</span> <span class="o">+</span> <span class="s">&#34;r&#34;</span>
-</code></pre></div><pre><code>## Error in 1 + &quot;r&quot;: nicht-numerisches Argument für binären Operator
-</code></pre><p>This is a problem because it highly limits the results when searching for error messages on Google. Have you ever read a stackoverflow post that was not in English? I haven&rsquo;t.</p>
-<p>So, how can you tell <code>R</code> to <em>not</em> translate error messages? By telling <code>R</code> that you are in an English locale.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">Sys.setenv</span><span class="p">(</span><span class="n">lang</span> <span class="o">=</span> <span class="s">&#34;en_US&#34;</span><span class="p">)</span>
-</code></pre></div><p>Your next error will be printed in English.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="m">1</span> <span class="o">+</span> <span class="s">&#34;r&#34;</span>
-</code></pre></div><pre><code>## Error in 1 + &quot;r&quot;: non-numeric argument to binary operator
-</code></pre><p>Great!</p>
-<p>The only problem with this approach is that the next time you start a new <code>R</code> session this change will be reverted. To make this change persistent add <code>Sys.setenv(lang = &quot;en_US&quot;)</code> to your <code>.Rprofile</code> file.</p>
-<p>Never heard of <code>.Rprofile</code>? It&rsquo;s basically an <code>R</code> script that - if present - gets executed whenever you start <code>R</code>. That makes it perfect for the purpose of changing your locale.</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1241,50 +674,6 @@ Let&amp;rsquo;s make sure that this actually worked as expected.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I hope this convinced you that &lt;code&gt;assign()&lt;/code&gt; is a useful function.&lt;/p&gt;
 &lt;p&gt;Did you ever use &lt;code&gt;assign()&lt;/code&gt;? I&amp;rsquo;d love to know in the comments.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>In <code>R</code>, <code>assign()</code> is one of those functions that common wisdom says you shouldn&rsquo;t be using. My aim in this blog post is to convince you that <code>assign()</code> can be very handy.</p>
-<p>The pharmaceutical industry, which I work in, is still <code>SAS</code> dominated so my primary data source at work are <code>.sas7bdat</code> files. Thus, whenever I use <code>R</code> the first thing I have to do is read in those files.</p>
-<p>Since the files have standard names, e.g. <code>ADAE</code> (Analysis Datasets Adverse Events), I want to read them into the global environment with exactly these names.</p>
-<p>For a single file that&rsquo;s easy. Just give the variable the same name as the file.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">adae</span> <span class="o">&lt;-</span> <span class="n">haven</span><span class="o">::</span><span class="nf">read_sas</span><span class="p">(</span><span class="s">&#34;data/adae.sas7bdat&#34;</span><span class="p">)</span>
-</code></pre></div><p>If you have a directory with multiple files in it this becomes tedious, though. Let&rsquo;s simulate this by creating a couple of <code>.csv</code> files with random numbers in it.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">dir</span> <span class="o">&lt;-</span> <span class="nf">tempdir</span><span class="p">()</span>
-<span class="n">datasets</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;adsl.csv&#34;</span><span class="p">,</span> <span class="s">&#34;adae.csv&#34;</span><span class="p">,</span> <span class="s">&#34;adrs.csv&#34;</span><span class="p">,</span> <span class="s">&#34;adtte.csv&#34;</span><span class="p">)</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">dataset</span> <span class="n">in</span> <span class="n">datasets</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">),</span> <span class="n">nrow</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span>
-  <span class="nf">write.csv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">dataset</span><span class="p">))</span>
-<span class="p">}</span>
-</code></pre></div><p>With the data ready the first step is to get a list of all files. Note that I purposefully set <code>full.names = FALSE</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="p">(</span><span class="n">files</span> <span class="o">&lt;-</span> <span class="nf">list.files</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&#34;csv$&#34;</span><span class="p">,</span> <span class="n">full.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">))</span>
-</code></pre></div><pre><code>## [1] &quot;adae.csv&quot;  &quot;adrs.csv&quot;  &quot;adsl.csv&quot;  &quot;adtte.csv&quot;
-</code></pre><p>Next, to read in all those files I loop over each file and</p>
-<ul>
-<li>remove the extension from <code>file</code></li>
-<li>construct the full path to the file with <code>file.path()</code></li>
-<li>read in the <code>.csv</code> file and <code>assign</code> it to its name.</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">for </span><span class="p">(</span><span class="n">file</span> <span class="n">in</span> <span class="n">files</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">file_name</span> <span class="o">&lt;-</span> <span class="n">tools</span><span class="o">::</span><span class="nf">file_path_sans_ext</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-  <span class="n">full_path_to_file</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
-  <span class="nf">assign</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">full_path_to_file</span><span class="p">),</span> <span class="n">envir</span> <span class="o">=</span> <span class="n">.GlobalEnv</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>Note that <code>envir = .GlobalEnv</code> is redundant here but I like to be explicit. 
-Let&rsquo;s make sure that this actually worked as expected.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">ls</span><span class="p">()</span>
-</code></pre></div><pre><code>##  [1] &quot;adae&quot;              &quot;adrs&quot;              &quot;adsl&quot;             
-##  [4] &quot;adtte&quot;             &quot;data&quot;              &quot;dataset&quot;          
-##  [7] &quot;datasets&quot;          &quot;dir&quot;               &quot;file&quot;             
-## [10] &quot;file_name&quot;         &quot;files&quot;             &quot;full_path_to_file&quot;
-</code></pre><p>Indeed, now there are five new variables in the global environment that have the names of the files created earlier.</p>
-<p>Without using <code>assign()</code> you&rsquo;d end up putting all datasets in a <code>list</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nf">read.csv</span><span class="p">(</span><span class="nf">file.path</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span>
-<span class="p">})</span>
-</code></pre></div><p>That may not be so bad but actually this list doesn&rsquo;t have names which is a problem.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">names</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div><pre><code>## NULL
-</code></pre><p>I hope this convinced you that <code>assign()</code> is a useful function.</p>
-<p>Did you ever use <code>assign()</code>? I&rsquo;d love to know in the comments.</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1310,23 +699,6 @@ Let&rsquo;s make sure that this actually worked as expected.</p>
 ## 2 versicolor        50
 ## 3 virginica         50
 &lt;/code&gt;&lt;/pre&gt;</description>
-			<content type="html"><![CDATA[<p>If you frequently use chains like this</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">data</span> <span class="o">%&gt;%</span>
-  <span class="nf">group_by</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="nf">summarise</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span>
-</code></pre></div><p>consider using</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">count</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">)</span>
-</code></pre></div><p>instead. It produces the same output, you need to type less and the code is more expressive.</p>
-<p>By default, the column containing the count will be named <code>n</code>. Want to change that? Simply set the <code>name</code> parameter of <code>count()</code>, e.g.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">data</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span>
-<span class="n">dplyr</span><span class="o">::</span><span class="nf">count</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span> <span class="n">Species</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;n_flowers&#34;</span><span class="p">)</span>
-</code></pre></div><pre><code>## # A tibble: 3 x 2
-##   Species    n_flowers
-##   &lt;fct&gt;          &lt;int&gt;
-## 1 setosa            50
-## 2 versicolor        50
-## 3 virginica         50
-</code></pre>]]></content>
 		</item>
 		
 		<item>
@@ -1392,63 +764,6 @@ Let&rsquo;s make sure that this actually worked as expected.</p>
   &lt;span class=&#34;nf&#34;&gt;ylab&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Population (Millions)&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggcharts</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">gapminder</span><span class="p">)</span>
-<span class="nf">data</span><span class="p">(</span><span class="n">gapminder</span><span class="p">)</span>
-</code></pre></div><p>I am very pleased to announce that my <a href="https://github.com/thomas-neitmann/ggcharts"><code>ggcharts</code></a> package has a new feature: <code>dumbbell_chart()</code>.</p>
-<p>To showcase this new function I will use the <code>gapminder</code> dataset which contains countries&rsquo; population counts from 1952 to 2017. This dataset is in long format. In order for <code>dumbbell_chart()</code> to work properly the data has to be in <em>wide</em> format, though. So, first a bit of data wrangling.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">gapminder_wide</span> <span class="o">&lt;-</span> <span class="n">gapminder</span> <span class="o">%&gt;%</span>
-  <span class="nf">mutate</span><span class="p">(</span><span class="n">pop</span> <span class="o">=</span> <span class="n">pop</span> <span class="o">/</span> <span class="m">1e6</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="nf">filter</span><span class="p">(</span><span class="n">year</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="m">1952</span><span class="p">,</span> <span class="m">2007</span><span class="p">))</span> <span class="o">%&gt;%</span>
-  <span class="n">tidyr</span><span class="o">::</span><span class="nf">pivot_wider</span><span class="p">(</span>
-    <span class="n">id_cols</span> <span class="o">=</span> <span class="n">country</span><span class="p">,</span>
-    <span class="n">names_from</span> <span class="o">=</span> <span class="n">year</span><span class="p">,</span>
-    <span class="n">values_from</span> <span class="o">=</span> <span class="n">pop</span><span class="p">,</span>
-    <span class="n">names_prefix</span> <span class="o">=</span> <span class="s">&#34;pop_&#34;</span>
-  <span class="p">)</span>
-<span class="n">gapminder_wide</span>
-</code></pre></div><pre><code>## # A tibble: 142 x 3
-##    country     pop_1952 pop_2007
-##    &lt;fct&gt;          &lt;dbl&gt;    &lt;dbl&gt;
-##  1 Afghanistan    8.43    31.9  
-##  2 Albania        1.28     3.60 
-##  3 Algeria        9.28    33.3  
-##  4 Angola         4.23    12.4  
-##  5 Argentina     17.9     40.3  
-##  6 Australia      8.69    20.4  
-##  7 Austria        6.93     8.20 
-##  8 Bahrain        0.120    0.709
-##  9 Bangladesh    46.9    150.   
-## 10 Belgium        8.73    10.4  
-## # ... with 132 more rows
-</code></pre><p>With the data being ready, let&rsquo;s create a simple chart.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">dumbbell_chart</span><span class="p">(</span><span class="n">gapminder_wide</span><span class="p">,</span> <span class="n">country</span><span class="p">,</span> <span class="n">pop_1952</span><span class="p">,</span> <span class="n">pop_2007</span><span class="p">,</span>
-               <span class="n">limit</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>That looks already quite nice but let&rsquo;s customize the plot to make it look even better. First, let&rsquo;s see which customizations can be done by changing the defaults of <code>dumbbell_chart()</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">&lt;-</span> <span class="nf">dumbbell_chart</span><span class="p">(</span><span class="n">gapminder_wide</span><span class="p">,</span> <span class="n">country</span><span class="p">,</span> <span class="n">pop_1952</span><span class="p">,</span> <span class="n">pop_2007</span><span class="p">,</span>
-                        <span class="n">limit</span> <span class="o">=</span> <span class="m">10</span><span class="p">,</span> <span class="n">point_size</span> <span class="o">=</span> <span class="m">5</span><span class="p">,</span>
-                        <span class="n">point_colors</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;lightgray&#34;</span><span class="p">,</span> <span class="s">&#34;black&#34;</span><span class="p">),</span>
-                        <span class="n">legend_labels</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;1952&#34;</span><span class="p">,</span> <span class="s">&#34;2007&#34;</span><span class="p">))</span>
-<span class="n">chart</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>To further customize the plot you can use <code>ggplot2</code> functions.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">chart</span> <span class="o">+</span>
-  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">expand</span> <span class="o">=</span> <span class="nf">expand_scale</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="m">.025</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">theme</span><span class="p">(</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">14</span><span class="p">),</span>
-    <span class="n">plot.caption</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">family</span> <span class="o">=</span> <span class="s">&#34;mono&#34;</span><span class="p">)</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="nf">labs</span><span class="p">(</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s">&#34;The World is Growing&#34;</span><span class="p">,</span>
-    <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;Top 10 Most Populated Countries in 2007&#34;</span><span class="p">,</span>
-    <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Chart created using #ggcharts&#34;</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="nf">xlab</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">ylab</span><span class="p">(</span><span class="s">&#34;Population (Millions)&#34;</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1468,17 +783,6 @@ Let&rsquo;s make sure that this actually worked as expected.</p>
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Very handy for lazy people like me.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>Are you tired of adding your favorite <code>ggplot2</code> theme to every data visualization you create in <code>R</code>? Then I have a solution for you!</p>
-<p>Before you start to create any plots call the <code>theme_set()</code> function with your favorite theme as first argument, e.g.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="nf">theme_set</span><span class="p">(</span><span class="nf">theme_minimal</span><span class="p">())</span>
-</code></pre></div><p>That will ensure all plots you subsequently create will use this theme unless you add a different one.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">data</span><span class="p">(</span><span class="s">&#34;mtcars&#34;</span><span class="p">)</span>
-<span class="nf">ggplot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">mpg</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">wt</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_point</span><span class="p">()</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Very handy for lazy people like me.</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1515,34 +819,6 @@ Let&rsquo;s make sure that this actually worked as expected.</p>
 &lt;p&gt;There you have it: that&amp;rsquo;s how you can create your own custom plotting function on top of &lt;code&gt;ggplot2&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Want to see the power of custom plotting functions in action? Make sure to check out my &lt;a href=&#34;https://github.com/thomas-neitmann/ggcharts&#34;&gt;&lt;code&gt;ggcharts&lt;/code&gt;&lt;/a&gt; package.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>If you find yourself repeatedly writing the same <code>ggplot2</code> code to create a data visualization in <code>R</code>, then it&rsquo;s time to put your code into a function.</p>
-<p>You may start out with an implementation similar to this one.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="nf">theme_set</span><span class="p">(</span><span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;XY&#34;</span><span class="p">))</span>
-<span class="nf">data</span><span class="p">(</span><span class="s">&#34;mtcars&#34;</span><span class="p">)</span>
-
-<span class="n">scatter_plot</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span> <span class="o">+</span>
-    <span class="nf">geom_point</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;yellow&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>That won&rsquo;t work though.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">scatter_plot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">mpg</span><span class="p">)</span>
-</code></pre></div><pre><code>## Error in FUN(X[[i]], ...): object 'hp' not found
-</code></pre><p>If you call this function, <code>R</code> will look for a variable called <code>hp</code> rather than looking for a column with that name inside the data frame you passed as the first argument.</p>
-<p>So, maybe it works when putting the column names in quotes?</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">scatter_plot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="s">&#34;hp&#34;</span><span class="p">,</span> <span class="s">&#34;mpg&#34;</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Well, no error this time but that most likely did not produce what you expected.</p>
-<p>The key to making this work is to tell <code>R</code>  somehow that it should look for the <code>x</code> and <code>y</code> arguments inside data. How can you achieve this? Using <code>{{ }}</code> (speak curly-curly) from the <code>rlang</code> package.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">scatter_plot2</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nf">aes</span><span class="p">({{</span><span class="n">x</span><span class="p">}},</span> <span class="p">{{</span><span class="n">y</span><span class="p">}}))</span> <span class="o">+</span>
-    <span class="nf">geom_point</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;yellow&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="nf">scatter_plot2</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">mpg</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>There you have it: that&rsquo;s how you can create your own custom plotting function on top of <code>ggplot2</code>.</p>
-<p>Want to see the power of custom plotting functions in action? Make sure to check out my <a href="https://github.com/thomas-neitmann/ggcharts"><code>ggcharts</code></a> package.</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1558,13 +834,6 @@ Let&rsquo;s make sure that this actually worked as expected.</p>
 git commit -m &lt;span class=&#34;s1&#34;&gt;&amp;#39;Rename old_name.ext to new_name.txt&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;That&amp;rsquo;s it! Don&amp;rsquo;t be afraid to rename a file when using &lt;code&gt;git&lt;/code&gt;. Just use the right command.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>If you are using <code>git</code> for your data science project (which you should!), you have to be careful when renaming a file.</p>
-<p>If you simply rename the file in your OS file browser, <code>git</code> would interpret this as deleting the file with the old name and creating a new one with the new name. They wouldn&rsquo;t be linked in any way and you&rsquo;d essentially loose the history of that file.</p>
-<p>So, how can you rename a file and keep its history? You need to use the <code>git mv</code> command and subsequently make a commit. Here&rsquo;s an example:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">git mv old_name.ext new_name.ext
-git commit -m <span class="s1">&#39;Rename old_name.ext to new_name.txt&#39;</span>
-</code></pre></div><p>That&rsquo;s it! Don&rsquo;t be afraid to rename a file when using <code>git</code>. Just use the right command.</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1587,20 +856,6 @@ git commit -m <span class="s1">&#39;Rename old_name.ext to new_name.txt&#39;</sp
 &lt;span class=&#34;nf&#34;&gt;.libPaths&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;./library&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;old_libraries&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;With that being said you know why I invetiable have to smile if I see an article about the top five &lt;code&gt;R&lt;/code&gt; libraries for xyz.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>In <code>R</code> you use the <code>library()</code> function to load a package. Thus, surely a package and a library must be the same thing, right?</p>
-<p>Actually no, they are not!</p>
-<p>So, what&rsquo;s the difference between the two? A library is nothing but a folder on your computer in which installed packages are saved. Just like a real library that contains books. It is merely a container. A library on its own is useless. It&rsquo;s the content, the packages, that gives you the power to do almost anything in <code>R</code>.</p>
-<p>If you are using <code>R</code> on Windows you&rsquo;ll likely have two libraries. One system wide library containing all packages that come with <code>R</code> and a user library that contains all packages you have installed on top of the defaults.</p>
-<p>To see which libraries you are using use</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">.libPaths</span><span class="p">()</span>
-</code></pre></div><pre><code>## [1] &quot;C:/Users/neitmant/R-Portable/App/R-Portable/library&quot;
-</code></pre><p>You can use the same function to tell <code>R</code> that a certain folder on your computer should be considered a library, e.g.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">.libPaths</span><span class="p">(</span><span class="s">&#34;./library&#34;</span><span class="p">)</span>
-</code></pre></div><p>Be aware, though, that this will overwrite your default libraries. To add an additional library on top of the existing ones you need to be explicit.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">old_libraries</span> <span class="o">&lt;-</span> <span class="nf">.libPaths</span><span class="p">()</span>
-<span class="nf">.libPaths</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;./library&#34;</span><span class="p">,</span> <span class="n">old_libraries</span><span class="p">))</span>
-</code></pre></div><p>With that being said you know why I invetiable have to smile if I see an article about the top five <code>R</code> libraries for xyz.</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1663,60 +918,6 @@ git commit -m <span class="s1">&#39;Rename old_name.ext to new_name.txt&#39;</sp
 &lt;p&gt;Just like &lt;code&gt;ggtext&lt;/code&gt;, the &lt;code&gt;mdthemes&lt;/code&gt; package is currently only available from GitHub. You can install it by copy-pasting this code into your &lt;code&gt;R&lt;/code&gt; console.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;remotes&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;install_github&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;thomas-neitmann/mdthemes&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-			<content type="html"><![CDATA[<p>I am super exciting to share with you my recent &ldquo;discovery&rdquo; of the <code>ggtext</code> <code>R</code> package.</p>
-<p>I had looked for a solution to color individual words in the title of a <code>ggplot2</code> data visualization and <code>ggtext</code> provided me with a great solution for doing just that (and more).</p>
-<p>So, how does it work? Have a look at this example:</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
-<span class="nf">data</span><span class="p">(</span><span class="n">biomedicalrevenue</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&#34;ggcharts&#34;</span><span class="p">)</span>
-
-<span class="n">plot</span> <span class="o">&lt;-</span> <span class="n">biomedicalrevenue</span> <span class="o">%&gt;%</span>
-  <span class="nf">filter</span><span class="p">(</span><span class="n">company</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Roche&#34;</span><span class="p">,</span> <span class="s">&#34;Novartis&#34;</span><span class="p">))</span> <span class="o">%&gt;%</span>
-  <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">revenue</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">company</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_line</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">1.2</span><span class="p">)</span> <span class="o">+</span>
-  <span class="nf">ggtitle</span><span class="p">(</span>
-    <span class="nf">paste0</span><span class="p">(</span>
-      <span class="s">&#34;&lt;span style = &#39;color:#93C1DE&#39;&gt;**Roche**&lt;/span&gt;&#34;</span><span class="p">,</span>
-      <span class="s">&#34; *overtook* &lt;span style = &#39;color:darkorange&#39;&gt;**Novartis**&lt;/span&gt;&#34;</span><span class="p">,</span>
-      <span class="s">&#34; in 2016&#34;</span>
-    <span class="p">)</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="nf">scale_color_manual</span><span class="p">(</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Roche&#34;</span> <span class="o">=</span> <span class="s">&#34;#93C1DE&#34;</span><span class="p">,</span> <span class="s">&#34;Novartis&#34;</span> <span class="o">=</span> <span class="s">&#34;darkorange&#34;</span><span class="p">),</span>
-    <span class="n">guide</span> <span class="o">=</span> <span class="s">&#34;none&#34;</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">ticks</span> <span class="o">=</span> <span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;X&#34;</span><span class="p">)</span>  <span class="o">+</span>
-  <span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span> <span class="o">=</span> <span class="n">ggtext</span><span class="o">::</span><span class="nf">element_markdown</span><span class="p">())</span>
-<span class="n">plot</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Inside <code>theme()</code> I set <code>plot.title = ggtext::element_markdown()</code>. This has the effect that the plot title I created using <code>ggtitle()</code> is interpreted as markdown/HTML. That made it possible to have the title of the plot act as a legend by coloring the appropriate keywords.</p>
-<p>Notice also that inside of <code>scale_color_manual()</code> I set <code>guide = &quot;none&quot;</code>. This results in no legend being drawn which would be redundant in this plot.</p>
-<p>Quite a neat solution, isn&rsquo;t it?</p>
-<p>While you need to revert to HTML for coloring the text you can use markdown for making individual words bold (e.g. <code>**Roche**</code>), italics (e.g. <code>*overtook*</code>) and so forth. I love the flexibility this offers.</p>
-<p>The <code>ggtext</code> package is not yet available on CRAN but you can install it from GitHub using</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">remotes</span><span class="o">::</span><span class="nf">install_github</span><span class="p">(</span><span class="s">&#34;wilkelab/ggtext&#34;</span><span class="p">)</span>
-</code></pre></div><p>Setting individual theme elements to <code>ggtext::element_markdown()</code> can add quite a bit of boilerplate code to your plot. That&rsquo;s why I decided to create the <a href="https://github.com/thomas-neitmann/mdthemes"><code>mdthemes</code></a> package which provides themes that interpret text as markdown out of the box. Let&rsquo;s contrast a &ldquo;normal&rdquo; theme with an <code>md_theme</code>. First, have a look at what happens if I add <code>theme_minimal()</code> to the plot I just created.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">+</span> <span class="nf">theme_minimal</span><span class="p">()</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>As expected, the title is not rendered correctly because the <code>plot.title</code> theme element is overwritten. If you use <code>md_theme_minimal()</code>, however, it just works.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">+</span> <span class="n">mdthemes</span><span class="o">::</span><span class="nf">md_theme_minimal</span><span class="p">()</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Apart from the title, the subtitle, axis labels and captions are set to <code>element_markdown()</code> for all <code>mdthemes</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">+</span>
-  <span class="nf">labs</span><span class="p">(</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="s">&#34;**Year**&#34;</span><span class="p">,</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="s">&#34;Revenue (*Billion* USD)&#34;</span><span class="p">,</span>
-    <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Data Source: *en.wikipedia.org/wiki/List_of_largest_biomedical_companies_by_revenue*&#34;</span>
-  <span class="p">)</span> <span class="o">+</span>
-  <span class="n">mdthemes</span><span class="o">::</span><span class="nf">md_theme_minimal</span><span class="p">()</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>The <code>mdthemes</code> packages currently contains all themes from <code>ggplot2</code>, <code>ggthemes</code>, <code>hrbrthemes</code> and <code>tvthemes</code> with support for rendering text as markdown.</p>
-<p>If you want to turn a theme that is not part of the <code>mdthemes</code> package into an <code>md_theme</code> you can use the <code>as_md_theme()</code> function.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">+</span> <span class="n">mdthemes</span><span class="o">::</span><span class="nf">as_md_theme</span><span class="p">(</span><span class="nf">theme_minimal</span><span class="p">())</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<p>Just like <code>ggtext</code>, the <code>mdthemes</code> package is currently only available from GitHub. You can install it by copy-pasting this code into your <code>R</code> console.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">remotes</span><span class="o">::</span><span class="nf">install_github</span><span class="p">(</span><span class="s">&#34;thomas-neitmann/mdthemes&#34;</span><span class="p">)</span>
-</code></pre></div>]]></content>
 		</item>
 		
 		<item>
@@ -1743,24 +944,6 @@ git commit -m <span class="s1">&#39;Rename old_name.ext to new_name.txt&#39;</sp
 &lt;span class=&#34;nf&#34;&gt;saveWorkbook&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;wb&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;mtcars.xlsx&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;overwrite&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The only thing that didn&amp;rsquo;t quite work was adjusting the column width to fit the content. While there is a &lt;code&gt;setColWidths()&lt;/code&gt; function where you can set the &lt;code&gt;widths&lt;/code&gt; parameter to &lt;code&gt;&amp;quot;auto&amp;quot;&lt;/code&gt; that didn&amp;rsquo;t work a 100%. It &lt;em&gt;did&lt;/em&gt; look much better than having all columns in the standard width, though. In the end that was good enough for me.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>Yesterday I had to share data with some internal stakeholders in excel format. Why excel? Well, I guess if you are not a &ldquo;data professional&rdquo;, then that&rsquo;s the easiest format to work with.</p>
-<p>So, I started <code>R</code>, read in the dataset, did some data wrangling and then wanted to write the data to a xlsx file. I heard great things about the <code>openxlsx</code> package so I used it for the first time. My initial attempt was using the <code>write.xlsx()</code> function. That certainly did the job but the resulting file didn&rsquo;t look how I like my excel files. I am a fan of a freezed top row with bold and centered column headers.</p>
-<p>I digged a bit into the <code>openxlsx</code> documentation and it turned out that the package can do all of this. Great!</p>
-<p>Here is the code I used (obviously not exporting the mtcars dataset):</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">openxlsx</span><span class="p">)</span>
-<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-
-<span class="n">header_style</span> <span class="o">&lt;-</span> <span class="nf">createStyle</span><span class="p">(</span><span class="n">halign</span> <span class="o">=</span> <span class="s">&#34;center&#34;</span><span class="p">,</span> <span class="n">textDecoration</span> <span class="o">=</span> <span class="s">&#34;bold&#34;</span><span class="p">)</span>
-
-<span class="n">wb</span> <span class="o">&lt;-</span> <span class="nf">createWorkbook</span><span class="p">()</span>
-
-<span class="nf">addWorksheet</span><span class="p">(</span><span class="n">wb</span><span class="p">,</span> <span class="s">&#34;Data&#34;</span><span class="p">)</span>
-<span class="nf">writeData</span><span class="p">(</span><span class="n">wb</span><span class="p">,</span> <span class="s">&#34;Data&#34;</span><span class="p">,</span> <span class="n">mtcars</span><span class="p">,</span> <span class="n">headerStyle</span> <span class="o">=</span> <span class="n">header_style</span><span class="p">)</span>
-<span class="nf">freezePane</span><span class="p">(</span><span class="n">wb</span><span class="p">,</span> <span class="s">&#34;Data&#34;</span><span class="p">,</span> <span class="n">firstRow</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
-<span class="nf">setColWidths</span><span class="p">(</span><span class="n">wb</span><span class="p">,</span> <span class="s">&#34;Data&#34;</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="m">1</span><span class="o">:</span><span class="nf">ncol</span><span class="p">(</span><span class="n">mtcars</span><span class="p">),</span> <span class="n">widths</span> <span class="o">=</span> <span class="s">&#34;auto&#34;</span><span class="p">)</span>
-<span class="nf">saveWorkbook</span><span class="p">(</span><span class="n">wb</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&#34;mtcars.xlsx&#34;</span><span class="p">,</span> <span class="n">overwrite</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
-</code></pre></div><p>The only thing that didn&rsquo;t quite work was adjusting the column width to fit the content. While there is a <code>setColWidths()</code> function where you can set the <code>widths</code> parameter to <code>&quot;auto&quot;</code> that didn&rsquo;t work a 100%. It <em>did</em> look much better than having all columns in the standard width, though. In the end that was good enough for me.</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1778,15 +961,6 @@ git commit -m <span class="s1">&#39;Rename old_name.ext to new_name.txt&#39;</sp
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;nf&#34;&gt;is.na&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## [1] FALSE  TRUE FALSE
 &lt;/code&gt;&lt;/pre&gt;</description>
-			<content type="html"><![CDATA[<p>To check for missing values in <code>R</code> you might be tempted to use the equality operator <code>==</code> with your vector on one side and <code>NA</code> on the other. Don&rsquo;t!</p>
-<p>If you insist, you&rsquo;ll get a useless results.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">==</span> <span class="kc">NA</span>
-</code></pre></div><pre><code>## [1] NA NA NA
-</code></pre><p>Instead use the <code>is.na()</code> function.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">is.na</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</code></pre></div><pre><code>## [1] FALSE  TRUE FALSE
-</code></pre>]]></content>
 		</item>
 		
 		<item>
@@ -1829,40 +1003,6 @@ git commit -m <span class="s1">&#39;Rename old_name.ext to new_name.txt&#39;</sp
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;.GlobalEnv&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;But, carefully think whether or not you really want to work with global variables (most of the time there are better solutions).&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>If you&rsquo;ve been using <code>R</code> for a while, chances are high you came across the <code>&lt;&lt;-</code> operator. On several occasions I&rsquo;ve heard or read people calling <code>&lt;&lt;-</code> the &ldquo;global assignment operator&rdquo;. However, this is wrong. Let me elaborate why.</p>
-<p>First, have a look at this example.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">0</span>
-<span class="n">foo</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">x</span> <span class="o">&lt;&lt;-</span> <span class="n">x</span> <span class="o">+</span> <span class="m">1</span>
-  <span class="n">x</span>
-<span class="p">}</span>
-<span class="nf">foo</span><span class="p">()</span>
-</code></pre></div><pre><code>## [1] 1
-</code></pre><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">foo</span><span class="p">()</span>
-</code></pre></div><pre><code>## [1] 2
-</code></pre><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">x</span>
-</code></pre></div><pre><code>## [1] 2
-</code></pre><p>Here <code>&lt;&lt;-</code> truly behaves like a global assignment operator. Every time you call <code>foo()</code> the variable <code>x</code> in the global environment is incremented by 1. So far so good.</p>
-<p>If you look at the next example, though, you&rsquo;ll see that <code>&lt;&lt;-</code> does <em>not</em> always assign to the global environment.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">y</span> <span class="o">&lt;-</span> <span class="m">0</span>
-<span class="n">bar</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">y</span> <span class="o">&lt;-</span> <span class="m">99</span>
-  <span class="n">bla</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">y</span> <span class="o">&lt;&lt;-</span> <span class="n">y</span> <span class="o">+</span> <span class="m">1</span>
-  <span class="p">}</span>
-  <span class="nf">bla</span><span class="p">()</span>
-  <span class="n">y</span>
-<span class="p">}</span>
-
-<span class="nf">bar</span><span class="p">()</span>
-</code></pre></div><pre><code>## [1] 100
-</code></pre><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">y</span>
-</code></pre></div><pre><code>## [1] 0
-</code></pre><p>Instead, it assigns the value to the variable in the enclosing environment, i.e. the environment in which the function was created. It just happens to be that in the first example the enclosing environment was the global environment. In the second example that is not the case and so the variable <code>y</code> in the global environment is unaffected by calling <code>bar()</code>.</p>
-<p>If you&rsquo;d truly want to assign a value to a variable in the global environment you&rsquo;d have to do something like this:</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">.GlobalEnv</span><span class="o">$</span><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">100</span>
-</code></pre></div><p>But, carefully think whether or not you really want to work with global variables (most of the time there are better solutions).</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1885,20 +1025,6 @@ git commit -m <span class="s1">&#39;Rename old_name.ext to new_name.txt&#39;</sp
 ## NULL
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This behavior can cause trouble, so if you know there&amp;rsquo;s a function with the same name in multiple packages I&amp;rsquo;d advice you to be explicit and use &lt;code&gt;::&lt;/code&gt; every time you use that function.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p><code>R</code> users often talk of loading a package when they use <code>library()</code>. But technical <code>library()</code> doesn&rsquo;t load the package but attaches it. So what&rsquo;s the difference?</p>
-<p>If you&rsquo;ve ever used the <code>::</code> operator, e.g. <code>dplyr::filter()</code>, you have loaded a package. Loading a package does exactly what the name suggests: it loads all functions and datasets of a particular package. However, to access these functions and datasets you will still need to use <code>::</code> every time you refer to something within the package.</p>
-<p>When you use <code>library()</code> the package is attached to the search path. You can think of the search path as a queue of (literally) packages, each one filled with functions and datasets. Whenever you use a function without <code>::</code>, <code>R</code> looks for a function with that name in the first package. If it doesn&rsquo;t find it, <code>R</code> continues to look for it in the next package and so on until it finds the function.</p>
-<p>Importantly, calling <code>library(pkg)</code> will place <code>pkg</code> at the beginning of the queue. That&rsquo;s why after calling <code>library(dplyr)</code>, <code>filter()</code> will be <code>dplyr::filter()</code> and not <code>stats::filter()</code> any longer.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">args</span><span class="p">(</span><span class="n">filter</span><span class="p">)</span> <span class="c1"># stats::filter</span>
-</code></pre></div><pre><code>## function (x, filter, method = c(&quot;convolution&quot;, &quot;recursive&quot;), 
-##     sides = 2L, circular = FALSE, init = NULL) 
-## NULL
-</code></pre><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
-<span class="nf">args</span><span class="p">(</span><span class="n">filter</span><span class="p">)</span> <span class="c1"># dplyr::filter</span>
-</code></pre></div><pre><code>## function (.data, ..., .preserve = FALSE) 
-## NULL
-</code></pre><p>This behavior can cause trouble, so if you know there&rsquo;s a function with the same name in multiple packages I&rsquo;d advice you to be explicit and use <code>::</code> every time you use that function.</p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1926,25 +1052,6 @@ git commit -m <span class="s1">&#39;Rename old_name.ext to new_name.txt&#39;</sp
   &lt;span class=&#34;nf&#34;&gt;geom_smooth&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;method&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;lm&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-</code></pre></div><h3 id="step-1">Step 1</h3>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">wt</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_point</span><span class="p">()</span>
-<span class="n">p</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<h3 id="step-2">Step 2</h3>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">+</span> <span class="nf">geom_smooth</span><span class="p">()</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<h3 id="step-3">Step 3</h3>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p</span> <span class="o">+</span> <span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">&#34;lm&#34;</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-<h3 id="putting-it-all-together">Putting it all together</h3>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">ggplot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">wt</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_point</span><span class="p">()</span> <span class="o">+</span>
-  <span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">&#34;lm&#34;</span><span class="p">)</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-]]></content>
 		</item>
 		
 		<item>
@@ -1967,20 +1074,6 @@ git commit -m <span class="s1">&#39;Rename old_name.ext to new_name.txt&#39;</sp
 &lt;span class=&#34;n&#34;&gt;p1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p3&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>If you want to change only the lower or upper bound of your plot axis pass <code>NA</code> for the value you don&rsquo;t want to set inside either <code>xlim()</code> or <code>ylim()</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">patchwork</span><span class="p">)</span>
-<span class="nf">theme_set</span><span class="p">(</span><span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">(</span><span class="n">grid</span> <span class="o">=</span> <span class="s">&#34;XY&#34;</span><span class="p">))</span>
-<span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-
-<span class="n">p1</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="nf">factor</span><span class="p">(</span><span class="n">cyl</span><span class="p">),</span> <span class="n">hp</span><span class="p">))</span> <span class="o">+</span>
-  <span class="nf">geom_boxplot</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#D6DDE1&#34;</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="s">&#34;steelblue&#34;</span><span class="p">)</span>
-<span class="n">p2</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="nf">ylim</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
-<span class="n">p3</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="nf">ylim</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="m">500</span><span class="p">)</span>
-
-<span class="n">p1</span> <span class="o">|</span> <span class="n">p2</span> <span class="o">|</span> <span class="n">p3</span>
-</code></pre></div><p><!-- raw HTML omitted --></p>
-]]></content>
 		</item>
 		
 		<item>
@@ -2000,17 +1093,6 @@ git commit --amend --no-edit
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;where &lt;code&gt;&amp;lt;your branch&amp;gt;&lt;/code&gt; is the branch you are currently working in, e.g. &lt;code&gt;master&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;A note to RStudio users: you need to run the &lt;code&gt;git&lt;/code&gt; commands from the terminal instead of using the &lt;code&gt;git&lt;/code&gt; GUI.&lt;/p&gt;
 </description>
-			<content type="html"><![CDATA[<p>While working on a data science project did you ever <code>git commit</code> a bunch of <code>.R</code> files only to realize a few seconds later that you forget to include something? I certainly did. Today alone 3 times.</p>
-<p>What can you do? The obvious solution is to make a second commit. But that&rsquo;s a bad one. Instead do the following:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">git add &lt;forgotten.file&gt;
-git commit --amend --no-edit
-</code></pre></div><p>Replace <code>&lt;forgotten.file&gt;</code> with the actual file name, e.g. <code>analysis.R</code>. This will add the file to your previous commit while keeping the commit message. If you want to change the commit message remove the <code>--no-edit</code> argument. When you do so a text editor will pop up where you can change the commit message.</p>
-<p>Another scenario: you committed all files but forgot to make a change in one file. In that case simply edit the respective file and run the exact same two commands as above. Make sure to replace <code>&lt;forgotten.file&gt;</code> with the name of the file you just edited.</p>
-<p>Finally to push the commit to GitHub run</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">git push -f origin &lt;your branch&gt;
-</code></pre></div><p>where <code>&lt;your branch&gt;</code> is the branch you are currently working in, e.g. <code>master</code>.</p>
-<p>A note to RStudio users: you need to run the <code>git</code> commands from the terminal instead of using the <code>git</code> GUI.</p>
-]]></content>
 		</item>
 		
 	</channel>
