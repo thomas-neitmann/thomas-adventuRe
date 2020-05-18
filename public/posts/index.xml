@@ -60,7 +60,7 @@
   &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;When putting the plots side-by-side they now create an harmonious picture.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;p1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p2&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 5 row(s) containing missing values (geom_path).
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 9 row(s) containing missing values (geom_path).
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h2 id=&#34;distribution-of-daily-downloads&#34;&gt;Distribution of Daily Downloads&lt;/h2&gt;
 &lt;p&gt;The third plot will show the distribution of daily downloads.&lt;/p&gt;
@@ -122,12 +122,12 @@
 &lt;h2 id=&#34;putting-it-all-together&#34;&gt;Putting it All Together&lt;/h2&gt;
 &lt;p&gt;Combining these four plots into one data visualization is a piece of cake thanks to the &lt;code&gt;patchwork&lt;/code&gt; package. Simply add them together.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;p1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p4&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 5 row(s) containing missing values (geom_path).
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 9 row(s) containing missing values (geom_path).
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;That looks quite nice. What makes this plot a bit messy though is the axis labels. I think they are redundant. It&amp;rsquo;s very clear from the titles what is displayed so having axis labels only adds visual clutter.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;plot&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p4&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;labs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;plot&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 5 row(s) containing missing values (geom_path).
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 9 row(s) containing missing values (geom_path).
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Notice that I used &lt;code&gt;&amp;amp;&lt;/code&gt; instead of the usual &lt;code&gt;+&lt;/code&gt;. By using &lt;code&gt;&amp;amp;&lt;/code&gt; the labels of all plots in the patchwork are adjusted. When using &lt;code&gt;+&lt;/code&gt; only the labels of the last plot, i.e. &lt;code&gt;p4&lt;/code&gt;, would be changed.&lt;/p&gt;
 &lt;p&gt;Finally, let&amp;rsquo;s add an overall title, subtitle and a caption.&lt;/p&gt;
@@ -137,7 +137,7 @@
     &lt;span class=&#34;n&#34;&gt;subtitle&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;A Summary of Downloads from the RStudio CRAN Mirror&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;caption&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Source: RStudio CRAN Logs&amp;#34;&lt;/span&gt;
   &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 5 row(s) containing missing values (geom_path).
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 9 row(s) containing missing values (geom_path).
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Ok, that looks awful! Fortunately, this can be fixed by passing the same theme used for the individual plots to the patchwork.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;plot&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
@@ -147,7 +147,7 @@
     &lt;span class=&#34;n&#34;&gt;caption&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Source: RStudio CRAN Logs&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;theme&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ggcharts&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;theme_hermit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
   &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 5 row(s) containing missing values (geom_path).
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 9 row(s) containing missing values (geom_path).
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Much better, but I would prefer the overall title to be (much) larger than the titles of the individual plots. That can be achieved by tweaking the theme passed to &lt;code&gt;plot_annotation()&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;plot_theme&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ggcharts&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;theme_hermit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
@@ -164,13 +164,13 @@
     &lt;span class=&#34;n&#34;&gt;theme&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;plot_theme&lt;/span&gt;
   &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;plot&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 5 row(s) containing missing values (geom_path).
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 9 row(s) containing missing values (geom_path).
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;I am almost satisfied with this data visualization. One thing that bothers me is the position of the individual titles, though. They are aligned with the edge of the plot which I think is great for a stand alone plot but not for a patchwork. Let&amp;rsquo;s align them with the panel, i.e. the part of the plot that actually shows the data.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;plot&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;theme&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;plot.title.position&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;panel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 5 row(s) containing missing values (geom_path).
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;## Warning: Removed 9 row(s) containing missing values (geom_path).
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;It took quite some effort to get here but I really like the end results.&lt;/p&gt;
+&lt;p&gt;It took quite some effort to get here but I really like the end results. How about you? Let me know in the comments.&lt;/p&gt;
 &lt;h2 id=&#34;just-the-code&#34;&gt;Just the Code&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ggplot2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;patchwork&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
@@ -298,7 +298,7 @@
   <span class="p">)</span>
 </code></pre></div><p>When putting the plots side-by-side they now create an harmonious picture.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span>
-</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
 </code></pre><p><!-- raw HTML omitted --></p>
 <h2 id="distribution-of-daily-downloads">Distribution of Daily Downloads</h2>
 <p>The third plot will show the distribution of daily downloads.</p>
@@ -360,12 +360,12 @@
 <h2 id="putting-it-all-together">Putting it All Together</h2>
 <p>Combining these four plots into one data visualization is a piece of cake thanks to the <code>patchwork</code> package. Simply add them together.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span> <span class="o">+</span> <span class="n">p4</span>
-</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
 </code></pre><p><!-- raw HTML omitted --></p>
 <p>That looks quite nice. What makes this plot a bit messy though is the axis labels. I think they are redundant. It&rsquo;s very clear from the titles what is displayed so having axis labels only adds visual clutter.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">&lt;-</span> <span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span> <span class="o">+</span> <span class="n">p4</span> <span class="o">&amp;</span> <span class="nf">labs</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
 <span class="n">plot</span>
-</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
 </code></pre><p><!-- raw HTML omitted --></p>
 <p>Notice that I used <code>&amp;</code> instead of the usual <code>+</code>. By using <code>&amp;</code> the labels of all plots in the patchwork are adjusted. When using <code>+</code> only the labels of the last plot, i.e. <code>p4</code>, would be changed.</p>
 <p>Finally, let&rsquo;s add an overall title, subtitle and a caption.</p>
@@ -375,7 +375,7 @@
     <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;A Summary of Downloads from the RStudio CRAN Mirror&#34;</span><span class="p">,</span>
     <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Source: RStudio CRAN Logs&#34;</span>
   <span class="p">)</span>
-</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
 </code></pre><p><!-- raw HTML omitted --></p>
 <p>Ok, that looks awful! Fortunately, this can be fixed by passing the same theme used for the individual plots to the patchwork.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">+</span>
@@ -385,7 +385,7 @@
     <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Source: RStudio CRAN Logs&#34;</span><span class="p">,</span>
     <span class="n">theme</span> <span class="o">=</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">()</span>
   <span class="p">)</span>
-</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
 </code></pre><p><!-- raw HTML omitted --></p>
 <p>Much better, but I would prefer the overall title to be (much) larger than the titles of the individual plots. That can be achieved by tweaking the theme passed to <code>plot_annotation()</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot_theme</span> <span class="o">&lt;-</span> <span class="n">ggcharts</span><span class="o">::</span><span class="nf">theme_hermit</span><span class="p">()</span> <span class="o">+</span>
@@ -402,13 +402,13 @@
     <span class="n">theme</span> <span class="o">=</span> <span class="n">plot_theme</span>
   <span class="p">)</span>
 <span class="n">plot</span>
-</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
 </code></pre><p><!-- raw HTML omitted --></p>
 <p>I am almost satisfied with this data visualization. One thing that bothers me is the position of the individual titles, though. They are aligned with the edge of the plot which I think is great for a stand alone plot but not for a patchwork. Let&rsquo;s align them with the panel, i.e. the part of the plot that actually shows the data.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">plot</span> <span class="o">&amp;</span> <span class="nf">theme</span><span class="p">(</span><span class="n">plot.title.position</span> <span class="o">=</span> <span class="s">&#34;panel&#34;</span><span class="p">)</span>
-</code></pre></div><pre><code>## Warning: Removed 5 row(s) containing missing values (geom_path).
+</code></pre></div><pre><code>## Warning: Removed 9 row(s) containing missing values (geom_path).
 </code></pre><p><!-- raw HTML omitted --></p>
-<p>It took quite some effort to get here but I really like the end results.</p>
+<p>It took quite some effort to get here but I really like the end results. How about you? Let me know in the comments.</p>
 <h2 id="just-the-code">Just the Code</h2>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">patchwork</span><span class="p">)</span>

@@ -113,7 +113,7 @@ p1 + p2
 ```
 
 ```
-## Warning: Removed 5 row(s) containing missing values (geom_path).
+## Warning: Removed 9 row(s) containing missing values (geom_path).
 ```
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-9-1.png" width="100%" />
@@ -236,7 +236,7 @@ p1 + p2 + p3 + p4
 ```
 
 ```
-## Warning: Removed 5 row(s) containing missing values (geom_path).
+## Warning: Removed 9 row(s) containing missing values (geom_path).
 ```
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-17-1.png" width="100%" />
@@ -250,7 +250,7 @@ plot
 ```
 
 ```
-## Warning: Removed 5 row(s) containing missing values (geom_path).
+## Warning: Removed 9 row(s) containing missing values (geom_path).
 ```
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-18-1.png" width="100%" />
@@ -270,7 +270,7 @@ plot +
 ```
 
 ```
-## Warning: Removed 5 row(s) containing missing values (geom_path).
+## Warning: Removed 9 row(s) containing missing values (geom_path).
 ```
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-19-1.png" width="100%" />
@@ -289,7 +289,7 @@ plot +
 ```
 
 ```
-## Warning: Removed 5 row(s) containing missing values (geom_path).
+## Warning: Removed 9 row(s) containing missing values (geom_path).
 ```
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-20-1.png" width="100%" />
@@ -315,7 +315,7 @@ plot
 ```
 
 ```
-## Warning: Removed 5 row(s) containing missing values (geom_path).
+## Warning: Removed 9 row(s) containing missing values (geom_path).
 ```
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-21-1.png" width="100%" />
@@ -328,12 +328,12 @@ plot & theme(plot.title.position = "panel")
 ```
 
 ```
-## Warning: Removed 5 row(s) containing missing values (geom_path).
+## Warning: Removed 9 row(s) containing missing values (geom_path).
 ```
 
 <img src="/posts/2020-05-03-ggcharts-cran-downloads-part-2_files/figure-html/unnamed-chunk-22-1.png" width="100%" />
 
-It took quite some effort to get here but I really like the end results.
+It took quite some effort to get here but I really like the end results. How about you? Let me know in the comments.
 
 ## Just the Code
 
