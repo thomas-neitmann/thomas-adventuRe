@@ -1,26 +1,267 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>article on Thomas&#39; adventuRe</title>
-    <link>/categories/article/</link>
-    <description>Recent content in article on Thomas&#39; adventuRe</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 10 Apr 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/article/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Analyzing the ggcharts CRAN Downloads. Part 1: Getting Data</title>
-      <link>/posts/ggcharts-cran-downloads-part-1/</link>
-      <pubDate>Fri, 10 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/ggcharts-cran-downloads-part-1/</guid>
-      <description>Introduction It&amp;rsquo;s been a little over two weeks since my ggcharts package has been published on CRAN. As you can imagine I am curious to see how many people actually use the package. While there is no way to actually measure the usage, the number of package downloads seems like a good proxy to me.
-CRAN Logs Getting data on the number of package downloads is fairly easy thanks to the cranlogs package.</description>
-    </item>
-    
-  </channel>
+	<channel>
+		<title>article on Thomas&#39; adventuRe</title>
+		<link>/categories/article/</link>
+		<description>Recent content in article on Thomas&#39; adventuRe</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en-us</language>
+		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+		<lastBuildDate>Fri, 10 Apr 2020 00:00:00 +0000</lastBuildDate>
+		<atom:link href="/categories/article/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Analyzing the ggcharts CRAN Downloads. Part 1: Getting Data</title>
+			<link>/posts/ggcharts-cran-downloads-part-1/</link>
+			<pubDate>Fri, 10 Apr 2020 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/ggcharts-cran-downloads-part-1/</guid>
+			<description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;It&amp;rsquo;s been a little over two weeks since my &lt;a href=&#34;https://thomas-neitmann.github.io/ggcharts/index.html&#34;&gt;&lt;code&gt;ggcharts&lt;/code&gt;&lt;/a&gt; package has been published on CRAN. As you can imagine I am curious to see how many people actually use the package. While there is no way to actually measure the usage, the number of package downloads seems like a good proxy to me.&lt;/p&gt;
+&lt;h2 id=&#34;cran-logs&#34;&gt;CRAN Logs&lt;/h2&gt;
+&lt;p&gt;Getting data on the number of package downloads is fairly easy thanks to the &lt;code&gt;cranlogs&lt;/code&gt; package.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;cranlogs&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;cran_downloads&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;ggcharts&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;last-week&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;##         date count  package
+## 1 2020-05-03    35 ggcharts
+## 2 2020-05-04    43 ggcharts
+## 3 2020-05-05    43 ggcharts
+## 4 2020-05-06    31 ggcharts
+## 5 2020-05-07    43 ggcharts
+## 6 2020-05-08    34 ggcharts
+## 7 2020-05-09    33 ggcharts
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Notably, only downloads from RStudio&amp;rsquo;s CRAN mirror are counted here. But I would guess that more than 90% of userRs also use RStudio so it shouldn&amp;rsquo;t be too far off the actual number of downloads.&lt;/p&gt;
+&lt;p&gt;I was curious why for some days the number of downloads suddenly dropped to &lt;code&gt;0&lt;/code&gt;. As it turned out this is a &lt;a href=&#34;https://github.com/r-hub/cranlogs/issues/54&#34;&gt;known bug&lt;/a&gt;. Thus, I decided to &amp;ldquo;manually&amp;rdquo; download the CRAN logs from &lt;a href=&#34;http://cran-logs.rstudio.com/&#34;&gt;cran-logs.rstudio.com&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;downloading-a-single-log-file&#34;&gt;Downloading a Single Log File&lt;/h2&gt;
+&lt;p&gt;If you visit this CRAN logs website you&amp;rsquo;ll see that it contains one file per day. The data is stored in &lt;code&gt;.csv&lt;/code&gt; files compressed with &lt;code&gt;gzip&lt;/code&gt;. Let&amp;rsquo;s have a look at a single file.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;url&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;http://cran-logs.rstudio.com/2020/2020-04-01.csv.gz&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;2020-04-01.csv.gz&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;download.file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;url&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;read.csv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;##         date     time     size r_version r_arch    r_os    package  version
+## 1 2020-04-01 18:40:53   813724      &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;    &amp;lt;NA&amp;gt;    rgenoud  5.8-3.0
+## 2 2020-04-01 18:40:58   258505      &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;    &amp;lt;NA&amp;gt; rstudioapi     0.11
+## 3 2020-04-01 18:40:51    13426      &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;    &amp;lt;NA&amp;gt;        AUC    0.3.0
+## 4 2020-04-01 18:40:54   745075     3.6.3 x86_64 mingw32      Hmisc    4.4-0
+## 5 2020-04-01 18:40:58  1154641      &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;    &amp;lt;NA&amp;gt;    ggrepel    0.8.2
+## 6 2020-04-01 18:40:56 18271283      &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;    &amp;lt;NA&amp;gt;         BH 1.72.0-3
+##   country ip_id
+## 1      NL     1
+## 2      HK     2
+## 3      US     3
+## 4      GB     4
+## 5      CO     5
+## 6      US     6
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you run this code yourself you will note that the file is quite large (~60 MB) and downloading plus reading the file is slow. But compared to the &lt;code&gt;cran_downloads()&lt;/code&gt; output it does contain more information so I think its worth the effort. Personally, I am especially interested in the &lt;code&gt;country&lt;/code&gt; column.&lt;/p&gt;
+&lt;h2 id=&#34;downloading-multiple-log-files&#34;&gt;Downloading Multiple Log Files&lt;/h2&gt;
+&lt;p&gt;Downloading a single file is nice but I was interested to see data on all downloads since the package was published on CRAN on March 26th. Downloading multiple files is not too difficult because all files follow the same naming structure, namely the date in ISO 8601 format, e.g. &lt;code&gt;2020-02-13.csv.gz&lt;/code&gt;. Thus, below I am creating a vector of dates to subsequently loop over.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;start_date&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;as.Date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;2020-03-26&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;end_date&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;as.Date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;2020-4-08&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;dates&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;as.Date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start_date&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end_date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;1970-01-01&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Inside &lt;code&gt;lapply()&lt;/code&gt; I build the proper URL of the file, download it and read it into &lt;code&gt;R&lt;/code&gt;. Next, I delete the file and finally filter only the records of &lt;code&gt;ggcharts&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;base_url&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;http://cran-logs.rstudio.com/2020/&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;lapply&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dates&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;paste0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;as.character&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;.csv.gz&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;url&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;paste0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;base_url&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  
+  &lt;span class=&#34;nf&#34;&gt;download.file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;url&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;read.csv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;nf&#34;&gt;file.remove&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  
+  &lt;span class=&#34;n&#34;&gt;downloads[downloads&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;ggcharts&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If you want to run this code yourself, you&amp;rsquo;d better step away from your desk and grep yourself a coffee. It will feel like an eternity until all files are downloaded and read into &lt;code&gt;R&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;So, you may ask, is there a way to speed this up? Sure enough, there is!&lt;/p&gt;
+&lt;p&gt;For one, instead of downloading and reading the files sequentially you can do this in parallel thanks to &lt;code&gt;R&lt;/code&gt;&#39;s build-in &lt;code&gt;parallel&lt;/code&gt; package. In addition, using &lt;code&gt;data.table&lt;/code&gt; and its &lt;code&gt;fread()&lt;/code&gt; function will dramatically reduce the time it takes to read a single file.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;cl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;parallel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;makeCluster&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;parallel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;detectCores&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;parallel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;parLapply&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dates&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;base_url&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;http://cran-logs.rstudio.com/2020/&amp;#34;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;paste0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;as.character&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;.csv.gz&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;url&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;paste0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;base_url&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  
+  &lt;span class=&#34;nf&#34;&gt;download.file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;url&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data.table&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;fread&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;nf&#34;&gt;file.remove&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  
+  &lt;span class=&#34;n&#34;&gt;downloads[package&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;ggcharts&amp;#34;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;parallel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;stopCluster&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This code will only run on Windows. If you are using &lt;code&gt;R&lt;/code&gt; on macOS or Linux this will do the trick instead.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;parallel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;mclapply&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dates&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;base_url&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;http://cran-logs.rstudio.com/2020/&amp;#34;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;paste0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;as.character&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;.csv.gz&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;url&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;paste0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;base_url&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  
+  &lt;span class=&#34;nf&#34;&gt;download.file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;url&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data.table&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;fread&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;nf&#34;&gt;file.remove&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  
+  &lt;span class=&#34;n&#34;&gt;downloads[package&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;ggcharts&amp;#34;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Note that I moved the &lt;code&gt;base_url&lt;/code&gt; assignment inside of the lambda function. Not doing so will result in an error because the function is executed in its own environment which does not have access to &lt;code&gt;base_url&lt;/code&gt; in the global environment.&lt;/p&gt;
+&lt;p&gt;Running this code will still take some time but is &lt;strong&gt;&lt;em&gt;much&lt;/em&gt;&lt;/strong&gt; faster than the solution with &lt;code&gt;lapply()&lt;/code&gt; and &lt;code&gt;read.csv()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Just like &lt;code&gt;lapply()&lt;/code&gt;, &lt;code&gt;parallel::parLapply()&lt;/code&gt; and &lt;code&gt;parallel::mclapply()&lt;/code&gt; return a list. Combining the individual datasets inside the list is easy.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data.table&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;rbindlist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;aggregating-the-data&#34;&gt;Aggregating the Data&lt;/h2&gt;
+&lt;p&gt;At this point &lt;code&gt;downloads&lt;/code&gt; contains one row per download of &lt;code&gt;ggcharts&lt;/code&gt;. Getting the daily downloads can be achieved like this.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;daily_downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;downloads[&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;.N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;by&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;date]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;daily_downloads&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;##          date  N
+## 1: 2020-03-26 11
+## 2: 2020-03-27 29
+## 3: 2020-03-28 30
+## 4: 2020-03-29 39
+## 5: 2020-03-30 35
+## 6: 2020-03-31 31
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This is &lt;code&gt;data.table&lt;/code&gt; syntax. The equivalent &lt;code&gt;dplyr&lt;/code&gt; code looks like this.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&#34;nf&#34;&gt;group_by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&#34;nf&#34;&gt;summarise&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The &lt;code&gt;date&lt;/code&gt; column is still a &lt;code&gt;character&lt;/code&gt; at this point. Let&amp;rsquo;s change that and in addition calculate the cumulative downloads.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;daily_downloads[&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;date&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;as.Date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;daily_downloads[&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cumulative_N&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;cumsum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If you are not used to working with &lt;code&gt;data.table&lt;/code&gt; then you may wonder what this strange looking syntax is about. With &lt;code&gt;dplyr&lt;/code&gt; you&amp;rsquo;d do something like this instead.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;daily_downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;daily_downloads&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&#34;nf&#34;&gt;mutate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;data&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;as.Date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cumulative_N&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;cumsum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Notice that when using &lt;code&gt;dplyr&lt;/code&gt; you have to re-assign the result to &lt;code&gt;daily_downloads&lt;/code&gt; because you are copying the original dataset and only after that modify it. This is &lt;code&gt;R&lt;/code&gt;&#39;s standard behavior and is called copy-on-modify.&lt;/p&gt;
+&lt;p&gt;Using &lt;code&gt;data.table&lt;/code&gt;&#39;s special &lt;code&gt;:=&lt;/code&gt; operator you can avoid the copying and instead directly add a new column to the existing dataset &lt;em&gt;in place&lt;/em&gt;. This can save you a lot of time and memory when working with large datasets. Arguably, this is overkill here but since I was using &lt;code&gt;data.table&lt;/code&gt; already I wanted to stick with it rather than switching to &lt;code&gt;dplyr&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Next, let&amp;rsquo;s calculate the total downloads by country.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;downloads_by_country&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;downloads[&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;.N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;by&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;country]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;downloads_by_country&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;##    country   N
+## 1:      ES   5
+## 2:      CZ   1
+## 3:      US 204
+## 4:      CA   7
+## 5:      VE   3
+## 6:      CN  12
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The countries are coded according to the &lt;a href=&#34;https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2&#34;&gt;ISO 3166-1 alpha-2&lt;/a&gt; standard. Transforming these two letter codes into more readable country names can be done with the &lt;code&gt;countrycode&lt;/code&gt; package.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;downloads_by_country[&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;country&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;countrycode&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;countrycode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;country&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;iso2c&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;country.name&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;That&amp;rsquo;s it for part 1. In &lt;a href=&#34;/posts/ggcharts-cran-downloads-part-2/&#34;&gt;part 2&lt;/a&gt; I will continue with creating a data visualization of the downloads. In the meantime feel free to ask me any question you may have about this post in the comments below.&lt;/p&gt;
+</description>
+			<content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
+<p>It&rsquo;s been a little over two weeks since my <a href="https://thomas-neitmann.github.io/ggcharts/index.html"><code>ggcharts</code></a> package has been published on CRAN. As you can imagine I am curious to see how many people actually use the package. While there is no way to actually measure the usage, the number of package downloads seems like a good proxy to me.</p>
+<h2 id="cran-logs">CRAN Logs</h2>
+<p>Getting data on the number of package downloads is fairly easy thanks to the <code>cranlogs</code> package.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">cranlogs</span><span class="o">::</span><span class="nf">cran_downloads</span><span class="p">(</span><span class="s">&#34;ggcharts&#34;</span><span class="p">,</span> <span class="s">&#34;last-week&#34;</span><span class="p">)</span>
+</code></pre></div><pre><code>##         date count  package
+## 1 2020-05-03    35 ggcharts
+## 2 2020-05-04    43 ggcharts
+## 3 2020-05-05    43 ggcharts
+## 4 2020-05-06    31 ggcharts
+## 5 2020-05-07    43 ggcharts
+## 6 2020-05-08    34 ggcharts
+## 7 2020-05-09    33 ggcharts
+</code></pre><p>Notably, only downloads from RStudio&rsquo;s CRAN mirror are counted here. But I would guess that more than 90% of userRs also use RStudio so it shouldn&rsquo;t be too far off the actual number of downloads.</p>
+<p>I was curious why for some days the number of downloads suddenly dropped to <code>0</code>. As it turned out this is a <a href="https://github.com/r-hub/cranlogs/issues/54">known bug</a>. Thus, I decided to &ldquo;manually&rdquo; download the CRAN logs from <a href="http://cran-logs.rstudio.com/">cran-logs.rstudio.com</a>.</p>
+<h2 id="downloading-a-single-log-file">Downloading a Single Log File</h2>
+<p>If you visit this CRAN logs website you&rsquo;ll see that it contains one file per day. The data is stored in <code>.csv</code> files compressed with <code>gzip</code>. Let&rsquo;s have a look at a single file.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">url</span> <span class="o">&lt;-</span> <span class="s">&#34;http://cran-logs.rstudio.com/2020/2020-04-01.csv.gz&#34;</span>
+<span class="n">file</span> <span class="o">&lt;-</span> <span class="s">&#34;2020-04-01.csv.gz&#34;</span>
+<span class="nf">download.file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+<span class="n">downloads</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">downloads</span><span class="p">)</span>
+</code></pre></div><pre><code>##         date     time     size r_version r_arch    r_os    package  version
+## 1 2020-04-01 18:40:53   813724      &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;    rgenoud  5.8-3.0
+## 2 2020-04-01 18:40:58   258505      &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt; rstudioapi     0.11
+## 3 2020-04-01 18:40:51    13426      &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;        AUC    0.3.0
+## 4 2020-04-01 18:40:54   745075     3.6.3 x86_64 mingw32      Hmisc    4.4-0
+## 5 2020-04-01 18:40:58  1154641      &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;    ggrepel    0.8.2
+## 6 2020-04-01 18:40:56 18271283      &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         BH 1.72.0-3
+##   country ip_id
+## 1      NL     1
+## 2      HK     2
+## 3      US     3
+## 4      GB     4
+## 5      CO     5
+## 6      US     6
+</code></pre><p>If you run this code yourself you will note that the file is quite large (~60 MB) and downloading plus reading the file is slow. But compared to the <code>cran_downloads()</code> output it does contain more information so I think its worth the effort. Personally, I am especially interested in the <code>country</code> column.</p>
+<h2 id="downloading-multiple-log-files">Downloading Multiple Log Files</h2>
+<p>Downloading a single file is nice but I was interested to see data on all downloads since the package was published on CRAN on March 26th. Downloading multiple files is not too difficult because all files follow the same naming structure, namely the date in ISO 8601 format, e.g. <code>2020-02-13.csv.gz</code>. Thus, below I am creating a vector of dates to subsequently loop over.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">start_date</span> <span class="o">&lt;-</span> <span class="nf">as.Date</span><span class="p">(</span><span class="s">&#34;2020-03-26&#34;</span><span class="p">)</span>
+<span class="n">end_date</span> <span class="o">&lt;-</span> <span class="nf">as.Date</span><span class="p">(</span><span class="s">&#34;2020-4-08&#34;</span><span class="p">)</span>
+<span class="n">dates</span> <span class="o">&lt;-</span> <span class="nf">as.Date</span><span class="p">(</span><span class="n">start_date</span><span class="o">:</span><span class="n">end_date</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s">&#34;1970-01-01&#34;</span><span class="p">)</span>
+</code></pre></div><p>Inside <code>lapply()</code> I build the proper URL of the file, download it and read it into <code>R</code>. Next, I delete the file and finally filter only the records of <code>ggcharts</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">base_url</span> <span class="o">&lt;-</span> <span class="s">&#34;http://cran-logs.rstudio.com/2020/&#34;</span>
+<span class="n">downloads</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">dates</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">file</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">date</span><span class="p">),</span> <span class="s">&#34;.csv.gz&#34;</span><span class="p">)</span>
+  <span class="n">url</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+  
+  <span class="nf">download.file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+  <span class="n">downloads</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="nf">file.remove</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  
+  <span class="n">downloads[downloads</span><span class="o">$</span><span class="n">package</span> <span class="o">==</span> <span class="s">&#34;ggcharts&#34;</span><span class="p">,</span> <span class="n">]</span>
+<span class="p">})</span>
+</code></pre></div><p>If you want to run this code yourself, you&rsquo;d better step away from your desk and grep yourself a coffee. It will feel like an eternity until all files are downloaded and read into <code>R</code>.</p>
+<p>So, you may ask, is there a way to speed this up? Sure enough, there is!</p>
+<p>For one, instead of downloading and reading the files sequentially you can do this in parallel thanks to <code>R</code>'s build-in <code>parallel</code> package. In addition, using <code>data.table</code> and its <code>fread()</code> function will dramatically reduce the time it takes to read a single file.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">cl</span> <span class="o">&lt;-</span> <span class="n">parallel</span><span class="o">::</span><span class="nf">makeCluster</span><span class="p">(</span><span class="n">parallel</span><span class="o">::</span><span class="nf">detectCores</span><span class="p">())</span>
+<span class="n">downloads</span> <span class="o">&lt;-</span> <span class="n">parallel</span><span class="o">::</span><span class="nf">parLapply</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="n">dates</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">base_url</span> <span class="o">&lt;-</span> <span class="s">&#34;http://cran-logs.rstudio.com/2020/&#34;</span>
+  <span class="n">file</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">date</span><span class="p">),</span> <span class="s">&#34;.csv.gz&#34;</span><span class="p">)</span>
+  <span class="n">url</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+  
+  <span class="nf">download.file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+  <span class="n">downloads</span> <span class="o">&lt;-</span> <span class="n">data.table</span><span class="o">::</span><span class="nf">fread</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="nf">file.remove</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  
+  <span class="n">downloads[package</span> <span class="o">==</span> <span class="s">&#34;ggcharts&#34;</span><span class="n">]</span>
+<span class="p">})</span>
+<span class="n">parallel</span><span class="o">::</span><span class="nf">stopCluster</span><span class="p">(</span><span class="n">cl</span><span class="p">)</span>
+</code></pre></div><p>This code will only run on Windows. If you are using <code>R</code> on macOS or Linux this will do the trick instead.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads</span> <span class="o">&lt;-</span> <span class="n">parallel</span><span class="o">::</span><span class="nf">mclapply</span><span class="p">(</span><span class="n">dates</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">base_url</span> <span class="o">&lt;-</span> <span class="s">&#34;http://cran-logs.rstudio.com/2020/&#34;</span>
+  <span class="n">file</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">date</span><span class="p">),</span> <span class="s">&#34;.csv.gz&#34;</span><span class="p">)</span>
+  <span class="n">url</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+  
+  <span class="nf">download.file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+  <span class="n">downloads</span> <span class="o">&lt;-</span> <span class="n">data.table</span><span class="o">::</span><span class="nf">fread</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="nf">file.remove</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  
+  <span class="n">downloads[package</span> <span class="o">==</span> <span class="s">&#34;ggcharts&#34;</span><span class="n">]</span>
+<span class="p">})</span>
+</code></pre></div><p>Note that I moved the <code>base_url</code> assignment inside of the lambda function. Not doing so will result in an error because the function is executed in its own environment which does not have access to <code>base_url</code> in the global environment.</p>
+<p>Running this code will still take some time but is <strong><em>much</em></strong> faster than the solution with <code>lapply()</code> and <code>read.csv()</code>.</p>
+<p>Just like <code>lapply()</code>, <code>parallel::parLapply()</code> and <code>parallel::mclapply()</code> return a list. Combining the individual datasets inside the list is easy.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads</span> <span class="o">&lt;-</span> <span class="n">data.table</span><span class="o">::</span><span class="nf">rbindlist</span><span class="p">(</span><span class="n">downloads</span><span class="p">)</span>
+</code></pre></div><h2 id="aggregating-the-data">Aggregating the Data</h2>
+<p>At this point <code>downloads</code> contains one row per download of <code>ggcharts</code>. Getting the daily downloads can be achieved like this.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">daily_downloads</span> <span class="o">&lt;-</span> <span class="n">downloads[</span><span class="p">,</span> <span class="n">.N</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="n">date]</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">daily_downloads</span><span class="p">)</span>
+</code></pre></div><pre><code>##          date  N
+## 1: 2020-03-26 11
+## 2: 2020-03-27 29
+## 3: 2020-03-28 30
+## 4: 2020-03-29 39
+## 5: 2020-03-30 35
+## 6: 2020-03-31 31
+</code></pre><p>This is <code>data.table</code> syntax. The equivalent <code>dplyr</code> code looks like this.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads</span> <span class="o">%&gt;%</span>
+  <span class="nf">group_by</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">summarise</span><span class="p">(</span><span class="n">N</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span>
+</code></pre></div><p>The <code>date</code> column is still a <code>character</code> at this point. Let&rsquo;s change that and in addition calculate the cumulative downloads.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">daily_downloads[</span><span class="p">,</span> <span class="n">date</span> <span class="o">:=</span> <span class="nf">as.Date</span><span class="p">(</span><span class="n">date</span><span class="p">)</span><span class="n">]</span>
+<span class="n">daily_downloads[</span><span class="p">,</span> <span class="n">cumulative_N</span> <span class="o">:=</span> <span class="nf">cumsum</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="n">]</span>
+</code></pre></div><p>If you are not used to working with <code>data.table</code> then you may wonder what this strange looking syntax is about. With <code>dplyr</code> you&rsquo;d do something like this instead.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">daily_downloads</span> <span class="o">&lt;-</span> <span class="n">daily_downloads</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="nf">as.Date</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">cumulative_N</span> <span class="o">=</span> <span class="nf">cumsum</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+</code></pre></div><p>Notice that when using <code>dplyr</code> you have to re-assign the result to <code>daily_downloads</code> because you are copying the original dataset and only after that modify it. This is <code>R</code>'s standard behavior and is called copy-on-modify.</p>
+<p>Using <code>data.table</code>'s special <code>:=</code> operator you can avoid the copying and instead directly add a new column to the existing dataset <em>in place</em>. This can save you a lot of time and memory when working with large datasets. Arguably, this is overkill here but since I was using <code>data.table</code> already I wanted to stick with it rather than switching to <code>dplyr</code>.</p>
+<p>Next, let&rsquo;s calculate the total downloads by country.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads_by_country</span> <span class="o">&lt;-</span> <span class="n">downloads[</span><span class="p">,</span> <span class="n">.N</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="n">country]</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">downloads_by_country</span><span class="p">)</span>
+</code></pre></div><pre><code>##    country   N
+## 1:      ES   5
+## 2:      CZ   1
+## 3:      US 204
+## 4:      CA   7
+## 5:      VE   3
+## 6:      CN  12
+</code></pre><p>The countries are coded according to the <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> standard. Transforming these two letter codes into more readable country names can be done with the <code>countrycode</code> package.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">downloads_by_country[</span><span class="p">,</span> <span class="n">country</span> <span class="o">:=</span> <span class="n">countrycode</span><span class="o">::</span><span class="nf">countrycode</span><span class="p">(</span><span class="n">country</span><span class="p">,</span> <span class="s">&#34;iso2c&#34;</span><span class="p">,</span> <span class="s">&#34;country.name&#34;</span><span class="p">)</span><span class="n">]</span>
+</code></pre></div><p>That&rsquo;s it for part 1. In <a href="/posts/ggcharts-cran-downloads-part-2/">part 2</a> I will continue with creating a data visualization of the downloads. In the meantime feel free to ask me any question you may have about this post in the comments below.</p>
+]]></content>
+		</item>
+		
+	</channel>
 </rss>
