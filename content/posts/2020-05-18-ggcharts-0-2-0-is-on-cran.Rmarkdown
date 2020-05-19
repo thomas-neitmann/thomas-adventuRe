@@ -16,7 +16,7 @@ images: ~
 
 ## Introduction
 
-A week ago the second release of my [`{ggcharts}`]((https://thomas-neitmann.github.io/ggcharts/index.html)) package was published on CRAN. `{ggcharts}` aims to get you to your desired plot faster. It provides a high-level interface for creating common plots using `{ggplot2}` and does the heavy lifting for you. The resulting plots are `ggplot` objects so you can further tweak them using any `{ggplot2}` function.
+A week ago the second release of my [`{ggcharts}`](https://thomas-neitmann.github.io/ggcharts/index.html) package was published on CRAN. `{ggcharts}` aims to get you to your desired plot faster. It provides a high-level interface for creating common plots using `{ggplot2}` and does the heavy lifting for you. The resulting plots are `ggplot` objects so you can further tweak them using any `{ggplot2}` function.
 
 
 ## Major new feature: themes
