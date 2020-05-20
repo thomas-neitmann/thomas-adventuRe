@@ -13,6 +13,18 @@
     
     
     <item>
+      <title>Enhance your {ggplot2} data visualizations with {ggtext}</title>
+      <link>/posts/enhance-ggplot2-with-ggtext/</link>
+      <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/enhance-ggplot2-with-ggtext/</guid>
+      <description>I am super exciting to share with you my recent &amp;ldquo;discovery&amp;rdquo; of the {ggtext} R package.
+I had looked for a solution to color individual words in the title of a {ggplot2} data visualization and {ggtext} provided me with a great solution for doing just that (and more).
+So, how does it work? Have a look at this example:
+library(ggplot2)library(dplyr)data(biomedicalrevenue, package = &amp;#34;ggcharts&amp;#34;)plot &amp;lt;- biomedicalrevenue %&amp;gt;%filter(company %in% c(&amp;#34;Roche&amp;#34;, &amp;#34;Novartis&amp;#34;)) %&amp;gt;%ggplot(aes(year, revenue, color = company)) +geom_line(size = 1.</description>
+    </item>
+    
+    <item>
       <title>{ggcharts 0.2.0} is on CRAN</title>
       <link>/posts/ggcharts-0-2-0-is-on-cran/</link>
       <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
@@ -101,19 +113,6 @@ The pharmaceutical industry, which I work in, is still SAS dominated so my prima
       <guid>/about/</guid>
       <description>My name is Thomas Neitmann. I am a R enthusiast currently working for Swiss pharmaceutcial company Roche as a Statistical Programmer Analyst for late-phase clinical trials in oncology.
 My R journey began in 2014 when a coworker told me to run an R script to &amp;ldquo;analyze some data&amp;rdquo;. Having never programmed before at that time I was overwhelmed. But I took on the challenge and soon realized the power and joy of programming.</description>
-    </item>
-    
-    <item>
-      <title>Streamline your dplyr chains with count()</title>
-      <link>/posts/dplyr-count/</link>
-      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/dplyr-count/</guid>
-      <description>If you frequently use chains like this
-data %&amp;gt;%group_by(var1, var2) %&amp;gt;%summarise(n = n())consider using
-count(data, var1, var2)instead. It produces the same output, you need to type less and the code is more expressive.
-By default, the column containing the count will be named n. Want to change that? Simply set the name parameter of count(), e.g.
-data(iris)dplyr::count(iris, Species, name = &amp;#34;n_flowers&amp;#34;)## # A tibble: 3 x 2## Species n_flowers## &amp;lt;fct&amp;gt; &amp;lt;int&amp;gt;## 1 setosa 50## 2 versicolor 50## 3 virginica 50</description>
     </item>
     
   </channel>

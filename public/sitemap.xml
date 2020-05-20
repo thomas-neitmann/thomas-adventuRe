@@ -3,17 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/categories/article/</loc>
-    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/categories/</loc>
-    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
+    <lastmod>2020-05-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/datavisualization/</loc>
+    <lastmod>2020-05-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/enhance-ggplot2-with-ggtext/</loc>
+    <lastmod>2020-05-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/ggplot2/</loc>
+    <lastmod>2020-05-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/</loc>
+    <lastmod>2020-05-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2020-05-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-05-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/article/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
   </url>
   
@@ -28,32 +53,12 @@
   </url>
   
   <url>
-    <loc>/posts/</loc>
-    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/posts/ggcharts-0-2-0-is-on-cran/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/posts/ggcharts-cran-downloads-part-2/</loc>
-    <lastmod>2020-05-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/ggplot2/</loc>
     <lastmod>2020-05-03T00:00:00+00:00</lastmod>
   </url>
   
@@ -160,11 +165,6 @@
   <url>
     <loc>/posts/is-a-library-the-same-thing-as-a-package/</loc>
     <lastmod>2020-02-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/enhacing-ggplot2-with-ggtext/</loc>
-    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>

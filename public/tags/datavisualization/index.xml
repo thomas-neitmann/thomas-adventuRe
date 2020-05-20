@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 18 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/datavisualization/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Enhance your {ggplot2} data visualizations with {ggtext}</title>
+      <link>/posts/enhance-ggplot2-with-ggtext/</link>
+      <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/enhance-ggplot2-with-ggtext/</guid>
+      <description>I am super exciting to share with you my recent &amp;ldquo;discovery&amp;rdquo; of the {ggtext} R package.
+I had looked for a solution to color individual words in the title of a {ggplot2} data visualization and {ggtext} provided me with a great solution for doing just that (and more).
+So, how does it work? Have a look at this example:
+library(ggplot2)library(dplyr)data(biomedicalrevenue, package = &amp;#34;ggcharts&amp;#34;)plot &amp;lt;- biomedicalrevenue %&amp;gt;%filter(company %in% c(&amp;#34;Roche&amp;#34;, &amp;#34;Novartis&amp;#34;)) %&amp;gt;%ggplot(aes(year, revenue, color = company)) +geom_line(size = 1.</description>
+    </item>
     
     <item>
       <title>{ggcharts 0.2.0} is on CRAN</title>
@@ -74,18 +86,6 @@ gapminder_wide &amp;lt;- gapminder %&amp;gt;%mutate(pop = pop / 1e6) %&amp;gt;%
 You may start out with an implementation similar to this one.
 library(ggplot2)theme_set(ggcharts::theme_hermit(grid = &amp;#34;XY&amp;#34;))data(&amp;#34;mtcars&amp;#34;)scatter_plot &amp;lt;- function(data, x, y) {ggplot(data, aes(x, y)) +geom_point(color = &amp;#34;yellow&amp;#34;)}That won&amp;rsquo;t work though.
 scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; not foundIf you call this function, R will look for a variable called hp rather than looking for a column with that name inside the data frame you passed as the first argument.</description>
-    </item>
-    
-    <item>
-      <title>Enhance your ggplot2 data visualizations with ggtext</title>
-      <link>/posts/enhacing-ggplot2-with-ggtext/</link>
-      <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/enhacing-ggplot2-with-ggtext/</guid>
-      <description>I am super exciting to share with you my recent &amp;ldquo;discovery&amp;rdquo; of the ggtext R package.
-I had looked for a solution to color individual words in the title of a ggplot2 data visualization and ggtext provided me with a great solution for doing just that (and more).
-So, how does it work? Have a look at this example:
-library(ggplot2)library(dplyr)data(biomedicalrevenue, package = &amp;#34;ggcharts&amp;#34;)plot &amp;lt;- biomedicalrevenue %&amp;gt;%filter(company %in% c(&amp;#34;Roche&amp;#34;, &amp;#34;Novartis&amp;#34;)) %&amp;gt;%ggplot(aes(year, revenue, color = company)) +geom_line(size = 1.</description>
     </item>
     
     <item>
