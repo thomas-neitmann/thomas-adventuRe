@@ -64,6 +64,10 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     name = "github"
     url = "https://github.com/thomas-neitmann"
 
+  [[params.social]]
+    name = "twitter"
+    url = "https://twitter.com/thomas_neitmann"
+
 [menu]
 
   [[menu.main]]
