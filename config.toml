@@ -1,7 +1,7 @@
 baseURL = "https://thomasadventure.blog/"
 languageCode = "en-us"
 defaultContentLanguage = "en"
-title = "Thomas' adventuRe"
+title = "Thomas’ adventuRe"
 theme = "hermit"
 # enableGitInfo = true
 pygmentsCodefences  = true
