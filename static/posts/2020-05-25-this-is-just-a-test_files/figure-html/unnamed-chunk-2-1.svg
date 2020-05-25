@@ -10,6 +10,10 @@
       stroke-miterlimit: 10.00;
     }
   ]]></style>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i');
+    @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700,700i');
+    </style>
 </defs>
 <rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
 <rect x='0.000000000000064' y='0.00' width='504.00' height='360.00' style='stroke-width: 1.36; stroke: #F4F7FC; fill: #F4F7FC;' />
