@@ -13,6 +13,15 @@
     
     
     <item>
+      <title>This is just a test</title>
+      <link>/posts/this-is-just-a-test/</link>
+      <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/this-is-just-a-test/</guid>
+      <description>knitr::opts_chunk$set(dev = &amp;#34;svglite&amp;#34;)library(ggcharts)## Loading required package: ggplot2bar_chart(diamonds, cut)</description>
+    </item>
+    
+    <item>
       <title>Enhance your {ggplot2} data visualizations with {ggtext}</title>
       <link>/posts/enhance-ggplot2-with-ggtext/</link>
       <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
@@ -103,16 +112,6 @@ An obvious solution to display the current date is to update the date field in t
       <guid>/posts/a-case-for-the-assign-function/</guid>
       <description>In R, assign() is one of those functions that common wisdom says you shouldn&amp;rsquo;t be using. My aim in this blog post is to convince you that assign() can be very handy.
 The pharmaceutical industry, which I work in, is still SAS dominated so my primary data source at work are .sas7bdat files. Thus, whenever I use R the first thing I have to do is read in those files.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>My name is Thomas Neitmann. I am a R enthusiast currently working for Swiss pharmaceutcial company Roche as a Statistical Programmer Analyst for late-phase clinical trials in oncology.
-My R journey began in 2014 when a coworker told me to run an R script to &amp;ldquo;analyze some data&amp;rdquo;. Having never programmed before at that time I was overwhelmed. But I took on the challenge and soon realized the power and joy of programming.</description>
     </item>
     
   </channel>

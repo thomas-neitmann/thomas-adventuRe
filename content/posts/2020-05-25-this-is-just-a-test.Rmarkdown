@@ -1,0 +1,20 @@
+---
+title: This is just a test
+author: Thomas Neitmann
+date: '2020-05-25'
+slug: this-is-just-a-test
+categories: []
+tags: []
+toc: no
+images: ~
+---
+
+```{r}
+knitr::opts_chunk$set(dev = "svglite")
+```
+
+```{r}
+library(ggcharts)
+bar_chart(diamonds, cut)
+```
+
