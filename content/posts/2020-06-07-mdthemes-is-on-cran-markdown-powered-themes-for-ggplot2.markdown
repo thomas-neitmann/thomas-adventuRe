@@ -1,5 +1,5 @@
 ---
-title: '{mdthemes} Is On CRAN: Markdown Powered Themes for {ggplot2}'
+title: '{mdthemes} is on CRAN: markdown powered themes for {ggplot2}'
 author: Thomas Neitmann
 date: '2020-06-07'
 slug: mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2
@@ -16,11 +16,11 @@ images: ~
 
 
 
-I'm very pleased to announce that `{mdthemes}`—my second R package—is now available from CRAN. `{mdthemes}` adds support for rendering text as markdown to the themes from `{ggplot2}`, `{ggthemes}`, `{hrbrthemes}`, `{tvthemes}` and `{cowplot}`. All themes start with `md_` followed by the name of the original theme, e.g. `md_theme_bw()`.
+I'm very pleased to announce that `{mdthemes}`—my second R package—is now available from CRAN. `{mdthemes}` adds support for rendering text as markdown to the themes from `{ggplot2}`, `{ggthemes}`, `{hrbrthemes}`, `{tvthemes}` and `{cowplot}`. It contains 55 themes in total. All themes start with `md_` followed by the name of the original theme, e.g. `md_theme_bw()`.
 
-I've been meaning to put this package on CRAN for quite some time but I had to wait until `{ggtext}`—which does all the hard work for `{mdthemes}`—was available from CRAN. Fortunately, `{ggtext}` was accepted last week so I could go ahead to submit `{mdthemes}`. Five days later it got accepted without any comments. Quite a pleasant experience.
+I've been meaning to put this package on CRAN for quite some time. However, before submitting I had to wait until `{ggtext}`—which does all the hard work for `{mdthemes}`—was available from CRAN. Fortunately, `{ggtext}` was accepted recently so I could go ahead with submitting `{mdthemes}`. Five days later it got accepted without any comments. Quite a pleasant experience.
 
-To motivate the use of `{mdthemes}` let's say you'd like to use `theme_minimal()` but want a bold header rather then the plain default one. With vanilla `{ggplot2}` you'd have to rely on tweaking the theme using `theme()`.
+To motivate the use of `{mdthemes}` let's say you'd like to use `theme_minimal()` but want a bold title rather then the plain default one. With vanilla `{ggplot2}` you'd have to rely on using `theme()`.
 
 
 ```r
@@ -49,7 +49,7 @@ ggplot(mtcars, aes(hp, mpg)) +
 
 <img src="/posts/2020-06-07-mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
-Notice that all I had to do was to put the title inside two asterisks and use `md_theme_minimal()` instead of `theme_minimal()`.
+All I had to do was to put the title inside two asterisks and use `md_theme_minimal()` instead of `theme_minimal()`.
 
 So far so good. Let's take a look at another, more complex example.
 
@@ -67,7 +67,7 @@ ggplot(mtcars, aes(hp, mpg, color = factor(cyl))) +
 
 <img src="/posts/2020-06-07-mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
-As you can see you are not limited to making the whole title bold (as is the case when using `theme()`) but you can rather make individual words bold. The same is true for italics. Just wrap the word inside `*`. To make something bolditalic wrap it inside `**_`.
+As you can see you are not limited to making the whole title bold (as is the case when using `theme()`). Rather you can bold individual words. The same is true for italics. Just wrap the word inside `*`. To make something bolditalic wrap it inside `**_`.
 
 Next, let's have a look at coloring words.
 
@@ -96,9 +96,9 @@ line_chart
 
 <img src="/posts/2020-06-07-mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
-I wrapped the words in the title I wanted to color inside a HTML `<span>` tag and used inline CSS to color them. That way I could get rid of the legend which I think is really neat.
+I wrapped the company names in the title inside a HTML `<span>` tag and used inline CSS to color them. That way I could get rid of the legend which I think is really neat.
 
-You are not limited to coloring the title, you can do the same with the axis tick labels.
+You are not limited to coloring the title, you can do the same with the axis tick labels (or any text for that matter).
 
 
 ```r
@@ -130,14 +130,17 @@ biomedicalrevenue %>%
     y = "Revenue in 2018 (Billion USD)",
     title = glue::glue("Two {shiny::span('**Swiss**', style='color:#D52B1E')} Companies Are Among The Top 10 Big Pharma")
   ) +
-  md_theme_minimal_vgrid()
+  md_theme_minimal_vgrid() +
+  theme(plot.title.position = "plot")
 ```
 
 <img src="/posts/2020-06-07-mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 Notice that I used the little helper function `shiny::span()` to create the required HTML for the title rather then writing it by hand.
 
-Finally, I would like to mention that even if a theme you'd like to use is not included in `{mdthemes}` you can turn it into a markdown theme using the `as_md_theme()` function. In fact that's exactly what I do inside the package. Have a look at the function body of `md_theme_minimal()` for example.
+As I mentioned in the beginning of this post, `{ggtext}` is the package which powers `{mdthemes}`. `{ggtext}` provides `element_markdown()` which—unlike `element_text()`—renders text as markdown/HTML. What `{mdthemes}` does is basically substituting every text related theme element that usually is `element_text()` with `element_markdown()`. To get all full picture of the subset of markdown/HTML that `{ggtext}` currently supports, check out the [package website](https://wilkelab.org/ggtext/).
+
+I would like to mention that you can turn *any* theme into a markdown theme using the `as_md_theme()` function. In fact that's exactly what I do inside the package. Have a look at the function body of `md_theme_minimal()` for example.
 
 
 ```r
@@ -148,11 +151,11 @@ md_theme_minimal
 function(...) {
   as_md_theme(ggplot2::theme_minimal(...))
 }
-<bytecode: 0x000000001928c4a0>
+<bytecode: 0x000000001a0ef880>
 <environment: namespace:mdthemes>
 ```
 
-Let's see this in action.
+Let's see this in action. Using the non-markdown theme `theme_hermit()` the text is not rendered.
 
 
 ```r
@@ -162,7 +165,7 @@ line_chart +
 
 <img src="/posts/2020-06-07-mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
-Using the non-markdown theme `theme_hermit()` the text is not rendered.
+But now it is!
 
 
 ```r
@@ -172,8 +175,6 @@ line_chart +
 
 <img src="/posts/2020-06-07-mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
-But now it is!
+Is `{mdthemes}` missing your favorite theme(s)? Please let me know by opening an issue on [GitHub](https://github.com/thomas-neitmann/mdthemes/issues). I'm more than happy to add it.
 
-That's it for this post. Make sure to `install.packages("mdthemes")` and if you enjoy using the package please star in on [GitHub](https://github.com/thomas-neitmann/mdthemes).
-
-If you want to learn how this actually works, make sure to check out the [`{ggtext}`](https://wilkelab.org/ggtext/) package.
+That's it. Make sure to `install.packages("mdthemes")` and if you enjoy using the package please star in on [GitHub](https://github.com/thomas-neitmann/mdthemes). Thank you!

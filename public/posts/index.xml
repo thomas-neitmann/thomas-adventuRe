@@ -10,14 +10,14 @@
 		<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
 		
 		<item>
-			<title>{mdthemes} Is On CRAN: Markdown Powered Themes for {ggplot2}</title>
+			<title>{mdthemes} is on CRAN: markdown powered themes for {ggplot2}</title>
 			<link>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</link>
 			<pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
 			
 			<guid>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</guid>
-			<description>&lt;p&gt;I&amp;rsquo;m very pleased to announce that &lt;code&gt;{mdthemes}&lt;/code&gt;—my second R package—is now available from CRAN. &lt;code&gt;{mdthemes}&lt;/code&gt; adds support for rendering text as markdown to the themes from &lt;code&gt;{ggplot2}&lt;/code&gt;, &lt;code&gt;{ggthemes}&lt;/code&gt;, &lt;code&gt;{hrbrthemes}&lt;/code&gt;, &lt;code&gt;{tvthemes}&lt;/code&gt; and &lt;code&gt;{cowplot}&lt;/code&gt;. All themes start with &lt;code&gt;md_&lt;/code&gt; followed by the name of the original theme, e.g. &lt;code&gt;md_theme_bw()&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;ve been meaning to put this package on CRAN for quite some time but I had to wait until &lt;code&gt;{ggtext}&lt;/code&gt;—which does all the hard work for &lt;code&gt;{mdthemes}&lt;/code&gt;—was available from CRAN. Fortunately, &lt;code&gt;{ggtext}&lt;/code&gt; was accepted last week so I could go ahead to submit &lt;code&gt;{mdthemes}&lt;/code&gt;. Five days later it got accepted without any comments. Quite a pleasant experience.&lt;/p&gt;
-&lt;p&gt;To motivate the use of &lt;code&gt;{mdthemes}&lt;/code&gt; let&amp;rsquo;s say you&amp;rsquo;d like to use &lt;code&gt;theme_minimal()&lt;/code&gt; but want a bold header rather then the plain default one. With vanilla &lt;code&gt;{ggplot2}&lt;/code&gt; you&amp;rsquo;d have to rely on tweaking the theme using &lt;code&gt;theme()&lt;/code&gt;.&lt;/p&gt;
+			<description>&lt;p&gt;I&amp;rsquo;m very pleased to announce that &lt;code&gt;{mdthemes}&lt;/code&gt;—my second R package—is now available from CRAN. &lt;code&gt;{mdthemes}&lt;/code&gt; adds support for rendering text as markdown to the themes from &lt;code&gt;{ggplot2}&lt;/code&gt;, &lt;code&gt;{ggthemes}&lt;/code&gt;, &lt;code&gt;{hrbrthemes}&lt;/code&gt;, &lt;code&gt;{tvthemes}&lt;/code&gt; and &lt;code&gt;{cowplot}&lt;/code&gt;. It contains 55 themes in total. All themes start with &lt;code&gt;md_&lt;/code&gt; followed by the name of the original theme, e.g. &lt;code&gt;md_theme_bw()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve been meaning to put this package on CRAN for quite some time. However, before submitting I had to wait until &lt;code&gt;{ggtext}&lt;/code&gt;—which does all the hard work for &lt;code&gt;{mdthemes}&lt;/code&gt;—was available from CRAN. Fortunately, &lt;code&gt;{ggtext}&lt;/code&gt; was accepted recently so I could go ahead with submitting &lt;code&gt;{mdthemes}&lt;/code&gt;. Five days later it got accepted without any comments. Quite a pleasant experience.&lt;/p&gt;
+&lt;p&gt;To motivate the use of &lt;code&gt;{mdthemes}&lt;/code&gt; let&amp;rsquo;s say you&amp;rsquo;d like to use &lt;code&gt;theme_minimal()&lt;/code&gt; but want a bold title rather then the plain default one. With vanilla &lt;code&gt;{ggplot2}&lt;/code&gt; you&amp;rsquo;d have to rely on using &lt;code&gt;theme()&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ggplot2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dplyr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mdthemes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
@@ -34,7 +34,7 @@
   &lt;span class=&#34;nf&#34;&gt;ggtitle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;**Seminal Scatter Plot**&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;md_theme_minimal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;Notice that all I had to do was to put the title inside two asterisks and use &lt;code&gt;md_theme_minimal()&lt;/code&gt; instead of &lt;code&gt;theme_minimal()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;All I had to do was to put the title inside two asterisks and use &lt;code&gt;md_theme_minimal()&lt;/code&gt; instead of &lt;code&gt;theme_minimal()&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;So far so good. Let&amp;rsquo;s take a look at another, more complex example.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;nf&#34;&gt;ggplot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mtcars&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;aes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mpg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;color&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;factor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cyl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;geom_point&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
@@ -45,7 +45,7 @@
   &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;md_theme_fivethirtyeight&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;As you can see you are not limited to making the whole title bold (as is the case when using &lt;code&gt;theme()&lt;/code&gt;) but you can rather make individual words bold. The same is true for italics. Just wrap the word inside &lt;code&gt;*&lt;/code&gt;. To make something bolditalic wrap it inside &lt;code&gt;**_&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;As you can see you are not limited to making the whole title bold (as is the case when using &lt;code&gt;theme()&lt;/code&gt;). Rather you can bold individual words. The same is true for italics. Just wrap the word inside &lt;code&gt;*&lt;/code&gt;. To make something bolditalic wrap it inside &lt;code&gt;**_&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Next, let&amp;rsquo;s have a look at coloring words.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;nf&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;biomedicalrevenue&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;ggcharts&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 
@@ -67,8 +67,8 @@
   &lt;span class=&#34;nf&#34;&gt;md_theme_economist_white&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;line_chart&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;I wrapped the words in the title I wanted to color inside a HTML &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt; tag and used inline CSS to color them. That way I could get rid of the legend which I think is really neat.&lt;/p&gt;
-&lt;p&gt;You are not limited to coloring the title, you can do the same with the axis tick labels.&lt;/p&gt;
+&lt;p&gt;I wrapped the company names in the title inside a HTML &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt; tag and used inline CSS to color them. That way I could get rid of the legend which I think is really neat.&lt;/p&gt;
+&lt;p&gt;You are not limited to coloring the title, you can do the same with the axis tick labels (or any text for that matter).&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;nf&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;gapminder&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;gapminder&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;label&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;if &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%in%&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Roche&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Novartis&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
@@ -97,27 +97,28 @@
     &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Revenue in 2018 (Billion USD)&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;title&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;glue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;glue&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Two {shiny::span(&amp;#39;**Swiss**&amp;#39;, style=&amp;#39;color:#D52B1E&amp;#39;)} Companies Are Among The Top 10 Big Pharma&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
   &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
-  &lt;span class=&#34;nf&#34;&gt;md_theme_minimal_vgrid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+  &lt;span class=&#34;nf&#34;&gt;md_theme_minimal_vgrid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  &lt;span class=&#34;nf&#34;&gt;theme&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;plot.title.position&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;plot&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;Notice that I used the little helper function &lt;code&gt;shiny::span()&lt;/code&gt; to create the required HTML for the title rather then writing it by hand.&lt;/p&gt;
-&lt;p&gt;Finally, I would like to mention that even if a theme you&amp;rsquo;d like to use is not included in &lt;code&gt;{mdthemes}&lt;/code&gt; you can turn it into a markdown theme using the &lt;code&gt;as_md_theme()&lt;/code&gt; function. In fact that&amp;rsquo;s exactly what I do inside the package. Have a look at the function body of &lt;code&gt;md_theme_minimal()&lt;/code&gt; for example.&lt;/p&gt;
+&lt;p&gt;As I mentioned in the beginning of this post, &lt;code&gt;{ggtext}&lt;/code&gt; is the package which powers &lt;code&gt;{mdthemes}&lt;/code&gt;. &lt;code&gt;{ggtext}&lt;/code&gt; provides &lt;code&gt;element_markdown()&lt;/code&gt; which—unlike &lt;code&gt;element_text()&lt;/code&gt;—renders text as markdown/HTML. What &lt;code&gt;{mdthemes}&lt;/code&gt; does is basically substituting every text related theme element that usually is &lt;code&gt;element_text()&lt;/code&gt; with &lt;code&gt;element_markdown()&lt;/code&gt;. To get all full picture of the subset of markdown/HTML that &lt;code&gt;{ggtext}&lt;/code&gt; currently supports, check out the &lt;a href=&#34;https://wilkelab.org/ggtext/&#34;&gt;package website&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I would like to mention that you can turn &lt;em&gt;any&lt;/em&gt; theme into a markdown theme using the &lt;code&gt;as_md_theme()&lt;/code&gt; function. In fact that&amp;rsquo;s exactly what I do inside the package. Have a look at the function body of &lt;code&gt;md_theme_minimal()&lt;/code&gt; for example.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;md_theme_minimal&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;function(...) {
   as_md_theme(ggplot2::theme_minimal(...))
 }
-&amp;lt;bytecode: 0x000000001928c4a0&amp;gt;
+&amp;lt;bytecode: 0x000000001a0ef880&amp;gt;
 &amp;lt;environment: namespace:mdthemes&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Let&amp;rsquo;s see this in action.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Let&amp;rsquo;s see this in action. Using the non-markdown theme &lt;code&gt;theme_hermit()&lt;/code&gt; the text is not rendered.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;line_chart&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
   &lt;span class=&#34;n&#34;&gt;ggcharts&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;theme_hermit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;grid&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;XY&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;Using the non-markdown theme &lt;code&gt;theme_hermit()&lt;/code&gt; the text is not rendered.&lt;/p&gt;
+&lt;p&gt;But now it is!&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;line_chart&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;as_md_theme&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ggcharts&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;theme_hermit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;grid&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;XY&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;But now it is!&lt;/p&gt;
-&lt;p&gt;That&amp;rsquo;s it for this post. Make sure to &lt;code&gt;install.packages(&amp;quot;mdthemes&amp;quot;)&lt;/code&gt; and if you enjoy using the package please star in on &lt;a href=&#34;https://github.com/thomas-neitmann/mdthemes&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;If you want to learn how this actually works, make sure to check out the &lt;a href=&#34;https://wilkelab.org/ggtext/&#34;&gt;&lt;code&gt;{ggtext}&lt;/code&gt;&lt;/a&gt; package.&lt;/p&gt;
+&lt;p&gt;Is &lt;code&gt;{mdthemes}&lt;/code&gt; missing your favorite theme(s)? Please let me know by opening an issue on &lt;a href=&#34;https://github.com/thomas-neitmann/mdthemes/issues&#34;&gt;GitHub&lt;/a&gt;. I&amp;rsquo;m more than happy to add it.&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s it. Make sure to &lt;code&gt;install.packages(&amp;quot;mdthemes&amp;quot;)&lt;/code&gt; and if you enjoy using the package please star in on &lt;a href=&#34;https://github.com/thomas-neitmann/mdthemes&#34;&gt;GitHub&lt;/a&gt;. Thank you!&lt;/p&gt;
 </description>
 		</item>
 		
