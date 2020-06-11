@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Calculating change from baseline in R">
+<meta itemprop="description" content="As a statistical programmer working on clinical trials data I frequently have to calculate change from baseline. In clinical trials baseline is typically defined as the last measurement prior to a clinical trial subject receiving any study drug. Change from baseline is frequently calculated for laboratory measurements, e.g. hemoglobin concentration in blood.
+SAS is still the standard used to program datasets in the pharmaceutical industry but R is catching up. Recently, I derived change from baseline for the first time in R.">
+<meta itemprop="datePublished" content="2020-06-11T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-11T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="803">
+
+
+
+<meta itemprop="keywords" content="dplyr,base,datawrangling," /><meta property="og:title" content="Calculating change from baseline in R" />
+<meta property="og:description" content="As a statistical programmer working on clinical trials data I frequently have to calculate change from baseline. In clinical trials baseline is typically defined as the last measurement prior to a clinical trial subject receiving any study drug. Change from baseline is frequently calculated for laboratory measurements, e.g. hemoglobin concentration in blood.
+SAS is still the standard used to program datasets in the pharmaceutical industry but R is catching up. Recently, I derived change from baseline for the first time in R." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/calculating-change-from-baseline-in-r/" />
+<meta property="article:published_time" content="2020-06-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-11T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Calculating change from baseline in R"/>
+<meta name="twitter:description" content="As a statistical programmer working on clinical trials data I frequently have to calculate change from baseline. In clinical trials baseline is typically defined as the last measurement prior to a clinical trial subject receiving any study drug. Change from baseline is frequently calculated for laboratory measurements, e.g. hemoglobin concentration in blood.
+SAS is still the standard used to program datasets in the pharmaceutical industry but R is catching up. Recently, I derived change from baseline for the first time in R."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Calculating change from baseline in R</title>
+	<link rel="stylesheet" href="/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="/css/extra.css">
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Thomas’ adventuRe</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/tags/">Tags</a>
+				<a href="/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://linkedin.com/in/thomasneitmann" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://github.com/thomas-neitmann" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><a href="https://twitter.com/thomas_neitmann" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/tags/">Tags</a></li>
+			<li><a href="/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Jun 11, 2020</span></div>
+				<h1>Calculating change from baseline in R</h1>
+			</header>
+			<div class="content">
+				<p>As a statistical programmer working on clinical trials data I frequently have to calculate change from baseline. In clinical trials baseline is typically defined as the last measurement prior to a clinical trial subject receiving any study drug. Change from baseline is frequently calculated for laboratory measurements, e.g. hemoglobin concentration in blood.</p>
+<p>SAS is still the standard used to program datasets in the pharmaceutical industry but <code>R</code> is catching up. Recently, I derived change from baseline for the first time in <code>R</code>. Using my beloved <code>{dplyr}</code> package this was straightforward to do.</p>
+<p>To illustrate this I will use an artificial dataset of a clinical trial. The data comes from the <a href="https://www.psiweb.org/sigs-special-interest-groups/visualisation/welcome-to-wonderful-wednesdays">Wonderful Wednesday</a> initiative of the data visualization special interest group within <a href="https://www.psiweb.org/">PSI</a>. The dataset contains six columns:</p>
+<ul>
+<li><strong>USUBJID</strong>: Subject unique identifier</li>
+<li><strong>TRT01PN</strong>: Treatment group (numeric)</li>
+<li><strong>TRT01P</strong>: Treatment group</li>
+<li><strong>AVISITN</strong>: Visit identifier (numeric)</li>
+<li><strong>AVISIT</strong>: Visit identifier</li>
+<li><strong>AVAL</strong>: haemoglobin concentration (g/dL)</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="n">data_source</span> <span class="o">&lt;-</span> <span class="s">&#34;https://raw.githubusercontent.com/VIS-SIG/Wonderful-Wednesdays/master/data/2020/2020-06-10/hgb_data.csv&#34;</span>
+<span class="n">trial_data</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">data_source</span><span class="p">,</span> <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="nf">glimpse</span><span class="p">(</span><span class="n">trial_data</span><span class="p">)</span>
+</code></pre></div><pre><code>## Rows: 2,100
+## Columns: 6
+## $ USUBJID &lt;chr&gt; &quot;ABC123456.000001&quot;, &quot;ABC123456.000001&quot;, &quot;ABC123456.000001&quot;,...
+## $ TRT01PN &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
+## $ TRT01P  &lt;chr&gt; &quot;Treatment E&quot;, &quot;Treatment E&quot;, &quot;Treatment E&quot;, &quot;Treatment E&quot;,...
+## $ AVISITN &lt;int&gt; 10, 20, 30, 40, 50, 60, 70, 10, 20, 30, 40, 50, 60, 70, 10,...
+## $ AVISIT  &lt;chr&gt; &quot;Baseline&quot;, &quot;Week 4&quot;, &quot;Week 8&quot;, &quot;Week 12&quot;, &quot;Week 16&quot;, &quot;Week...
+## $ AVAL    &lt;dbl&gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195863, 10.1...
+</code></pre><p>From the quick <code>glimpse()</code> you can see that each subject has multiple visits: Baseline, Week 4, Week 8 and so forth. To calculate change from baseline I have to subtract the baseline value from the value at each visit. Here&rsquo;s how.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data_chg</span> <span class="o">&lt;-</span> <span class="n">trial_data</span> <span class="o">%&gt;%</span>
+  <span class="nf">arrange</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">,</span> <span class="n">AVISITN</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">group_by</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">CHG</span> <span class="o">=</span> <span class="n">AVAL</span> <span class="o">-</span> <span class="n">AVAL[1L]</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">ungroup</span><span class="p">()</span>
+</code></pre></div><p>First, it&rsquo;s important to arrange the data of each subject in increasing order of <code>AVISITN</code>. Next, I grouped the data by <code>USUBJID</code> such that <code>AVAL[1L]</code> refers to the baseline value of each subject. Finally, I subtracted the baseline value from the value measured at each visit.</p>
+<p>Let&rsquo;s have a look at the result to see whether this actually did what I said it would do.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data_chg</span> <span class="o">%&gt;%</span>
+  <span class="nf">select</span><span class="p">(</span><span class="n">TRT01P</span><span class="p">,</span> <span class="n">USUBJID</span><span class="p">,</span> <span class="n">AVISIT</span><span class="p">,</span> <span class="n">AVAL</span><span class="p">,</span> <span class="n">CHG</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">rmarkdown</span><span class="o">::</span><span class="nf">paged_table</span><span class="p">()</span>
+</code></pre></div><!-- raw HTML omitted -->
+<p>Looks good!</p>
+<p>Alternatively, you could do this which circumvents the need to use <code>arrange()</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data_chg2</span> <span class="o">&lt;-</span> <span class="n">trial_data</span> <span class="o">%&gt;%</span>
+  <span class="nf">group_by</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">CHG</span> <span class="o">=</span> <span class="n">AVAL</span> <span class="o">-</span> <span class="n">AVAL[AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">ungroup</span><span class="p">()</span>
+</code></pre></div><p>Let&rsquo;s check that this in fact produced the same result.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span><span class="n">trial_data_chg</span><span class="p">,</span> <span class="n">trial_data_chg2</span><span class="p">)</span>
+</code></pre></div><pre><code>## No issues were found!
+</code></pre><p>Awesome!</p>
+<p>Next, I will show you how you can achieve the same result using only base <code>R</code>. I will use the good old split-apply-combine strategy.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">by_subject</span> <span class="o">&lt;-</span> <span class="nf">split</span><span class="p">(</span><span class="n">trial_data</span><span class="p">,</span> <span class="n">trial_data</span><span class="o">$</span><span class="n">USUBJID</span><span class="p">)</span>
+<span class="n">by_subject_chg</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">by_subject</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL</span> <span class="o">-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL[data</span><span class="o">$</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span>
+  <span class="n">data</span>
+<span class="p">})</span>
+<span class="n">trial_data_chg3</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="n">by_subject_chg</span><span class="p">)</span>
+<span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span><span class="n">trial_data_chg</span><span class="p">,</span> <span class="n">trial_data_chg3</span><span class="p">)</span>
+</code></pre></div><pre><code>## No issues were found!
+</code></pre><p>Compared to the <code>{dplyr}</code> approach this is a bit clumsy but it certainly does the job and you don&rsquo;t need any add-on packages. <code>split()</code>—as the name suggests—splits its input <code>data.frame</code> into a <code>list</code> of <code>data.frame</code>s, one for each level of the second argument. <code>lapply()</code> applies a function to every element of a <code>list</code>. <code>do.call(rbind, &lt;list&gt;)</code> combines the datasets in the <code>list</code> back to a single <code>data.frame</code>.</p>
+<p>Actually you can combine <code>split()</code> and <code>lapply()</code> into a single step using <code>by()</code> which makes it more concise.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">by_subject_chg</span> <span class="o">&lt;-</span> <span class="nf">by</span><span class="p">(</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">trial_data</span><span class="p">,</span>
+  <span class="n">INDICES</span> <span class="o">=</span> <span class="n">trial_data</span><span class="o">$</span><span class="n">USUBJID</span><span class="p">,</span>
+  <span class="n">FUN</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL</span> <span class="o">-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL[data</span><span class="o">$</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span>
+    <span class="n">data</span>
+  <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">trial_data_chg4</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="n">by_subject_chg</span><span class="p">)</span>
+<span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span><span class="n">trial_data_chg</span><span class="p">,</span> <span class="n">trial_data_chg4</span><span class="p">)</span>
+</code></pre></div><pre><code>## No issues were found!
+</code></pre><p>The example dataset contains only a single laboratory measure but in practice that&rsquo;s never the case. Let&rsquo;s have a look at how to calculate change from baseline when having multiple lab parameters in the dataset. To do so I will duplicate the dataset and add a variable called <code>PARAM</code> to identify different lab measures.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data</span><span class="o">$</span><span class="n">PARAM</span> <span class="o">&lt;-</span> <span class="s">&#34;Hemoglobin&#34;</span>
+<span class="n">trial_data2</span> <span class="o">&lt;-</span> <span class="n">trial_data</span>
+<span class="n">trial_data2</span><span class="o">$</span><span class="n">PARAM</span> <span class="o">&lt;-</span> <span class="s">&#34;WBC&#34;</span>
+<span class="n">trial_data_mult</span> <span class="o">&lt;-</span> <span class="nf">rbind</span><span class="p">(</span><span class="n">trial_data</span><span class="p">,</span> <span class="n">trial_data2</span><span class="p">)</span>
+</code></pre></div><p>First, the <code>{dplyr}</code> version.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data_mult_chg</span> <span class="o">&lt;-</span> <span class="n">trial_data_mult</span> <span class="o">%&gt;%</span>
+  <span class="nf">group_by</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">,</span> <span class="n">PARAM</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">CHG</span> <span class="o">=</span> <span class="n">AVAL</span> <span class="o">-</span> <span class="n">AVAL[AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">ungroup</span><span class="p">()</span>
+<span class="n">rmarkdown</span><span class="o">::</span><span class="nf">paged_table</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">trial_data_mult_chg</span><span class="p">,</span> <span class="m">100</span><span class="p">))</span>
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">rmarkdown</span><span class="o">::</span><span class="nf">paged_table</span><span class="p">(</span><span class="nf">tail</span><span class="p">(</span><span class="n">trial_data_mult_chg</span><span class="p">,</span> <span class="m">100</span><span class="p">))</span>
+</code></pre></div><!-- raw HTML omitted -->
+<p>That was easy. All I had to do was to add a second grouping variable, i.e. <code>PARAM</code>.</p>
+<p>Next, the base <code>R</code> version.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">by_subject_chg</span> <span class="o">&lt;-</span> <span class="nf">by</span><span class="p">(</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">trial_data_mult</span><span class="p">,</span>
+  <span class="n">INDICES</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="n">trial_data_mult</span><span class="o">$</span><span class="n">USUBJID</span><span class="p">,</span> <span class="n">trial_data_mult</span><span class="o">$</span><span class="n">PARAM</span><span class="p">),</span>
+  <span class="n">FUN</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL</span> <span class="o">-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL[data</span><span class="o">$</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span>
+    <span class="n">data</span>
+  <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">trial_data_mult_chg2</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="n">by_subject_chg</span><span class="p">)</span>
+<span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span><span class="n">trial_data_mult_chg</span><span class="p">,</span> <span class="n">trial_data_mult_chg2</span><span class="p">)</span>
+</code></pre></div><pre><code>## No issues were found!
+</code></pre><p>Again a minimal change. Just pass a <code>list</code> of variables to split by to the <code>INDICES</code> argument of <code>by()</code>.</p>
+<p>There you have it, that&rsquo;s how you calculate change from baseline in <code>R</code> using <code>{dplyr}</code> and good old <code>{base}</code>. If you enjoyed reading this post please share it with your friends and colleagues. Thank you!</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>Thomas Neitmann</p>
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/dplyr">dplyr</a></span><span class="tag"><a href="/tags/base">base</a></span><span class="tag"><a href="/tags/datawrangling">datawrangling</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>803 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-11 02:00 &#43;0200</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="/posts/enhance-ggplot2-with-ggtext/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Enhance your {ggplot2} data visualizations with {ggtext}</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "thomas-adventure" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="/">Thomas Neitmann</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://www.r-bloggers.com/" target="_blank" rel="noopener">R-bloggers</a> &#183; <a href="/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-161564352-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+
+</html>
