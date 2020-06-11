@@ -15,7 +15,7 @@
     <item>
       <title>Calculating change from baseline in R</title>
       <link>/posts/calculating-change-from-baseline-in-r/</link>
-      <pubDate>Thu, 11 Jun 2020 19:30:00 +0000</pubDate>
+      <pubDate>Thu, 11 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>/posts/calculating-change-from-baseline-in-r/</guid>
       <description>As a statistical programmer working on clinical trials data I frequently have to calculate change from baseline. In clinical trials baseline is typically defined as the last measurement prior to a clinical trial subject receiving any study drug. Change from baseline is frequently calculated for laboratory measurements, e.g. hemoglobin concentration in blood.
