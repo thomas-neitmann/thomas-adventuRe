@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Thu, 11 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2020 19:30:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>base</title>
       <link>/tags/base/</link>
-      <pubDate>Thu, 11 Jun 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 11 Jun 2020 19:30:00 +0000</pubDate>
       
       <guid>/tags/base/</guid>
       <description></description>
@@ -24,7 +24,7 @@
     <item>
       <title>datawrangling</title>
       <link>/tags/datawrangling/</link>
-      <pubDate>Thu, 11 Jun 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 11 Jun 2020 19:30:00 +0000</pubDate>
       
       <guid>/tags/datawrangling/</guid>
       <description></description>
@@ -33,7 +33,7 @@
     <item>
       <title>dplyr</title>
       <link>/tags/dplyr/</link>
-      <pubDate>Thu, 11 Jun 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 11 Jun 2020 19:30:00 +0000</pubDate>
       
       <guid>/tags/dplyr/</guid>
       <description></description>

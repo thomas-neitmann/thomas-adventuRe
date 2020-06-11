@@ -1,7 +1,7 @@
 ---
 title: Calculating change from baseline in R
 author: Thomas Neitmann
-date: '2020-06-11'
+date: '2020-06-11 19:30:00'
 slug: calculating-change-from-baseline-in-r
 categories:
   - R
