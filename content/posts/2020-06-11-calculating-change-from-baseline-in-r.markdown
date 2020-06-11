@@ -91,30 +91,87 @@ trial_data_chg %>%
 # ... with 2,086 more rows
 ```
 
-Looks good!
+Looks good! However, this method will fail if there is no baseline value. In such a case the value of the first visit—regardless of whether or nor it was really baseline—would be subtracted from the other visit values. In that case change from baseline should be `NA`, though. Here's what I mean.
 
-Alternatively, you could do this which circumvents the need to use `arrange()`.
+
+```r
+trial_data <- trial_data[-1L, ] # remove baseline of first subject
+trial_data %>%
+  arrange(USUBJID, AVISITN) %>%
+  group_by(USUBJID) %>%
+  mutate(CHG = AVAL - AVAL[1L]) %>%
+  ungroup() %>%
+  select(USUBJID, AVISIT, AVAL, CHG) %>%
+  print(n = 14)
+```
+
+```
+# A tibble: 2,099 x 4
+   USUBJID          AVISIT    AVAL    CHG
+   <chr>            <chr>    <dbl>  <dbl>
+ 1 ABC123456.000001 Week 4   11.3   0    
+ 2 ABC123456.000001 Week 8   12.3   1.02 
+ 3 ABC123456.000001 Week 12  13.5   2.24 
+ 4 ABC123456.000001 Week 16  12.2   0.923
+ 5 ABC123456.000001 Week 20  10.2  -1.10 
+ 6 ABC123456.000001 Week 24  12.3   1.01 
+ 7 ABC123456.000002 Baseline  9.40  0    
+ 8 ABC123456.000002 Week 4    9.14 -0.259
+ 9 ABC123456.000002 Week 8    8.56 -0.838
+10 ABC123456.000002 Week 12   8.59 -0.809
+11 ABC123456.000002 Week 16   8.46 -0.942
+12 ABC123456.000002 Week 20   8.78 -0.624
+13 ABC123456.000002 Week 24   6.97 -2.43 
+14 ABC123456.000003 Baseline  9.44  0    
+# ... with 2,085 more rows
+```
+
+
+So, how to take care of missing baseline values? Like so.
 
 
 ```r
 trial_data_chg2 <- trial_data %>%
   group_by(USUBJID) %>%
-  mutate(CHG = AVAL - AVAL[AVISIT == "Baseline"]) %>%
+  mutate(
+    HASBL = any(AVISIT == "Baseline"),
+    CHG = if (HASBL) AVAL - AVAL[AVISIT == "Baseline"] else NA
+  ) %>%
+  select(-HASBL) %>%
   ungroup()
 ```
 
-Let's check that this in fact produced the same result.
+You could put the `any(AVISIT == "Baseline")` expression directly into `if()` but I think this way it's clearer what is going on. Let's check that this in fact produced the right result.
 
 
 ```r
-diffdf::diffdf(trial_data_chg, trial_data_chg2)
+trial_data_chg2 %>%
+  select(USUBJID, AVISIT, AVAL, CHG) %>%
+  print(n = 14)
 ```
 
 ```
-No issues were found!
+# A tibble: 2,099 x 4
+   USUBJID          AVISIT    AVAL    CHG
+   <chr>            <chr>    <dbl>  <dbl>
+ 1 ABC123456.000001 Week 4   11.3  NA    
+ 2 ABC123456.000001 Week 8   12.3  NA    
+ 3 ABC123456.000001 Week 12  13.5  NA    
+ 4 ABC123456.000001 Week 16  12.2  NA    
+ 5 ABC123456.000001 Week 20  10.2  NA    
+ 6 ABC123456.000001 Week 24  12.3  NA    
+ 7 ABC123456.000002 Baseline  9.40  0    
+ 8 ABC123456.000002 Week 4    9.14 -0.259
+ 9 ABC123456.000002 Week 8    8.56 -0.838
+10 ABC123456.000002 Week 12   8.59 -0.809
+11 ABC123456.000002 Week 16   8.46 -0.942
+12 ABC123456.000002 Week 20   8.78 -0.624
+13 ABC123456.000002 Week 24   6.97 -2.43 
+14 ABC123456.000003 Baseline  9.44  0    
+# ... with 2,085 more rows
 ```
 
-Awesome!
+That looks good, awesome!
 
 Next, I will show you how you can achieve the same result using only base `R`. I will use the good old split-apply-combine strategy.
 
@@ -122,11 +179,15 @@ Next, I will show you how you can achieve the same result using only base `R`. I
 ```r
 by_subject <- split(trial_data, trial_data$USUBJID)
 by_subject_chg <- lapply(by_subject, function(data) {
-  data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+  if (any(data$AVISIT == "Baseline")) {
+    data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+  } else {
+    data$CHG <- NA
+  }
   data
 })
 trial_data_chg3 <- do.call(rbind, by_subject_chg)
-diffdf::diffdf(trial_data_chg, trial_data_chg3)
+diffdf::diffdf(trial_data_chg2, trial_data_chg3)
 ```
 
 ```
@@ -143,12 +204,16 @@ by_subject_chg <- by(
   data = trial_data,
   INDICES = trial_data$USUBJID,
   FUN = function(data) {
-    data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+    if (any(data$AVISIT == "Baseline")) {
+      data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+    } else {
+      data$CHG <- NA
+    }
     data
   }
 )
 trial_data_chg4 <- do.call(rbind, by_subject_chg)
-diffdf::diffdf(trial_data_chg, trial_data_chg4)
+diffdf::diffdf(trial_data_chg2, trial_data_chg4)
 ```
 
 ```
@@ -171,7 +236,11 @@ First, the `{dplyr}` version.
 ```r
 trial_data_mult_chg <- trial_data_mult %>%
   group_by(USUBJID, PARAM) %>%
-  mutate(CHG = AVAL - AVAL[AVISIT == "Baseline"]) %>%
+  mutate(
+    HASBL = any(AVISIT == "Baseline"),
+    CHG = if (HASBL) AVAL - AVAL[AVISIT == "Baseline"] else NA
+  ) %>%
+  select(-HASBL) %>%
   ungroup()
 
 trial_data_mult_chg %>%
@@ -181,15 +250,15 @@ trial_data_mult_chg %>%
 
 ```
 # A tibble: 7 x 4
-  USUBJID          AVISIT    AVAL     CHG
-  <chr>            <chr>    <dbl>   <dbl>
-1 ABC123456.000001 Baseline  10.2  0     
-2 ABC123456.000001 Week 4    11.3  1.08  
-3 ABC123456.000001 Week 8    12.3  2.09  
-4 ABC123456.000001 Week 12   13.5  3.31  
-5 ABC123456.000001 Week 16   12.2  2.00  
-6 ABC123456.000001 Week 20   10.2 -0.0213
-7 ABC123456.000001 Week 24   12.3  2.09  
+  USUBJID          AVISIT    AVAL   CHG
+  <chr>            <chr>    <dbl> <dbl>
+1 ABC123456.000001 Week 4   11.3     NA
+2 ABC123456.000001 Week 8   12.3     NA
+3 ABC123456.000001 Week 12  13.5     NA
+4 ABC123456.000001 Week 16  12.2     NA
+5 ABC123456.000001 Week 20  10.2     NA
+6 ABC123456.000001 Week 24  12.3     NA
+7 ABC123456.000002 Baseline  9.40     0
 ```
 
 ```r
@@ -221,7 +290,11 @@ by_subject_chg <- by(
   data = trial_data_mult,
   INDICES = list(trial_data_mult$USUBJID, trial_data_mult$PARAM),
   FUN = function(data) {
-    data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+    if (any(data$AVISIT == "Baseline")) {
+      data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+    } else {
+      data$CHG <- NA
+    }
     data
   }
 )

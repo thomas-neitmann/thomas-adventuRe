@@ -62,35 +62,57 @@ trial_data_chg %>%
   print(n = 14)
 ```
 
-Looks good!
+Looks good! However, this method will fail if there is no baseline value. In such a case the value of the first visit—regardless of whether or nor it was really baseline—would be subtracted from the other visit values. In that case change from baseline should be `NA`, though. Here's what I mean.
 
-Alternatively, you could do this which circumvents the need to use `arrange()`.
+```{r}
+trial_data <- trial_data[-1L, ] # remove baseline of first subject
+trial_data %>%
+  arrange(USUBJID, AVISITN) %>%
+  group_by(USUBJID) %>%
+  mutate(CHG = AVAL - AVAL[1L]) %>%
+  ungroup() %>%
+  select(USUBJID, AVISIT, AVAL, CHG) %>%
+  print(n = 14)
+```
+
+
+So, how to take care of missing baseline values? Like so.
 
 ```{r}
 trial_data_chg2 <- trial_data %>%
   group_by(USUBJID) %>%
-  mutate(CHG = AVAL - AVAL[AVISIT == "Baseline"]) %>%
+  mutate(
+    HASBL = any(AVISIT == "Baseline"),
+    CHG = if (HASBL) AVAL - AVAL[AVISIT == "Baseline"] else NA
+  ) %>%
+  select(-HASBL) %>%
   ungroup()
 ```
 
-Let's check that this in fact produced the same result.
+You could put the `any(AVISIT == "Baseline")` expression directly into `if()` but I think this way it's clearer what is going on. Let's check that this in fact produced the right result.
 
 ```{r}
-diffdf::diffdf(trial_data_chg, trial_data_chg2)
+trial_data_chg2 %>%
+  select(USUBJID, AVISIT, AVAL, CHG) %>%
+  print(n = 14)
 ```
 
-Awesome!
+That looks good, awesome!
 
 Next, I will show you how you can achieve the same result using only base `R`. I will use the good old split-apply-combine strategy.
 
 ```{r}
 by_subject <- split(trial_data, trial_data$USUBJID)
 by_subject_chg <- lapply(by_subject, function(data) {
-  data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+  if (any(data$AVISIT == "Baseline")) {
+    data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+  } else {
+    data$CHG <- NA
+  }
   data
 })
 trial_data_chg3 <- do.call(rbind, by_subject_chg)
-diffdf::diffdf(trial_data_chg, trial_data_chg3)
+diffdf::diffdf(trial_data_chg2, trial_data_chg3)
 ```
 
 Compared to the `{dplyr}` approach this is a bit clumsy but it certainly does the job and you don't need any add-on packages. `split()`—as the name suggests—splits its input `data.frame` into a `list` of `data.frame`s, one for each level of the second argument. `lapply()` applies a function to every element of a `list`. `do.call(rbind, <list>)` combines the datasets in the `list` back to a single `data.frame`.
@@ -102,12 +124,16 @@ by_subject_chg <- by(
   data = trial_data,
   INDICES = trial_data$USUBJID,
   FUN = function(data) {
-    data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+    if (any(data$AVISIT == "Baseline")) {
+      data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+    } else {
+      data$CHG <- NA
+    }
     data
   }
 )
 trial_data_chg4 <- do.call(rbind, by_subject_chg)
-diffdf::diffdf(trial_data_chg, trial_data_chg4)
+diffdf::diffdf(trial_data_chg2, trial_data_chg4)
 ```
 
 The example dataset contains only a single laboratory measure but in practice that's never the case. Let's have a look at how to calculate change from baseline when having multiple lab parameters in the dataset. To do so I will duplicate the dataset and add a variable called `PARAM` to identify different lab measures.
@@ -124,7 +150,11 @@ First, the `{dplyr}` version.
 ```{r}
 trial_data_mult_chg <- trial_data_mult %>%
   group_by(USUBJID, PARAM) %>%
-  mutate(CHG = AVAL - AVAL[AVISIT == "Baseline"]) %>%
+  mutate(
+    HASBL = any(AVISIT == "Baseline"),
+    CHG = if (HASBL) AVAL - AVAL[AVISIT == "Baseline"] else NA
+  ) %>%
+  select(-HASBL) %>%
   ungroup()
 
 trial_data_mult_chg %>%
@@ -145,7 +175,11 @@ by_subject_chg <- by(
   data = trial_data_mult,
   INDICES = list(trial_data_mult$USUBJID, trial_data_mult$PARAM),
   FUN = function(data) {
-    data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+    if (any(data$AVISIT == "Baseline")) {
+      data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+    } else {
+      data$CHG <- NA
+    }
     data
   }
 )
