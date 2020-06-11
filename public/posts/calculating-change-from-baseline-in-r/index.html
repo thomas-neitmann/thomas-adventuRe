@@ -12,7 +12,7 @@
 SAS is still the standard used to program datasets in the pharmaceutical industry but R is catching up. Recently, I derived change from baseline for the first time in R.">
 <meta itemprop="datePublished" content="2020-06-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-06-11T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="803">
+<meta itemprop="wordCount" content="1020">
 
 
 
@@ -93,14 +93,14 @@ SAS is still the standard used to program datasets in the pharmaceutical industr
 <span class="n">data_source</span> <span class="o">&lt;-</span> <span class="s">&#34;https://raw.githubusercontent.com/VIS-SIG/Wonderful-Wednesdays/master/data/2020/2020-06-10/hgb_data.csv&#34;</span>
 <span class="n">trial_data</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">data_source</span><span class="p">,</span> <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 <span class="nf">glimpse</span><span class="p">(</span><span class="n">trial_data</span><span class="p">)</span>
-</code></pre></div><pre><code>## Rows: 2,100
-## Columns: 6
-## $ USUBJID &lt;chr&gt; &quot;ABC123456.000001&quot;, &quot;ABC123456.000001&quot;, &quot;ABC123456.000001&quot;,...
-## $ TRT01PN &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
-## $ TRT01P  &lt;chr&gt; &quot;Treatment E&quot;, &quot;Treatment E&quot;, &quot;Treatment E&quot;, &quot;Treatment E&quot;,...
-## $ AVISITN &lt;int&gt; 10, 20, 30, 40, 50, 60, 70, 10, 20, 30, 40, 50, 60, 70, 10,...
-## $ AVISIT  &lt;chr&gt; &quot;Baseline&quot;, &quot;Week 4&quot;, &quot;Week 8&quot;, &quot;Week 12&quot;, &quot;Week 16&quot;, &quot;Week...
-## $ AVAL    &lt;dbl&gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195863, 10.1...
+</code></pre></div><pre><code>Rows: 2,100
+Columns: 6
+$ USUBJID &lt;chr&gt; &quot;ABC123456.000001&quot;, &quot;ABC123456.000001&quot;, &quot;ABC123456.000001&quot;,...
+$ TRT01PN &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
+$ TRT01P  &lt;chr&gt; &quot;Treatment E&quot;, &quot;Treatment E&quot;, &quot;Treatment E&quot;, &quot;Treatment E&quot;,...
+$ AVISITN &lt;int&gt; 10, 20, 30, 40, 50, 60, 70, 10, 20, 30, 40, 50, 60, 70, 10,...
+$ AVISIT  &lt;chr&gt; &quot;Baseline&quot;, &quot;Week 4&quot;, &quot;Week 8&quot;, &quot;Week 12&quot;, &quot;Week 16&quot;, &quot;Week...
+$ AVAL    &lt;dbl&gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195863, 10.1...
 </code></pre><p>From the quick <code>glimpse()</code> you can see that each subject has multiple visits: Baseline, Week 4, Week 8 and so forth. To calculate change from baseline I have to subtract the baseline value from the value at each visit. Here&rsquo;s how.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data_chg</span> <span class="o">&lt;-</span> <span class="n">trial_data</span> <span class="o">%&gt;%</span>
   <span class="nf">arrange</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">,</span> <span class="n">AVISITN</span><span class="p">)</span> <span class="o">%&gt;%</span>
@@ -110,10 +110,27 @@ SAS is still the standard used to program datasets in the pharmaceutical industr
 </code></pre></div><p>First, it&rsquo;s important to arrange the data of each subject in increasing order of <code>AVISITN</code>. Next, I grouped the data by <code>USUBJID</code> such that <code>AVAL[1L]</code> refers to the baseline value of each subject. Finally, I subtracted the baseline value from the value measured at each visit.</p>
 <p>Let&rsquo;s have a look at the result to see whether this actually did what I said it would do.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data_chg</span> <span class="o">%&gt;%</span>
-  <span class="nf">select</span><span class="p">(</span><span class="n">TRT01P</span><span class="p">,</span> <span class="n">USUBJID</span><span class="p">,</span> <span class="n">AVISIT</span><span class="p">,</span> <span class="n">AVAL</span><span class="p">,</span> <span class="n">CHG</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="n">rmarkdown</span><span class="o">::</span><span class="nf">paged_table</span><span class="p">()</span>
-</code></pre></div><!-- raw HTML omitted -->
-<p>Looks good!</p>
+  <span class="nf">select</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">,</span> <span class="n">AVISIT</span><span class="p">,</span> <span class="n">AVAL</span><span class="p">,</span> <span class="n">CHG</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="m">14</span><span class="p">)</span>
+</code></pre></div><pre><code># A tibble: 2,100 x 4
+   USUBJID          AVISIT    AVAL     CHG
+   &lt;chr&gt;            &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+ 1 ABC123456.000001 Baseline 10.2   0     
+ 2 ABC123456.000001 Week 4   11.3   1.08  
+ 3 ABC123456.000001 Week 8   12.3   2.09  
+ 4 ABC123456.000001 Week 12  13.5   3.31  
+ 5 ABC123456.000001 Week 16  12.2   2.00  
+ 6 ABC123456.000001 Week 20  10.2  -0.0213
+ 7 ABC123456.000001 Week 24  12.3   2.09  
+ 8 ABC123456.000002 Baseline  9.40  0     
+ 9 ABC123456.000002 Week 4    9.14 -0.259 
+10 ABC123456.000002 Week 8    8.56 -0.838 
+11 ABC123456.000002 Week 12   8.59 -0.809 
+12 ABC123456.000002 Week 16   8.46 -0.942 
+13 ABC123456.000002 Week 20   8.78 -0.624 
+14 ABC123456.000002 Week 24   6.97 -2.43  
+# ... with 2,086 more rows
+</code></pre><p>Looks good!</p>
 <p>Alternatively, you could do this which circumvents the need to use <code>arrange()</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data_chg2</span> <span class="o">&lt;-</span> <span class="n">trial_data</span> <span class="o">%&gt;%</span>
   <span class="nf">group_by</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">)</span> <span class="o">%&gt;%</span>
@@ -121,7 +138,7 @@ SAS is still the standard used to program datasets in the pharmaceutical industr
   <span class="nf">ungroup</span><span class="p">()</span>
 </code></pre></div><p>Let&rsquo;s check that this in fact produced the same result.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span><span class="n">trial_data_chg</span><span class="p">,</span> <span class="n">trial_data_chg2</span><span class="p">)</span>
-</code></pre></div><pre><code>## No issues were found!
+</code></pre></div><pre><code>No issues were found!
 </code></pre><p>Awesome!</p>
 <p>Next, I will show you how you can achieve the same result using only base <code>R</code>. I will use the good old split-apply-combine strategy.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">by_subject</span> <span class="o">&lt;-</span> <span class="nf">split</span><span class="p">(</span><span class="n">trial_data</span><span class="p">,</span> <span class="n">trial_data</span><span class="o">$</span><span class="n">USUBJID</span><span class="p">)</span>
@@ -131,7 +148,7 @@ SAS is still the standard used to program datasets in the pharmaceutical industr
 <span class="p">})</span>
 <span class="n">trial_data_chg3</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="n">by_subject_chg</span><span class="p">)</span>
 <span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span><span class="n">trial_data_chg</span><span class="p">,</span> <span class="n">trial_data_chg3</span><span class="p">)</span>
-</code></pre></div><pre><code>## No issues were found!
+</code></pre></div><pre><code>No issues were found!
 </code></pre><p>Compared to the <code>{dplyr}</code> approach this is a bit clumsy but it certainly does the job and you don&rsquo;t need any add-on packages. <code>split()</code>—as the name suggests—splits its input <code>data.frame</code> into a <code>list</code> of <code>data.frame</code>s, one for each level of the second argument. <code>lapply()</code> applies a function to every element of a <code>list</code>. <code>do.call(rbind, &lt;list&gt;)</code> combines the datasets in the <code>list</code> back to a single <code>data.frame</code>.</p>
 <p>Actually you can combine <code>split()</code> and <code>lapply()</code> into a single step using <code>by()</code> which makes it more concise.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">by_subject_chg</span> <span class="o">&lt;-</span> <span class="nf">by</span><span class="p">(</span>
@@ -144,22 +161,45 @@ SAS is still the standard used to program datasets in the pharmaceutical industr
 <span class="p">)</span>
 <span class="n">trial_data_chg4</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="n">by_subject_chg</span><span class="p">)</span>
 <span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span><span class="n">trial_data_chg</span><span class="p">,</span> <span class="n">trial_data_chg4</span><span class="p">)</span>
-</code></pre></div><pre><code>## No issues were found!
+</code></pre></div><pre><code>No issues were found!
 </code></pre><p>The example dataset contains only a single laboratory measure but in practice that&rsquo;s never the case. Let&rsquo;s have a look at how to calculate change from baseline when having multiple lab parameters in the dataset. To do so I will duplicate the dataset and add a variable called <code>PARAM</code> to identify different lab measures.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data</span><span class="o">$</span><span class="n">PARAM</span> <span class="o">&lt;-</span> <span class="s">&#34;Hemoglobin&#34;</span>
 <span class="n">trial_data2</span> <span class="o">&lt;-</span> <span class="n">trial_data</span>
-<span class="n">trial_data2</span><span class="o">$</span><span class="n">PARAM</span> <span class="o">&lt;-</span> <span class="s">&#34;WBC&#34;</span>
+<span class="n">trial_data2</span><span class="o">$</span><span class="n">PARAM</span> <span class="o">&lt;-</span> <span class="s">&#34;WBC&#34;</span> <span class="c1"># White Blood Count</span>
 <span class="n">trial_data_mult</span> <span class="o">&lt;-</span> <span class="nf">rbind</span><span class="p">(</span><span class="n">trial_data</span><span class="p">,</span> <span class="n">trial_data2</span><span class="p">)</span>
 </code></pre></div><p>First, the <code>{dplyr}</code> version.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data_mult_chg</span> <span class="o">&lt;-</span> <span class="n">trial_data_mult</span> <span class="o">%&gt;%</span>
   <span class="nf">group_by</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">,</span> <span class="n">PARAM</span><span class="p">)</span> <span class="o">%&gt;%</span>
   <span class="nf">mutate</span><span class="p">(</span><span class="n">CHG</span> <span class="o">=</span> <span class="n">AVAL</span> <span class="o">-</span> <span class="n">AVAL[AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span><span class="p">)</span> <span class="o">%&gt;%</span>
   <span class="nf">ungroup</span><span class="p">()</span>
-<span class="n">rmarkdown</span><span class="o">::</span><span class="nf">paged_table</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">trial_data_mult_chg</span><span class="p">,</span> <span class="m">100</span><span class="p">))</span>
-</code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">rmarkdown</span><span class="o">::</span><span class="nf">paged_table</span><span class="p">(</span><span class="nf">tail</span><span class="p">(</span><span class="n">trial_data_mult_chg</span><span class="p">,</span> <span class="m">100</span><span class="p">))</span>
-</code></pre></div><!-- raw HTML omitted -->
-<p>That was easy. All I had to do was to add a second grouping variable, i.e. <code>PARAM</code>.</p>
+
+<span class="n">trial_data_mult_chg</span> <span class="o">%&gt;%</span>
+  <span class="nf">select</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">,</span> <span class="n">AVISIT</span><span class="p">,</span> <span class="n">AVAL</span><span class="p">,</span> <span class="n">CHG</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">head</span><span class="p">(</span><span class="m">7</span><span class="p">)</span>
+</code></pre></div><pre><code># A tibble: 7 x 4
+  USUBJID          AVISIT    AVAL     CHG
+  &lt;chr&gt;            &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+1 ABC123456.000001 Baseline  10.2  0     
+2 ABC123456.000001 Week 4    11.3  1.08  
+3 ABC123456.000001 Week 8    12.3  2.09  
+4 ABC123456.000001 Week 12   13.5  3.31  
+5 ABC123456.000001 Week 16   12.2  2.00  
+6 ABC123456.000001 Week 20   10.2 -0.0213
+7 ABC123456.000001 Week 24   12.3  2.09  
+</code></pre><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">trial_data_mult_chg</span> <span class="o">%&gt;%</span>
+  <span class="nf">select</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">,</span> <span class="n">AVISIT</span><span class="p">,</span> <span class="n">AVAL</span><span class="p">,</span> <span class="n">CHG</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">tail</span><span class="p">(</span><span class="m">7</span><span class="p">)</span>
+</code></pre></div><pre><code># A tibble: 7 x 4
+  USUBJID          AVISIT    AVAL    CHG
+  &lt;chr&gt;            &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+1 ABC123456.000300 Baseline  9.75  0    
+2 ABC123456.000300 Week 4    8.88 -0.871
+3 ABC123456.000300 Week 8    8.57 -1.18 
+4 ABC123456.000300 Week 12   8.13 -1.62 
+5 ABC123456.000300 Week 16   8.87 -0.880
+6 ABC123456.000300 Week 20  12.7   2.95 
+7 ABC123456.000300 Week 24  12.0   2.20 
+</code></pre><p>That was easy. All I had to do was to add a second grouping variable, i.e. <code>PARAM</code>.</p>
 <p>Next, the base <code>R</code> version.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">by_subject_chg</span> <span class="o">&lt;-</span> <span class="nf">by</span><span class="p">(</span>
   <span class="n">data</span> <span class="o">=</span> <span class="n">trial_data_mult</span><span class="p">,</span>
@@ -171,7 +211,7 @@ SAS is still the standard used to program datasets in the pharmaceutical industr
 <span class="p">)</span>
 <span class="n">trial_data_mult_chg2</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="n">by_subject_chg</span><span class="p">)</span>
 <span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span><span class="n">trial_data_mult_chg</span><span class="p">,</span> <span class="n">trial_data_mult_chg2</span><span class="p">)</span>
-</code></pre></div><pre><code>## No issues were found!
+</code></pre></div><pre><code>No issues were found!
 </code></pre><p>Again a minimal change. Just pass a <code>list</code> of variables to split by to the <code>INDICES</code> argument of <code>by()</code>.</p>
 <p>There you have it, that&rsquo;s how you calculate change from baseline in <code>R</code> using <code>{dplyr}</code> and good old <code>{base}</code>. If you enjoyed reading this post please share it with your friends and colleagues. Thank you!</p>
 
@@ -182,7 +222,7 @@ SAS is still the standard used to program datasets in the pharmaceutical industr
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/dplyr">dplyr</a></span><span class="tag"><a href="/tags/base">base</a></span><span class="tag"><a href="/tags/datawrangling">datawrangling</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>803 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1020 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-11 02:00 &#43;0200</p>
 			</footer>
 		</article>

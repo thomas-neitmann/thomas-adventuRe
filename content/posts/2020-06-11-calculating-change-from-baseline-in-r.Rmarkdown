@@ -17,7 +17,8 @@ images: ~
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   message = FALSE,
-  warning = FALSE
+  warning = FALSE,
+  comment = ""
 )
 ```
 
@@ -40,6 +41,7 @@ data_source <- "https://raw.githubusercontent.com/VIS-SIG/Wonderful-Wednesdays/m
 trial_data <- read.csv(data_source, stringsAsFactors = FALSE)
 glimpse(trial_data)
 ```
+
 From the quick `glimpse()` you can see that each subject has multiple visits: Baseline, Week 4, Week 8 and so forth. To calculate change from baseline I have to subtract the baseline value from the value at each visit. Here's how.
 
 ```{r}
@@ -56,8 +58,8 @@ Let's have a look at the result to see whether this actually did what I said it 
 
 ```{r}
 trial_data_chg %>%
-  select(TRT01P, USUBJID, AVISIT, AVAL, CHG) %>%
-  rmarkdown::paged_table()
+  select(USUBJID, AVISIT, AVAL, CHG) %>%
+  print(n = 14)
 ```
 
 Looks good!
@@ -113,7 +115,7 @@ The example dataset contains only a single laboratory measure but in practice th
 ```{r}
 trial_data$PARAM <- "Hemoglobin"
 trial_data2 <- trial_data
-trial_data2$PARAM <- "WBC"
+trial_data2$PARAM <- "WBC" # White Blood Count
 trial_data_mult <- rbind(trial_data, trial_data2)
 ```
 
@@ -124,8 +126,14 @@ trial_data_mult_chg <- trial_data_mult %>%
   group_by(USUBJID, PARAM) %>%
   mutate(CHG = AVAL - AVAL[AVISIT == "Baseline"]) %>%
   ungroup()
-rmarkdown::paged_table(head(trial_data_mult_chg, 100))
-rmarkdown::paged_table(tail(trial_data_mult_chg, 100))
+
+trial_data_mult_chg %>%
+  select(USUBJID, AVISIT, AVAL, CHG) %>%
+  head(7)
+
+trial_data_mult_chg %>%
+  select(USUBJID, AVISIT, AVAL, CHG) %>%
+  tail(7)
 ```
 
 That was easy. All I had to do was to add a second grouping variable, i.e. `PARAM`.
