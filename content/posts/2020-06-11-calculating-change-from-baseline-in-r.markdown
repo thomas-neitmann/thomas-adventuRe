@@ -91,7 +91,7 @@ trial_data_chg %>%
 # ... with 2,086 more rows
 ```
 
-Looks good! However, this method will fail if there is no baseline value. In such a case the value of the first visit—regardless of whether or nor it was really baseline—would be subtracted from the other visit values. In that case change from baseline should be `NA`, though. Here's what I mean.
+Looks good! However, this method will fail if there is no baseline value. In such a case the value of the first visit—regardless of whether or not it was really baseline—would be subtracted from the other visit values. In that case change from baseline should be `NA`, though. Here's what I mean.
 
 
 ```r
@@ -141,7 +141,7 @@ trial_data_chg2 <- trial_data %>%
   ungroup()
 ```
 
-You could put the `any(AVISIT == "Baseline")` expression directly into `if()` but I think this way it's clearer what is going on. Let's check that this in fact produced the right result.
+You could put the `any(AVISIT == "Baseline")` expression directly into `if()` but I think this way it's clearer to see what's going on. Let's check that this in fact produced the right result.
 
 
 ```r
@@ -194,7 +194,7 @@ diffdf::diffdf(trial_data_chg2, trial_data_chg3)
 No issues were found!
 ```
 
-Compared to the `{dplyr}` approach this is a bit clumsy but it certainly does the job and you don't need any add-on packages. `split()`—as the name suggests—splits its input `data.frame` into a `list` of `data.frame`s, one for each level of the second argument. `lapply()` applies a function to every element of a `list`. `do.call(rbind, <list>)` combines the datasets in the `list` back to a single `data.frame`.
+Compared to the `{dplyr}` approach this is a bit clumsy but it certainly does the job and you don't need any add-on packages. `split()`—as the name suggests—splits its input `data.frame` into a `list` of `data.frame`s, one for each level of the second argument. `lapply()` applies a function to every element of a `list`. `do.call(rbind, <list>)` combines the datasets in `<list>` back to a single `data.frame`.
 
 Actually you can combine `split()` and `lapply()` into a single step using `by()` which makes it more concise.
 
@@ -244,40 +244,46 @@ trial_data_mult_chg <- trial_data_mult %>%
   ungroup()
 
 trial_data_mult_chg %>%
-  select(USUBJID, AVISIT, AVAL, CHG) %>%
-  head(7)
+  select(USUBJID, AVISIT, PARAM, AVAL, CHG) %>%
+  head(13)
 ```
 
 ```
-# A tibble: 7 x 4
-  USUBJID          AVISIT    AVAL   CHG
-  <chr>            <chr>    <dbl> <dbl>
-1 ABC123456.000001 Week 4   11.3     NA
-2 ABC123456.000001 Week 8   12.3     NA
-3 ABC123456.000001 Week 12  13.5     NA
-4 ABC123456.000001 Week 16  12.2     NA
-5 ABC123456.000001 Week 20  10.2     NA
-6 ABC123456.000001 Week 24  12.3     NA
-7 ABC123456.000002 Baseline  9.40     0
+# A tibble: 13 x 5
+   USUBJID          AVISIT   PARAM       AVAL    CHG
+   <chr>            <chr>    <chr>      <dbl>  <dbl>
+ 1 ABC123456.000001 Week 4   Hemoglobin 11.3  NA    
+ 2 ABC123456.000001 Week 8   Hemoglobin 12.3  NA    
+ 3 ABC123456.000001 Week 12  Hemoglobin 13.5  NA    
+ 4 ABC123456.000001 Week 16  Hemoglobin 12.2  NA    
+ 5 ABC123456.000001 Week 20  Hemoglobin 10.2  NA    
+ 6 ABC123456.000001 Week 24  Hemoglobin 12.3  NA    
+ 7 ABC123456.000002 Baseline Hemoglobin  9.40  0    
+ 8 ABC123456.000002 Week 4   Hemoglobin  9.14 -0.259
+ 9 ABC123456.000002 Week 8   Hemoglobin  8.56 -0.838
+10 ABC123456.000002 Week 12  Hemoglobin  8.59 -0.809
+11 ABC123456.000002 Week 16  Hemoglobin  8.46 -0.942
+12 ABC123456.000002 Week 20  Hemoglobin  8.78 -0.624
+13 ABC123456.000002 Week 24  Hemoglobin  6.97 -2.43 
 ```
 
 ```r
 trial_data_mult_chg %>%
-  select(USUBJID, AVISIT, AVAL, CHG) %>%
+  select(USUBJID, AVISIT, PARAM, AVAL, CHG) %>%
   tail(7)
 ```
 
 ```
-# A tibble: 7 x 4
-  USUBJID          AVISIT    AVAL    CHG
-  <chr>            <chr>    <dbl>  <dbl>
-1 ABC123456.000300 Baseline  9.75  0    
-2 ABC123456.000300 Week 4    8.88 -0.871
-3 ABC123456.000300 Week 8    8.57 -1.18 
-4 ABC123456.000300 Week 12   8.13 -1.62 
-5 ABC123456.000300 Week 16   8.87 -0.880
-6 ABC123456.000300 Week 20  12.7   2.95 
-7 ABC123456.000300 Week 24  12.0   2.20 
+# A tibble: 7 x 5
+  USUBJID          AVISIT   PARAM  AVAL    CHG
+  <chr>            <chr>    <chr> <dbl>  <dbl>
+1 ABC123456.000300 Baseline WBC    9.75  0    
+2 ABC123456.000300 Week 4   WBC    8.88 -0.871
+3 ABC123456.000300 Week 8   WBC    8.57 -1.18 
+4 ABC123456.000300 Week 12  WBC    8.13 -1.62 
+5 ABC123456.000300 Week 16  WBC    8.87 -0.880
+6 ABC123456.000300 Week 20  WBC   12.7   2.95 
+7 ABC123456.000300 Week 24  WBC   12.0   2.20 
 ```
 
 That was easy. All I had to do was to add a second grouping variable, i.e. `PARAM`.

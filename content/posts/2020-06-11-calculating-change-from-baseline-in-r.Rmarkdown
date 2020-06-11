@@ -62,7 +62,7 @@ trial_data_chg %>%
   print(n = 14)
 ```
 
-Looks good! However, this method will fail if there is no baseline value. In such a case the value of the first visit—regardless of whether or nor it was really baseline—would be subtracted from the other visit values. In that case change from baseline should be `NA`, though. Here's what I mean.
+Looks good! However, this method will fail if there is no baseline value. In such a case the value of the first visit—regardless of whether or not it was really baseline—would be subtracted from the other visit values. In that case change from baseline should be `NA`, though. Here's what I mean.
 
 ```{r}
 trial_data <- trial_data[-1L, ] # remove baseline of first subject
@@ -89,7 +89,7 @@ trial_data_chg2 <- trial_data %>%
   ungroup()
 ```
 
-You could put the `any(AVISIT == "Baseline")` expression directly into `if()` but I think this way it's clearer what is going on. Let's check that this in fact produced the right result.
+You could put the `any(AVISIT == "Baseline")` expression directly into `if()` but I think this way it's clearer to see what's going on. Let's check that this in fact produced the right result.
 
 ```{r}
 trial_data_chg2 %>%
@@ -115,7 +115,7 @@ trial_data_chg3 <- do.call(rbind, by_subject_chg)
 diffdf::diffdf(trial_data_chg2, trial_data_chg3)
 ```
 
-Compared to the `{dplyr}` approach this is a bit clumsy but it certainly does the job and you don't need any add-on packages. `split()`—as the name suggests—splits its input `data.frame` into a `list` of `data.frame`s, one for each level of the second argument. `lapply()` applies a function to every element of a `list`. `do.call(rbind, <list>)` combines the datasets in the `list` back to a single `data.frame`.
+Compared to the `{dplyr}` approach this is a bit clumsy but it certainly does the job and you don't need any add-on packages. `split()`—as the name suggests—splits its input `data.frame` into a `list` of `data.frame`s, one for each level of the second argument. `lapply()` applies a function to every element of a `list`. `do.call(rbind, <list>)` combines the datasets in `<list>` back to a single `data.frame`.
 
 Actually you can combine `split()` and `lapply()` into a single step using `by()` which makes it more concise.
 
@@ -158,11 +158,11 @@ trial_data_mult_chg <- trial_data_mult %>%
   ungroup()
 
 trial_data_mult_chg %>%
-  select(USUBJID, AVISIT, AVAL, CHG) %>%
-  head(7)
+  select(USUBJID, AVISIT, PARAM, AVAL, CHG) %>%
+  head(13)
 
 trial_data_mult_chg %>%
-  select(USUBJID, AVISIT, AVAL, CHG) %>%
+  select(USUBJID, AVISIT, PARAM, AVAL, CHG) %>%
   tail(7)
 ```
 

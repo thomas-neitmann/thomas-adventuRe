@@ -67,7 +67,7 @@ $ AVAL    &amp;lt;dbl&amp;gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195
 13 ABC123456.000002 Week 20   8.78 -0.624 
 14 ABC123456.000002 Week 24   6.97 -2.43  
 # ... with 2,086 more rows
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Looks good! However, this method will fail if there is no baseline value. In such a case the value of the first visit—regardless of whether or nor it was really baseline—would be subtracted from the other visit values. In that case change from baseline should be &lt;code&gt;NA&lt;/code&gt;, though. Here&amp;rsquo;s what I mean.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Looks good! However, this method will fail if there is no baseline value. In such a case the value of the first visit—regardless of whether or not it was really baseline—would be subtracted from the other visit values. In that case change from baseline should be &lt;code&gt;NA&lt;/code&gt;, though. Here&amp;rsquo;s what I mean.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;trial_data&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trial_data[&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;-1L&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# remove baseline of first subject&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;trial_data&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;arrange&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;USUBJID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVISITN&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
@@ -103,7 +103,7 @@ $ AVAL    &amp;lt;dbl&amp;gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195
   &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HASBL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;ungroup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You could put the &lt;code&gt;any(AVISIT == &amp;quot;Baseline&amp;quot;)&lt;/code&gt; expression directly into &lt;code&gt;if()&lt;/code&gt; but I think this way it&amp;rsquo;s clearer what is going on. Let&amp;rsquo;s check that this in fact produced the right result.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You could put the &lt;code&gt;any(AVISIT == &amp;quot;Baseline&amp;quot;)&lt;/code&gt; expression directly into &lt;code&gt;if()&lt;/code&gt; but I think this way it&amp;rsquo;s clearer to see what&amp;rsquo;s going on. Let&amp;rsquo;s check that this in fact produced the right result.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;trial_data_chg2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;USUBJID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVISIT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVAL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CHG&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
@@ -139,7 +139,7 @@ $ AVAL    &amp;lt;dbl&amp;gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195
 &lt;span class=&#34;n&#34;&gt;trial_data_chg3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;do.call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rbind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;by_subject_chg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;diffdf&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;diffdf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;trial_data_chg2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trial_data_chg3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;No issues were found!
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Compared to the &lt;code&gt;{dplyr}&lt;/code&gt; approach this is a bit clumsy but it certainly does the job and you don&amp;rsquo;t need any add-on packages. &lt;code&gt;split()&lt;/code&gt;—as the name suggests—splits its input &lt;code&gt;data.frame&lt;/code&gt; into a &lt;code&gt;list&lt;/code&gt; of &lt;code&gt;data.frame&lt;/code&gt;s, one for each level of the second argument. &lt;code&gt;lapply()&lt;/code&gt; applies a function to every element of a &lt;code&gt;list&lt;/code&gt;. &lt;code&gt;do.call(rbind, &amp;lt;list&amp;gt;)&lt;/code&gt; combines the datasets in the &lt;code&gt;list&lt;/code&gt; back to a single &lt;code&gt;data.frame&lt;/code&gt;.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Compared to the &lt;code&gt;{dplyr}&lt;/code&gt; approach this is a bit clumsy but it certainly does the job and you don&amp;rsquo;t need any add-on packages. &lt;code&gt;split()&lt;/code&gt;—as the name suggests—splits its input &lt;code&gt;data.frame&lt;/code&gt; into a &lt;code&gt;list&lt;/code&gt; of &lt;code&gt;data.frame&lt;/code&gt;s, one for each level of the second argument. &lt;code&gt;lapply()&lt;/code&gt; applies a function to every element of a &lt;code&gt;list&lt;/code&gt;. &lt;code&gt;do.call(rbind, &amp;lt;list&amp;gt;)&lt;/code&gt; combines the datasets in &lt;code&gt;&amp;lt;list&amp;gt;&lt;/code&gt; back to a single &lt;code&gt;data.frame&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Actually you can combine &lt;code&gt;split()&lt;/code&gt; and &lt;code&gt;lapply()&lt;/code&gt; into a single step using &lt;code&gt;by()&lt;/code&gt; which makes it more concise.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;by_subject_chg&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
   &lt;span class=&#34;n&#34;&gt;data&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trial_data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
@@ -172,31 +172,37 @@ $ AVAL    &amp;lt;dbl&amp;gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195
   &lt;span class=&#34;nf&#34;&gt;ungroup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
 
 &lt;span class=&#34;n&#34;&gt;trial_data_mult_chg&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
-  &lt;span class=&#34;nf&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;USUBJID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVISIT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVAL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CHG&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
-  &lt;span class=&#34;nf&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;# A tibble: 7 x 4
-  USUBJID          AVISIT    AVAL   CHG
-  &amp;lt;chr&amp;gt;            &amp;lt;chr&amp;gt;    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
-1 ABC123456.000001 Week 4   11.3     NA
-2 ABC123456.000001 Week 8   12.3     NA
-3 ABC123456.000001 Week 12  13.5     NA
-4 ABC123456.000001 Week 16  12.2     NA
-5 ABC123456.000001 Week 20  10.2     NA
-6 ABC123456.000001 Week 24  12.3     NA
-7 ABC123456.000002 Baseline  9.40     0
+  &lt;span class=&#34;nf&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;USUBJID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVISIT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PARAM&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVAL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CHG&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&#34;nf&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;# A tibble: 13 x 5
+   USUBJID          AVISIT   PARAM       AVAL    CHG
+   &amp;lt;chr&amp;gt;            &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;
+ 1 ABC123456.000001 Week 4   Hemoglobin 11.3  NA    
+ 2 ABC123456.000001 Week 8   Hemoglobin 12.3  NA    
+ 3 ABC123456.000001 Week 12  Hemoglobin 13.5  NA    
+ 4 ABC123456.000001 Week 16  Hemoglobin 12.2  NA    
+ 5 ABC123456.000001 Week 20  Hemoglobin 10.2  NA    
+ 6 ABC123456.000001 Week 24  Hemoglobin 12.3  NA    
+ 7 ABC123456.000002 Baseline Hemoglobin  9.40  0    
+ 8 ABC123456.000002 Week 4   Hemoglobin  9.14 -0.259
+ 9 ABC123456.000002 Week 8   Hemoglobin  8.56 -0.838
+10 ABC123456.000002 Week 12  Hemoglobin  8.59 -0.809
+11 ABC123456.000002 Week 16  Hemoglobin  8.46 -0.942
+12 ABC123456.000002 Week 20  Hemoglobin  8.78 -0.624
+13 ABC123456.000002 Week 24  Hemoglobin  6.97 -2.43 
 &lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;trial_data_mult_chg&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
-  &lt;span class=&#34;nf&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;USUBJID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVISIT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVAL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CHG&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&#34;nf&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;USUBJID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVISIT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PARAM&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVAL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CHG&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;tail&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;# A tibble: 7 x 4
-  USUBJID          AVISIT    AVAL    CHG
-  &amp;lt;chr&amp;gt;            &amp;lt;chr&amp;gt;    &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;
-1 ABC123456.000300 Baseline  9.75  0    
-2 ABC123456.000300 Week 4    8.88 -0.871
-3 ABC123456.000300 Week 8    8.57 -1.18 
-4 ABC123456.000300 Week 12   8.13 -1.62 
-5 ABC123456.000300 Week 16   8.87 -0.880
-6 ABC123456.000300 Week 20  12.7   2.95 
-7 ABC123456.000300 Week 24  12.0   2.20 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;# A tibble: 7 x 5
+  USUBJID          AVISIT   PARAM  AVAL    CHG
+  &amp;lt;chr&amp;gt;            &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;
+1 ABC123456.000300 Baseline WBC    9.75  0    
+2 ABC123456.000300 Week 4   WBC    8.88 -0.871
+3 ABC123456.000300 Week 8   WBC    8.57 -1.18 
+4 ABC123456.000300 Week 12  WBC    8.13 -1.62 
+5 ABC123456.000300 Week 16  WBC    8.87 -0.880
+6 ABC123456.000300 Week 20  WBC   12.7   2.95 
+7 ABC123456.000300 Week 24  WBC   12.0   2.20 
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;That was easy. All I had to do was to add a second grouping variable, i.e. &lt;code&gt;PARAM&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Next, the base &lt;code&gt;R&lt;/code&gt; version.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;by_subject_chg&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
