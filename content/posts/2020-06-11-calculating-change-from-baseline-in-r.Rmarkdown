@@ -103,7 +103,7 @@ Next, I will show you how you can achieve the same result using only base `R`. I
 by_subject <- split(trial_data, trial_data$USUBJID)
 by_subject_chg <- lapply(by_subject, function(data) {
   if (any(data$AVISIT == "Baseline")) {
-    data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+    data$CHG <- with(data, AVAL - AVAL[AVISIT == "Baseline"])
   } else {
     data$CHG <- NA
   }
@@ -123,7 +123,7 @@ by_subject_chg <- by(
   INDICES = trial_data$USUBJID,
   FUN = function(data) {
     if (any(data$AVISIT == "Baseline")) {
-      data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+      data$CHG <- with(data, AVAL - AVAL[AVISIT == "Baseline"])
     } else {
       data$CHG <- NA
     }
@@ -172,7 +172,7 @@ by_subject_chg <- by(
   INDICES = list(trial_data_mult$USUBJID, trial_data_mult$PARAM),
   FUN = function(data) {
     if (any(data$AVISIT == "Baseline")) {
-      data$CHG <- data$AVAL - data$AVAL[data$AVISIT == "Baseline"]
+      data$CHG <- with(data, AVAL - AVAL[AVISIT == "Baseline"])
     } else {
       data$CHG <- NA
     }
@@ -184,5 +184,46 @@ diffdf::diffdf(trial_data_mult_chg, trial_data_mult_chg2)
 ```
 
 Again a minimal change. Just pass a `list` of variables to split by to the `INDICES` argument of `by()`.
+
+Yet another way to calculate change from baseline is via merging. This methods works regardless of whether or not baseline records are missing. First, create a new `data.frame` by subsetting only the baseline records. Next, left-join this new `data.frame` with the original one. Finally, subtract the baseline value from the other values as usual. Here's how you can do that using `{dplyr}`.
+
+```{r}
+baseline <- trial_data_mult %>%
+  filter(AVISIT == "Baseline") %>%
+  select(USUBJID, PARAM, BASELINE = AVAL)
+
+trial_data_mult_chg3 <- trial_data_mult %>%
+  left_join(baseline, by = c("USUBJID", "PARAM")) %>%
+  mutate(CHG = AVAL - BASELINE) %>%
+  select(-BASELINE)
+diffdf::diffdf(trial_data_mult_chg, trial_data_mult_chg3)
+```
+
+And here's the base `R` version.
+
+```{r}
+rows <- trial_data_mult$AVISIT == "Baseline"
+cols <- c("USUBJID", "PARAM", "AVAL")
+baseline <- trial_data_mult[rows, cols]
+
+trial_data_mult_chg4 <- merge(
+  x = trial_data_mult,
+  y = baseline,
+  by = c("USUBJID", "PARAM"),
+  all.x = TRUE, # Left join
+  suffixes = c("", "BL")
+)
+trial_data_mult_chg4 <- within(trial_data_mult_chg4, {
+  CHG <- AVAL - AVALBL
+  AVALBL <- NULL # Remove column with baseline values
+})
+diffdf::diffdf(
+  base = trial_data_mult_chg,
+  compare = trial_data_mult_chg4,
+  keys = c("USUBJID", "PARAM", "AVISITN")
+)
+```
+
+Notice that I had to specify the `keys` argument of `diffdf::diffdf()` because `merge()` does not preserve the initial sorting of its input dataset.
 
 There you have it, that's how you calculate change from baseline in `R` using `{dplyr}` and good old `{base}`. If you enjoyed reading this post please share it with your friends and colleagues. Thank you!

@@ -12,7 +12,7 @@
 SAS is still the standard used to program datasets in the pharmaceutical industry but R is catching up. Recently, I derived change from baseline for the first time in R.">
 <meta itemprop="datePublished" content="2020-06-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-06-11T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1452">
+<meta itemprop="wordCount" content="1656">
 
 
 
@@ -191,7 +191,7 @@ $ AVAL    &lt;dbl&gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195863, 10.
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">by_subject</span> <span class="o">&lt;-</span> <span class="nf">split</span><span class="p">(</span><span class="n">trial_data</span><span class="p">,</span> <span class="n">trial_data</span><span class="o">$</span><span class="n">USUBJID</span><span class="p">)</span>
 <span class="n">by_subject_chg</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">by_subject</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
   <span class="nf">if </span><span class="p">(</span><span class="nf">any</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL</span> <span class="o">-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL[data</span><span class="o">$</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span>
+    <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="nf">with</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">AVAL</span> <span class="o">-</span> <span class="n">AVAL[AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span><span class="p">)</span>
   <span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
     <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="kc">NA</span>
   <span class="p">}</span>
@@ -207,7 +207,7 @@ $ AVAL    &lt;dbl&gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195863, 10.
   <span class="n">INDICES</span> <span class="o">=</span> <span class="n">trial_data</span><span class="o">$</span><span class="n">USUBJID</span><span class="p">,</span>
   <span class="n">FUN</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="nf">if </span><span class="p">(</span><span class="nf">any</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="p">))</span> <span class="p">{</span>
-      <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL</span> <span class="o">-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL[data</span><span class="o">$</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span>
+      <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="nf">with</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">AVAL</span> <span class="o">-</span> <span class="n">AVAL[AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span><span class="p">)</span>
     <span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
       <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="kc">NA</span>
     <span class="p">}</span>
@@ -269,7 +269,7 @@ $ AVAL    &lt;dbl&gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195863, 10.
   <span class="n">INDICES</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="n">trial_data_mult</span><span class="o">$</span><span class="n">USUBJID</span><span class="p">,</span> <span class="n">trial_data_mult</span><span class="o">$</span><span class="n">PARAM</span><span class="p">),</span>
   <span class="n">FUN</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="nf">if </span><span class="p">(</span><span class="nf">any</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="p">))</span> <span class="p">{</span>
-      <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL</span> <span class="o">-</span> <span class="n">data</span><span class="o">$</span><span class="n">AVAL[data</span><span class="o">$</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span>
+      <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="nf">with</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">AVAL</span> <span class="o">-</span> <span class="n">AVAL[AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="n">]</span><span class="p">)</span>
     <span class="p">}</span> <span class="n">else</span> <span class="p">{</span>
       <span class="n">data</span><span class="o">$</span><span class="n">CHG</span> <span class="o">&lt;-</span> <span class="kc">NA</span>
     <span class="p">}</span>
@@ -280,6 +280,40 @@ $ AVAL    &lt;dbl&gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195863, 10.
 <span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span><span class="n">trial_data_mult_chg</span><span class="p">,</span> <span class="n">trial_data_mult_chg2</span><span class="p">)</span>
 </code></pre></div><pre><code>No issues were found!
 </code></pre><p>Again a minimal change. Just pass a <code>list</code> of variables to split by to the <code>INDICES</code> argument of <code>by()</code>.</p>
+<p>Yet another way to calculate change from baseline is via merging. This methods works regardless of whether or not baseline records are missing. First, create a new <code>data.frame</code> by subsetting only the baseline records. Next, left-join this new <code>data.frame</code> with the original one. Finally, subtract the baseline value from the other values as usual. Here&rsquo;s how you can do that using <code>{dplyr}</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">baseline</span> <span class="o">&lt;-</span> <span class="n">trial_data_mult</span> <span class="o">%&gt;%</span>
+  <span class="nf">filter</span><span class="p">(</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">select</span><span class="p">(</span><span class="n">USUBJID</span><span class="p">,</span> <span class="n">PARAM</span><span class="p">,</span> <span class="n">BASELINE</span> <span class="o">=</span> <span class="n">AVAL</span><span class="p">)</span>
+
+<span class="n">trial_data_mult_chg3</span> <span class="o">&lt;-</span> <span class="n">trial_data_mult</span> <span class="o">%&gt;%</span>
+  <span class="nf">left_join</span><span class="p">(</span><span class="n">baseline</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;USUBJID&#34;</span><span class="p">,</span> <span class="s">&#34;PARAM&#34;</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">CHG</span> <span class="o">=</span> <span class="n">AVAL</span> <span class="o">-</span> <span class="n">BASELINE</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">select</span><span class="p">(</span><span class="o">-</span><span class="n">BASELINE</span><span class="p">)</span>
+<span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span><span class="n">trial_data_mult_chg</span><span class="p">,</span> <span class="n">trial_data_mult_chg3</span><span class="p">)</span>
+</code></pre></div><pre><code>No issues were found!
+</code></pre><p>And here&rsquo;s the base <code>R</code> version.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">rows</span> <span class="o">&lt;-</span> <span class="n">trial_data_mult</span><span class="o">$</span><span class="n">AVISIT</span> <span class="o">==</span> <span class="s">&#34;Baseline&#34;</span>
+<span class="n">cols</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;USUBJID&#34;</span><span class="p">,</span> <span class="s">&#34;PARAM&#34;</span><span class="p">,</span> <span class="s">&#34;AVAL&#34;</span><span class="p">)</span>
+<span class="n">baseline</span> <span class="o">&lt;-</span> <span class="n">trial_data_mult[rows</span><span class="p">,</span> <span class="n">cols]</span>
+
+<span class="n">trial_data_mult_chg4</span> <span class="o">&lt;-</span> <span class="nf">merge</span><span class="p">(</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">trial_data_mult</span><span class="p">,</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">baseline</span><span class="p">,</span>
+  <span class="n">by</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;USUBJID&#34;</span><span class="p">,</span> <span class="s">&#34;PARAM&#34;</span><span class="p">),</span>
+  <span class="n">all.x</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="c1"># Left join</span>
+  <span class="n">suffixes</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;BL&#34;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">trial_data_mult_chg4</span> <span class="o">&lt;-</span> <span class="nf">within</span><span class="p">(</span><span class="n">trial_data_mult_chg4</span><span class="p">,</span> <span class="p">{</span>
+  <span class="n">CHG</span> <span class="o">&lt;-</span> <span class="n">AVAL</span> <span class="o">-</span> <span class="n">AVALBL</span>
+  <span class="n">AVALBL</span> <span class="o">&lt;-</span> <span class="kc">NULL</span> <span class="c1"># Remove column with baseline values</span>
+<span class="p">})</span>
+<span class="n">diffdf</span><span class="o">::</span><span class="nf">diffdf</span><span class="p">(</span>
+  <span class="n">base</span> <span class="o">=</span> <span class="n">trial_data_mult_chg</span><span class="p">,</span>
+  <span class="n">compare</span> <span class="o">=</span> <span class="n">trial_data_mult_chg4</span><span class="p">,</span>
+  <span class="n">keys</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;USUBJID&#34;</span><span class="p">,</span> <span class="s">&#34;PARAM&#34;</span><span class="p">,</span> <span class="s">&#34;AVISITN&#34;</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div><pre><code>No issues were found!
+</code></pre><p>Notice that I had to specify the <code>keys</code> argument of <code>diffdf::diffdf()</code> because <code>merge()</code> does not preserve the initial sorting of its input dataset.</p>
 <p>There you have it, that&rsquo;s how you calculate change from baseline in <code>R</code> using <code>{dplyr}</code> and good old <code>{base}</code>. If you enjoyed reading this post please share it with your friends and colleagues. Thank you!</p>
 
 			</div>
@@ -289,7 +323,7 @@ $ AVAL    &lt;dbl&gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195863, 10.
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/dplyr">dplyr</a></span><span class="tag"><a href="/tags/base">base</a></span><span class="tag"><a href="/tags/datawrangling">datawrangling</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1452 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1656 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-11 02:00 &#43;0200</p>
 			</footer>
 		</article>
