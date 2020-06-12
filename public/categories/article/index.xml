@@ -67,7 +67,7 @@ $ AVAL    &amp;lt;dbl&amp;gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195
 13 ABC123456.000002 Week 20   8.78 -0.624 
 14 ABC123456.000002 Week 24   6.97 -2.43  
 # ... with 2,086 more rows
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Looks good! However, this method will fail if there is no baseline value. In such a case the value of the first visit—regardless of whether or not it was really baseline—would be subtracted from the other visit values. In that case change from baseline should be &lt;code&gt;NA&lt;/code&gt;, though. Here&amp;rsquo;s what I mean.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Looks good! This method will also work if the value at baseline is &lt;code&gt;NA&lt;/code&gt; because subtracting &lt;code&gt;NA&lt;/code&gt; from a number results in &lt;code&gt;NA&lt;/code&gt;. This is the right result for change from baseline if there&amp;rsquo;s no baseline available. However, this method will fail if there&amp;rsquo;s no baseline record at all. In such a case the value of the first visit, e.g. Week 4, would be subtracted from the other visit values. This is wrong, though. Here&amp;rsquo;s what I mean.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;trial_data&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trial_data[&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;-1L&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# remove baseline of first subject&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;trial_data&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;arrange&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;USUBJID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AVISITN&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
@@ -94,7 +94,7 @@ $ AVAL    &amp;lt;dbl&amp;gt; 10.197338, 11.272717, 12.288091, 13.508947, 12.195
 13 ABC123456.000002 Week 24   6.97 -2.43 
 14 ABC123456.000003 Baseline  9.44  0    
 # ... with 2,085 more rows
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;So, how to take care of missing baseline values? Like so.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;So, how to take care of missing baseline records? Like so.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;trial_data_chg2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trial_data&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;group_by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;USUBJID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   &lt;span class=&#34;nf&#34;&gt;mutate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;

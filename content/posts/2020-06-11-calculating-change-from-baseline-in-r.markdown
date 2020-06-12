@@ -91,7 +91,7 @@ trial_data_chg %>%
 # ... with 2,086 more rows
 ```
 
-Looks good! However, this method will fail if there is no baseline value. In such a case the value of the first visit—regardless of whether or not it was really baseline—would be subtracted from the other visit values. In that case change from baseline should be `NA`, though. Here's what I mean.
+Looks good! This method will also work if the value at baseline is `NA` because subtracting `NA` from a number results in `NA`. This is the right result for change from baseline if there's no baseline available. However, this method will fail if there's no baseline record at all. In such a case the value of the first visit, e.g. Week 4, would be subtracted from the other visit values. This is wrong, though. Here's what I mean.
 
 
 ```r
@@ -127,7 +127,7 @@ trial_data %>%
 ```
 
 
-So, how to take care of missing baseline values? Like so.
+So, how to take care of missing baseline records? Like so.
 
 
 ```r
