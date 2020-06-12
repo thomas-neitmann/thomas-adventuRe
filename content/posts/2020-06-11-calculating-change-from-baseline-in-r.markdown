@@ -134,14 +134,12 @@ So, how to take care of missing baseline records? Like so.
 trial_data_chg2 <- trial_data %>%
   group_by(USUBJID) %>%
   mutate(
-    HASBL = any(AVISIT == "Baseline"),
-    CHG = if (HASBL) AVAL - AVAL[AVISIT == "Baseline"] else NA
+    CHG = if (any(AVISIT == "Baseline")) AVAL - AVAL[AVISIT == "Baseline"] else NA
   ) %>%
-  select(-HASBL) %>%
   ungroup()
 ```
 
-You could put the `any(AVISIT == "Baseline")` expression directly into `if()` but I think this way it's clearer to see what's going on. Let's check that this in fact produced the right result.
+Let's check that this in fact produced the right result.
 
 
 ```r
@@ -237,10 +235,8 @@ First, the `{dplyr}` version.
 trial_data_mult_chg <- trial_data_mult %>%
   group_by(USUBJID, PARAM) %>%
   mutate(
-    HASBL = any(AVISIT == "Baseline"),
-    CHG = if (HASBL) AVAL - AVAL[AVISIT == "Baseline"] else NA
+    CHG = if (any(AVISIT == "Baseline")) AVAL - AVAL[AVISIT == "Baseline"] else NA
   ) %>%
-  select(-HASBL) %>%
   ungroup()
 
 trial_data_mult_chg %>%
