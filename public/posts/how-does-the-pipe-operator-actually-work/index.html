@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="How does the pipe operator actually work?">
+<meta itemprop="description" content="I think it&rsquo;s fair to say that the pipe operator %&gt;% from the {magrittr} package—made famous by its use in {dplyr}—revolutionized R. Using %&gt;% you can chain together multiple functions to create pipelines for your data. That way you can write highly expressive code and mitigate the need to define intermediate variables for each step of you data processing. But how does %&gt;% actually work? If you think about it, %&gt;% does something quite astonishing: it applies the function on its right to the expression of its left.">
+<meta itemprop="datePublished" content="2020-06-16T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-14T14:23:00&#43;02:00" />
+<meta itemprop="wordCount" content="1580">
+
+
+
+<meta itemprop="keywords" content="" /><meta property="og:title" content="How does the pipe operator actually work?" />
+<meta property="og:description" content="I think it&rsquo;s fair to say that the pipe operator %&gt;% from the {magrittr} package—made famous by its use in {dplyr}—revolutionized R. Using %&gt;% you can chain together multiple functions to create pipelines for your data. That way you can write highly expressive code and mitigate the need to define intermediate variables for each step of you data processing. But how does %&gt;% actually work? If you think about it, %&gt;% does something quite astonishing: it applies the function on its right to the expression of its left." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/how-does-the-pipe-operator-actually-work/" />
+<meta property="article:published_time" content="2020-06-16T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-14T14:23:00+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How does the pipe operator actually work?"/>
+<meta name="twitter:description" content="I think it&rsquo;s fair to say that the pipe operator %&gt;% from the {magrittr} package—made famous by its use in {dplyr}—revolutionized R. Using %&gt;% you can chain together multiple functions to create pipelines for your data. That way you can write highly expressive code and mitigate the need to define intermediate variables for each step of you data processing. But how does %&gt;% actually work? If you think about it, %&gt;% does something quite astonishing: it applies the function on its right to the expression of its left."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>How does the pipe operator actually work?</title>
+	<link rel="stylesheet" href="/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="/css/extra.css">
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Thomas’ adventuRe</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://linkedin.com/in/thomasneitmann" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://github.com/thomas-neitmann" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><a href="https://twitter.com/thomas_neitmann" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Jun 16, 2020</span></div>
+				<h1>How does the pipe operator actually work?</h1>
+			</header>
+			<div class="content">
+				<p>I think it&rsquo;s fair to say that the pipe operator <code>%&gt;%</code> from the <code>{magrittr}</code> package—made famous by its use in <code>{dplyr}</code>—revolutionized <code>R</code>. Using <code>%&gt;%</code> you can chain together multiple functions to create pipelines for your data. That way you can write highly expressive code and mitigate the need to define intermediate variables for each step of you data processing. But how does <code>%&gt;%</code> actually work? If you think about it, <code>%&gt;%</code> does something quite astonishing: it applies the function on its right to the expression of its left. Achieving this is not really straightforward which is why I decided to write this post.</p>
+<p>Before I start, though, a word of caution and a disclaimer. First, I will cover some advanced <code>R</code> in this post. If you are new to <code>R</code> then this probably isn&rsquo;t for you. Second, in this post I will <em>not</em> look at the actual code of <code>%&gt;%</code> as defined in <code>{magrittr}</code>. Why? Because <code>{magrittr}</code> does some fancy stuff to take care of edge cases that blur the essence of what <code>%&gt;%</code> is all about. Instead I will use this minimal definition of <code>%&gt;%</code> which really captures the essence of this operator and can replace the &lsquo;real&rsquo; pipe operator in probably more than 95% of cases. Without further ado, here it is:</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">`%&gt;%`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">lhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
+  <span class="n">rhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
+  <span class="n">building_blocks</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span>
+    <span class="n">rhs[[1L]]</span><span class="p">,</span>
+    <span class="n">lhs</span><span class="p">,</span>
+    <span class="nf">as.list</span><span class="p">(</span><span class="n">rhs[</span><span class="m">-1L</span><span class="n">]</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="n">call</span> <span class="o">&lt;-</span> <span class="nf">as.call</span><span class="p">(</span><span class="n">building_blocks</span><span class="p">)</span>
+  <span class="nf">eval</span><span class="p">(</span><span class="n">call</span><span class="p">,</span> <span class="n">envir</span> <span class="o">=</span> <span class="nf">parent.frame</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre></div><p>Take a deep breath. I understand that this might look frightening. But don&rsquo;t worry, I will walk you through it step-by-step.</p>
+<p>Let&rsquo;s start with the very first line. <code>lhs</code> is short for left-hand side and <code>rhs</code>—as you might guess—stands for right-hand side. So, <code>%&gt;%</code> is defined as a function of something to its left and something to its right. If you&rsquo;ve ever used <code>%&gt;%</code> this should make sense. But isn&rsquo;t <code>%&gt;%</code> an operator rather than a function? Yes and no. <code>%&gt;%</code> is an operator but it also is a function. In fact, every operator in <code>R</code> be it <code>*</code>, <code>+</code> or <code>%*%</code> is a function. That&rsquo;s why you can use <code>%&gt;%</code> like any other function, e.g.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">`%&gt;%`</span><span class="p">(</span><span class="s">&#34;This actually works!&#34;</span><span class="p">,</span> <span class="nf">print</span><span class="p">())</span>
+</code></pre></div><pre><code>[1] &quot;This actually works!&quot;
+</code></pre><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="s">&#34;Just like this!&#34;</span> <span class="o">%&gt;%</span> <span class="nf">print</span><span class="p">()</span>
+</code></pre></div><pre><code>[1] &quot;Just like this!&quot;
+</code></pre><p>Granted this defies the purpose of <code>%&gt;%</code> but just so you know.</p>
+<p>Next, let&rsquo;s move on to the function body, i.e. the code between <code>{</code> and <code>}</code>. What does <code>substitute()</code> do? Usually, if you pass an argument to a function it is <em>evaluated</em>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">identity</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">x</span>
+<span class="p">}</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="nf">identity</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div><pre><code>[1] 1
+</code></pre><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">identity</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">))</span>
+</code></pre></div><pre><code>[1] 5.5
+</code></pre><p>Using <code>substitute()</code> you can infer the actual <em>expression</em> that was passed to an argument. Put differently, you bypass evaluating the expression but instead <em>quote</em> it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">identity2</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">substitute</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nf">identity2</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div><pre><code>y
+</code></pre><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">identity2</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">))</span>
+</code></pre></div><pre><code>mean(1:10)
+</code></pre><p>Why is this useful? Because you can actually modify this quoted expression which is exactly what <code>%&gt;%</code> needs to do. Let&rsquo;s move on to line 3 of <code>%&gt;%</code> to see what I mean.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">`%&gt;%`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">lhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
+  <span class="n">rhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
+  <span class="n">building_blocks</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span>
+    <span class="n">rhs[[1L]]</span><span class="p">,</span>
+    <span class="n">lhs</span><span class="p">,</span>
+    <span class="nf">as.list</span><span class="p">(</span><span class="n">rhs[</span><span class="m">-1L</span><span class="n">]</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="n">building_blocks</span>
+<span class="p">}</span>
+<span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">subset</span><span class="p">(</span><span class="n">cyl</span> <span class="o">==</span> <span class="m">4</span><span class="p">,</span> <span class="n">select</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">cyl</span><span class="p">))</span>
+</code></pre></div><pre><code>[[1]]
+subset
+
+[[2]]
+mtcars
+
+[[3]]
+cyl == 4
+
+$select
+c(hp, cyl)
+</code></pre><p>This looks interesting. Apparently you can subset a quoted expression like a list using <code>[[</code>. When you have a quoted expression <code>expr</code> that involves a function, <code>expr[[1L]]</code> will get you the name of the function and <code>expr[-1L]</code> will get you the arguments of the function.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">expr</span> <span class="o">&lt;-</span> <span class="nf">identity2</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="n">na.rm</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">))</span>
+<span class="n">expr[[1L]]</span>
+</code></pre></div><pre><code>mean
+</code></pre><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">expr[</span><span class="m">-1L</span><span class="n">]</span>
+</code></pre></div><pre><code>(1:10)(na.rm = TRUE)
+</code></pre><p>But wait, <code>(1:10)(na.rm = TRUE)</code> looks almost like a function, doesn&rsquo;t it? Indeed. <code>R</code> will always interpret the first element in a quoted expression as a function. To circumvent this I used <code>as.list()</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="nf">as.list</span><span class="p">(</span><span class="n">expr[</span><span class="m">-1L</span><span class="n">]</span><span class="p">)</span>
+</code></pre></div><pre><code>$x
+1:10
+
+$na.rm
+[1] TRUE
+</code></pre><p>Going back to the current definition of <code>%&gt;%</code> we actually already have all we need.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">subset</span><span class="p">(</span><span class="n">cyl</span> <span class="o">==</span> <span class="m">4</span><span class="p">,</span> <span class="n">select</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">cyl</span><span class="p">))</span>
+</code></pre></div><pre><code>[[1]]
+subset
+
+[[2]]
+mtcars
+
+[[3]]
+cyl == 4
+
+$select
+c(hp, cyl)
+</code></pre><p>The first element in the list is the function on the right-hand side that should be applied to the left-hand side. The left-hand side appears second in this list, i.e. as the first argument of <code>rhs</code>, just as needed. The next elements are the remaining argument to <code>rhs</code> in the order initially specified.</p>
+<p>A list is not what we need, though. We somehow have to turn this list into a function call. This is where <code>as.call()</code> comes into play.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">`%&gt;%`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">lhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
+  <span class="n">rhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
+  <span class="n">building_blocks</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span>
+    <span class="n">rhs[[1L]]</span><span class="p">,</span>
+    <span class="n">lhs</span><span class="p">,</span>
+    <span class="nf">as.list</span><span class="p">(</span><span class="n">rhs[</span><span class="m">-1L</span><span class="n">]</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="n">call</span> <span class="o">&lt;-</span> <span class="nf">as.call</span><span class="p">(</span><span class="n">building_blocks</span><span class="p">)</span>
+  <span class="n">call</span>
+<span class="p">}</span>
+<span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">subset</span><span class="p">(</span><span class="n">cyl</span> <span class="o">==</span> <span class="m">4</span><span class="p">,</span> <span class="n">select</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">cyl</span><span class="p">))</span>
+</code></pre></div><pre><code>subset(mtcars, cyl == 4, select = c(hp, cyl))
+</code></pre><p>At this point <code>%&gt;%</code> returns the code we want to run. But this code is still quoted and not evaluated yet. We can manually run it using the <code>eval()</code> function.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">code</span> <span class="o">&lt;-</span> <span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">subset</span><span class="p">(</span><span class="n">cyl</span> <span class="o">==</span> <span class="m">4</span><span class="p">,</span> <span class="n">select</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">cyl</span><span class="p">))</span>
+<span class="nf">eval</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+</code></pre></div><pre><code>                hp cyl
+Datsun 710      93   4
+Merc 240D       62   4
+Merc 230        95   4
+Fiat 128        66   4
+Honda Civic     52   4
+Toyota Corolla  65   4
+Toyota Corona   97   4
+Fiat X1-9       66   4
+Porsche 914-2   91   4
+Lotus Europa   113   4
+Volvo 142E     109   4
+</code></pre><p>But that&rsquo;s obviously cumbersome. Instead we will evaluate the quoted expression directly inside <code>%&gt;%</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">`%&gt;%`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">lhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
+  <span class="n">rhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
+  <span class="n">building_blocks</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">rhs[[1L]]</span><span class="p">,</span> <span class="n">lhs</span><span class="p">,</span> <span class="nf">as.list</span><span class="p">(</span><span class="n">rhs[</span><span class="m">-1L</span><span class="n">]</span><span class="p">))</span>
+  <span class="n">call</span> <span class="o">&lt;-</span> <span class="nf">as.call</span><span class="p">(</span><span class="n">building_blocks</span><span class="p">)</span>
+  <span class="nf">eval</span><span class="p">(</span><span class="n">call</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p>If you&rsquo;ve paid close attention to the definition of <code>%&gt;%</code> I displayed in the beginning of this post, you will realize that this one here is a bit different. Let&rsquo;s try to run it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">subset</span><span class="p">(</span><span class="n">cyl</span> <span class="o">==</span> <span class="m">4</span><span class="p">,</span> <span class="n">select</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">cyl</span><span class="p">))</span>
+</code></pre></div><pre><code>                hp cyl
+Datsun 710      93   4
+Merc 240D       62   4
+Merc 230        95   4
+Fiat 128        66   4
+Honda Civic     52   4
+Toyota Corolla  65   4
+Toyota Corona   97   4
+Fiat X1-9       66   4
+Porsche 914-2   91   4
+Lotus Europa   113   4
+Volvo 142E     109   4
+</code></pre><p>This seems to work just fine. However, let me make a little change to make you aware of a subtle bug in this function.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">`%&gt;%`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
+  <span class="n">lhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
+  <span class="n">rhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
+  <span class="n">building_blocks</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">rhs[[1L]]</span><span class="p">,</span> <span class="n">lhs</span><span class="p">,</span> <span class="nf">as.list</span><span class="p">(</span><span class="n">rhs[</span><span class="m">-1L</span><span class="n">]</span><span class="p">))</span>
+  <span class="n">call</span> <span class="o">&lt;-</span> <span class="nf">as.call</span><span class="p">(</span><span class="n">building_blocks</span><span class="p">)</span>
+  <span class="nf">eval</span><span class="p">(</span><span class="n">call</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">subset</span><span class="p">(</span><span class="n">cyl</span> <span class="o">==</span> <span class="m">4</span><span class="p">,</span> <span class="n">select</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">cyl</span><span class="p">))</span>
+</code></pre></div><pre><code>Error in subset.default(mtcars, cyl == 4, select = c(hp, cyl)): object 'cyl' not found
+</code></pre><p>By default, <code>eval()</code> looks for the variables inside the expression given to it in the current <a href="http://adv-r.had.co.nz/Environments.html">environment</a>. In this case that&rsquo;s the environment of <code>%&gt;%</code>. Only if the variable is not defined in the current environment it will go up one environment and look in the environment where the function was called. In this case that&rsquo;s the global environment. Since I defined <code>mtcars</code> locally it will never look in the global environment, though. If you think about it, if we use the <code>%&gt;%</code> operator in the global environment it should always start to look there not inside its own environment. To do so, I will make a little change to the definition of <code>%&gt;%</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">`%&gt;%`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">mtcars</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
+  <span class="n">lhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
+  <span class="n">rhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
+  <span class="n">building_blocks</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">rhs[[1L]]</span><span class="p">,</span> <span class="n">lhs</span><span class="p">,</span> <span class="nf">as.list</span><span class="p">(</span><span class="n">rhs[</span><span class="m">-1L</span><span class="n">]</span><span class="p">))</span>
+  <span class="n">call</span> <span class="o">&lt;-</span> <span class="nf">as.call</span><span class="p">(</span><span class="n">building_blocks</span><span class="p">)</span>
+  <span class="nf">eval</span><span class="p">(</span><span class="n">call</span><span class="p">,</span> <span class="n">envir</span> <span class="o">=</span> <span class="nf">parent.frame</span><span class="p">())</span>
+<span class="p">}</span>
+<span class="n">mtcars</span> <span class="o">%&gt;%</span> <span class="nf">subset</span><span class="p">(</span><span class="n">cyl</span> <span class="o">==</span> <span class="m">4</span><span class="p">,</span> <span class="n">select</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">cyl</span><span class="p">))</span>
+</code></pre></div><pre><code>                hp cyl
+Datsun 710      93   4
+Merc 240D       62   4
+Merc 230        95   4
+Fiat 128        66   4
+Honda Civic     52   4
+Toyota Corolla  65   4
+Toyota Corona   97   4
+Fiat X1-9       66   4
+Porsche 914-2   91   4
+Lotus Europa   113   4
+Volvo 142E     109   4
+</code></pre><p><code>parent.frame()</code> returns the environment from which a function—in this case <code>%&gt;%</code>—was called. By passing <code>parent.frame()</code> to the <code>envir</code> argument of <code>eval()</code>, it will start looking for variables not in the local function environment but one level above. That way even if <code>mtcars</code> is defined locally it won&rsquo;t do any harm. Still, let&rsquo;s remove it and have a finally look at <code>%&gt;%</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">`%&gt;%`</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">lhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
+  <span class="n">rhs</span> <span class="o">&lt;-</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
+  <span class="n">building_blocks</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span>
+    <span class="n">rhs[[1L]]</span><span class="p">,</span>
+    <span class="n">lhs</span><span class="p">,</span>
+    <span class="nf">as.list</span><span class="p">(</span><span class="n">rhs[</span><span class="m">-1L</span><span class="n">]</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="n">call</span> <span class="o">&lt;-</span> <span class="nf">as.call</span><span class="p">(</span><span class="n">building_blocks</span><span class="p">)</span>
+  <span class="nf">eval</span><span class="p">(</span><span class="n">call</span><span class="p">,</span> <span class="n">envir</span> <span class="o">=</span> <span class="nf">parent.frame</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre></div><p>As stated initially, this is not the same as <code>%&gt;%</code> in <code>{magrittr}</code>. The following code would work with the real <code>%&gt;%</code> but doesn&rsquo;t with the definition I presented here.</p>
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="s">&#34;error_message&#34;</span> <span class="o">%&gt;%</span>
+  <span class="nf">gsub</span><span class="p">(</span><span class="n">pattern</span> <span class="o">=</span> <span class="s">&#34;_&#34;</span><span class="p">,</span> <span class="n">replacement</span> <span class="o">=</span> <span class="s">&#34; &#34;</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">.)</span>
+</code></pre></div><pre><code>Error in gsub(&quot;error_message&quot;, pattern = &quot;_&quot;, replacement = &quot; &quot;, x = .): object '.' not found
+</code></pre><p>For <code>{magrittr}</code>'s <code>%&gt;%</code>, <code>.</code> is a special symbol that acts as a placeholder for <code>lhs</code>. This is useful when a function takes the data not as its first argument as is the case with <code>gsub()</code>. The pipe I wrote in this post is not that &lsquo;smart&rsquo; and always places its <code>lhs</code> as the first argument of <code>rhs</code>. Nevertheless, the <code>%&gt;%</code> presented here is functional. <code>{dplyr}</code> could use this pipe operator and everything would work just fine. In fact, the <code>{poorman}</code> package—a base <code>R</code> clone of <code>{dplyr}</code>—uses more-or-less this definition fo <code>%&gt;%</code>.</p>
+<p>If you have any questions please ask them in the comments below (if you are reading this on R-bloggers make sure to click <a href="https://thomasadventure.blog/posts/how-does-the-pipe-operator-actually-work/">here</a>). I did my best to explain the concepts I presented in an understandable way but I&rsquo;m sure my explanations lack in some points. And don&rsquo;t be shy. Certainly someone else has the same question as you and will benefit from you asking it (and me providing a hopefully helpful answer).</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>Thomas Neitmann</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1580 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-16 02:00 &#43;0200</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/thomas-neitmann/blog2/commit/a7208904e9bc17397163292bb0950b604390764c" target="_blank" rel="noopener">a720890</a> @ 2020-06-14</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="/posts/calculating-change-from-baseline-in-r/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Calculating change from baseline in R</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "thomas-adventure" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="/">Thomas Neitmann</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://www.r-bloggers.com/" target="_blank" rel="noopener">R-bloggers</a> &#183; <a href="/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-161564352-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+
+</html>
