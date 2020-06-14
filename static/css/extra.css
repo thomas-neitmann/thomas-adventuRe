@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Baumans:wght@400&display=swap');
+
+.site-branding {
+  font-family: Baumans, 'IBM Plex Sans', 'Trebuchet MS', Helvetica, sans-serif;
+}
 
 body {
   font-family: 'IBM Plex Sans', 'Trebuchet MS', Helvetica, sans-serif;
@@ -6,9 +14,9 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: 'Noto Sans JP', 'Trebuchet MS', Helvetica, sans-serif;
+  font-family: 'Baumans', 'IBM Plex Sans', 'Trebuchet MS', Helvetica, sans-serif;
 }
 
 pre, code {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Fira Mono', monospace;
 }
