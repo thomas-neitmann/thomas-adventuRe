@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 20 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2020 18:50:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>{mdthemes} is on CRAN: markdown powered themes for {ggplot2}</title>
+      <link>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</link>
+      <pubDate>Sun, 14 Jun 2020 18:50:00 +0000</pubDate>
+      
+      <guid>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</guid>
+      <description>I&amp;rsquo;m very pleased to announce that {mdthemes}—my second (public) R package—is now available from CRAN. {mdthemes} adds support for rendering text as markdown to the themes from {ggplot2}, {ggthemes}, {hrbrthemes}, {tvthemes} and {cowplot}. It contains 55 themes in total. All themes start with md_ followed by the name of the original theme, e.g. md_theme_bw().
+I&amp;rsquo;ve been meaning to put this package on CRAN for quite some time. However, before submitting I had to wait until {ggtext}—which does all the hard work for {mdthemes}—was available from CRAN.</description>
+    </item>
     
     <item>
       <title>Enhance your {ggplot2} data visualizations with {ggtext}</title>
@@ -96,16 +106,6 @@ scatter_plot(mtcars, hp, mpg)## Error in FUN(X[[i]], ...): object &#39;hp&#39; 
       <guid>/posts/adjusting-only-the-upper-or-lower-axis-limit-using-ggplot2/</guid>
       <description>If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&amp;rsquo;t want to set inside either xlim() or ylim().
 library(ggplot2)library(patchwork)theme_set(ggcharts::theme_hermit(grid = &amp;#34;XY&amp;#34;))data(mtcars)p1 &amp;lt;- ggplot(mtcars, aes(factor(cyl), hp)) +geom_boxplot(color = &amp;#34;#D6DDE1&amp;#34;, fill = &amp;#34;steelblue&amp;#34;)p2 &amp;lt;- p1 + ylim(0, NA)p3 &amp;lt;- p1 + ylim(NA, 500)p1 | p2 | p3</description>
-    </item>
-    
-    <item>
-      <title>{mdthemes} is on CRAN: markdown powered themes for {ggplot2}</title>
-      <link>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</guid>
-      <description>I&amp;rsquo;m very pleased to announce that {mdthemes}—my second (public) R package—is now available from CRAN. {mdthemes} adds support for rendering text as markdown to the themes from {ggplot2}, {ggthemes}, {hrbrthemes}, {tvthemes} and {cowplot}. It contains 55 themes in total. All themes start with md_ followed by the name of the original theme, e.g. md_theme_bw().
-I&amp;rsquo;ve been meaning to put this package on CRAN for quite some time. However, before submitting I had to wait until {ggtext}—which does all the hard work for {mdthemes}—was available from CRAN.</description>
     </item>
     
   </channel>

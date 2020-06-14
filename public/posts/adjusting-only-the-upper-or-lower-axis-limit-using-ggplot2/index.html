@@ -11,7 +11,7 @@
 <meta itemprop="description" content="If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&rsquo;t want to set inside either xlim() or ylim().
 library(ggplot2)library(patchwork)theme_set(ggcharts::theme_hermit(grid = &#34;XY&#34;))data(mtcars)p1 &lt;- ggplot(mtcars, aes(factor(cyl), hp)) &#43;geom_boxplot(color = &#34;#D6DDE1&#34;, fill = &#34;steelblue&#34;)p2 &lt;- p1 &#43; ylim(0, NA)p3 &lt;- p1 &#43; ylim(NA, 500)p1 | p2 | p3">
 <meta itemprop="datePublished" content="2020-01-04T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-01-04T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-03T12:19:59&#43;02:00" />
 <meta itemprop="wordCount" content="65">
 
 
@@ -22,7 +22,7 @@ library(ggplot2)library(patchwork)theme_set(ggcharts::theme_hermit(grid = &#34
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/posts/adjusting-only-the-upper-or-lower-axis-limit-using-ggplot2/" />
 <meta property="article:published_time" content="2020-01-04T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-01-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-03T12:19:59+02:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Adjusting only the upper or lower axis limit using ggplot2"/>
 <meta name="twitter:description" content="If you want to change only the lower or upper bound of your plot axis pass NA for the value you don&rsquo;t want to set inside either xlim() or ylim().
@@ -52,7 +52,6 @@ library(ggplot2)library(patchwork)theme_set(ggcharts::theme_hermit(grid = &#34
 				<nav class="site-nav hide-in-mobile">
 					
 				<a href="/posts/">Posts</a>
-				<a href="/tags/">Tags</a>
 				<a href="/about/">About</a>
 
 				</nav>
@@ -65,7 +64,6 @@ library(ggplot2)library(patchwork)theme_set(ggcharts::theme_hermit(grid = &#34
 	<div id="mobile-menu" class="animated fast">
 		<ul>
 			<li><a href="/posts/">Posts</a></li>
-			<li><a href="/tags/">Tags</a></li>
 			<li><a href="/about/">About</a></li>
 		</ul>
 	</div>
@@ -100,7 +98,8 @@ library(ggplot2)library(patchwork)theme_set(ggcharts::theme_hermit(grid = &#34
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/ggplot2">ggplot2</a></span><span class="tag"><a href="/tags/datavisualization">datavisualization</a></span>
 				</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>65 Words</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-01-04 01:00 &#43;0100</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-01-04 01:00 &#43;0000</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/thomas-neitmann/blog2/commit/12932b453053ef691d3aae8f900023c4e5580be3" target="_blank" rel="noopener">12932b4</a> @ 2020-05-03</p>
 			</footer>
 		</article>
 		<div class="post-nav thin">
