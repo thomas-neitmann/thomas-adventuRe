@@ -210,7 +210,7 @@ Volvo 142E     109   4
 		<item>
 			<title>{mdthemes} is on CRAN: markdown powered themes for {ggplot2}</title>
 			<link>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</link>
-			<pubDate>Sun, 14 Jun 2020 18:50:00 +0000</pubDate>
+			<pubDate>Sun, 14 Jun 2020 00:00:00 +0000</pubDate>
 			
 			<guid>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</guid>
 			<description>&lt;p&gt;I&amp;rsquo;m very pleased to announce that &lt;code&gt;{mdthemes}&lt;/code&gt;—my second (public) R package—is now available from CRAN. &lt;code&gt;{mdthemes}&lt;/code&gt; adds support for rendering text as markdown to the themes from &lt;code&gt;{ggplot2}&lt;/code&gt;, &lt;code&gt;{ggthemes}&lt;/code&gt;, &lt;code&gt;{hrbrthemes}&lt;/code&gt;, &lt;code&gt;{tvthemes}&lt;/code&gt; and &lt;code&gt;{cowplot}&lt;/code&gt;. It contains 55 themes in total. All themes start with &lt;code&gt;md_&lt;/code&gt; followed by the name of the original theme, e.g. &lt;code&gt;md_theme_bw()&lt;/code&gt;.&lt;/p&gt;
@@ -306,7 +306,7 @@ Volvo 142E     109   4
 {
     as_md_theme(ggplot2::theme_minimal(...))
 }
-&amp;lt;bytecode: 0x000000001877c5b8&amp;gt;
+&amp;lt;bytecode: 0x000000001877b2c8&amp;gt;
 &amp;lt;environment: namespace:mdthemes&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Let&amp;rsquo;s see this in action. Using the non-markdown theme &lt;code&gt;theme_hermit()&lt;/code&gt; the text is not rendered.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;n&#34;&gt;line_chart&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;

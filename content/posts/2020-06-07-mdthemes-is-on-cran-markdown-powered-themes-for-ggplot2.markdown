@@ -1,7 +1,7 @@
 ---
 title: '{mdthemes} is on CRAN: markdown powered themes for {ggplot2}'
 author: Thomas Neitmann
-date: '2020-06-14T18:50:00'
+date: '2020-06-14'
 slug: mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2
 categories:
   - R
@@ -152,7 +152,7 @@ function (...)
 {
     as_md_theme(ggplot2::theme_minimal(...))
 }
-<bytecode: 0x000000001877c5b8>
+<bytecode: 0x000000001877b2c8>
 <environment: namespace:mdthemes>
 ```
 

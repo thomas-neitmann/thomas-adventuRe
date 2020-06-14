@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 14 Jun 2020 18:50:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/package/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>{mdthemes} is on CRAN: markdown powered themes for {ggplot2}</title>
       <link>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</link>
-      <pubDate>Sun, 14 Jun 2020 18:50:00 +0000</pubDate>
+      <pubDate>Sun, 14 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</guid>
       <description>I&amp;rsquo;m very pleased to announce that {mdthemes}—my second (public) R package—is now available from CRAN. {mdthemes} adds support for rendering text as markdown to the themes from {ggplot2}, {ggthemes}, {hrbrthemes}, {tvthemes} and {cowplot}. It contains 55 themes in total. All themes start with md_ followed by the name of the original theme, e.g. md_theme_bw().
