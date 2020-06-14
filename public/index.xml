@@ -13,13 +13,22 @@
     
     
     <item>
-      <title>{mdthemes} is on CRAN: markdown powered themes for {ggplot2}</title>
-      <link>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</link>
-      <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
+      <title>How does the pipe operator actually work?</title>
+      <link>/posts/how-does-the-pipe-operator-actually-work/</link>
+      <pubDate>Tue, 16 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</guid>
-      <description>I&amp;rsquo;m very pleased to announce that {mdthemes}—my second R package—is now available from CRAN. {mdthemes} adds support for rendering text as markdown to the themes from {ggplot2}, {ggthemes}, {hrbrthemes}, {tvthemes} and {cowplot}. It contains 55 themes in total. All themes start with md_ followed by the name of the original theme, e.g. md_theme_bw().
-I&amp;rsquo;ve been meaning to put this package on CRAN for quite some time. However, before submitting I had to wait until {ggtext}—which does all the hard work for {mdthemes}—was available from CRAN.</description>
+      <guid>/posts/how-does-the-pipe-operator-actually-work/</guid>
+      <description>I think it&amp;rsquo;s fair to say that the pipe operator %&amp;gt;% from the {magrittr} package—made famous by its use in {dplyr}—revolutionized R. Using %&amp;gt;% you can chain together multiple functions to create pipelines for your data. That way you can write highly expressive code and mitigate the need to define intermediate variables for each step of you data processing. But how does %&amp;gt;% actually work? If you think about it, %&amp;gt;% does something quite astonishing: it applies the function on its right to the expression of its left.</description>
+    </item>
+    
+    <item>
+      <title>Calculating change from baseline in R</title>
+      <link>/posts/calculating-change-from-baseline-in-r/</link>
+      <pubDate>Thu, 11 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/calculating-change-from-baseline-in-r/</guid>
+      <description>As a statistical programmer working on clinical trials data I frequently have to calculate change from baseline. In clinical trials baseline is typically defined as the last measurement prior to a clinical trial subject receiving any study drug. Change from baseline is frequently calculated for laboratory measurements, e.g. hemoglobin concentration in blood.
+SAS is still the standard used to program datasets in the pharmaceutical industry but R is catching up. Recently, I derived change from baseline for the first time in R.</description>
     </item>
     
     <item>
@@ -103,16 +112,6 @@ An obvious solution to display the current date is to update the date field in t
       <guid>/posts/getting-r-to-print-english-error-messages/</guid>
       <description>If you live in a non-English locale such as I do, you&amp;rsquo;ll likely receive error messages in your locale language when things go wrong in R.
 1 + &amp;#34;r&amp;#34;## Error in 1 + &amp;quot;r&amp;quot;: nicht-numerisches Argument für binären OperatorThis is a problem because it highly limits the results when searching for error messages on Google. Have you ever read a stackoverflow post that was not in English? I haven&amp;rsquo;t.</description>
-    </item>
-    
-    <item>
-      <title>A case for the assign() function</title>
-      <link>/posts/a-case-for-the-assign-function/</link>
-      <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/a-case-for-the-assign-function/</guid>
-      <description>In R, assign() is one of those functions that common wisdom says you shouldn&amp;rsquo;t be using. My aim in this blog post is to convince you that assign() can be very handy.
-The pharmaceutical industry, which I work in, is still SAS dominated so my primary data source at work are .sas7bdat files. Thus, whenever I use R the first thing I have to do is read in those files.</description>
     </item>
     
   </channel>

@@ -3,43 +3,58 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/categories/article/</loc>
+    <lastmod>2020-06-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/categories/</loc>
-    <lastmod>2020-06-07T00:00:00+00:00</lastmod>
+    <lastmod>2020-06-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/datavisualization/</loc>
-    <lastmod>2020-06-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/ggplot2/</loc>
-    <lastmod>2020-06-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/package/</loc>
-    <lastmod>2020-06-07T00:00:00+00:00</lastmod>
+    <loc>/posts/how-does-the-pipe-operator-actually-work/</loc>
+    <lastmod>2020-06-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/posts/</loc>
-    <lastmod>2020-06-07T00:00:00+00:00</lastmod>
+    <lastmod>2020-06-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2020-06-07T00:00:00+00:00</lastmod>
+    <lastmod>2020-06-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/base/</loc>
+    <lastmod>2020-06-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/calculating-change-from-baseline-in-r/</loc>
+    <lastmod>2020-06-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/datawrangling/</loc>
+    <lastmod>2020-06-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/dplyr/</loc>
+    <lastmod>2020-06-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2020-06-07T00:00:00+00:00</lastmod>
+    <lastmod>2020-06-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</loc>
-    <lastmod>2020-06-07T00:00:00+00:00</lastmod>
+    <loc>/tags/datavisualization/</loc>
+    <lastmod>2020-05-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -48,12 +63,17 @@
   </url>
   
   <url>
-    <loc>/categories/article/</loc>
-    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
+    <loc>/tags/ggplot2/</loc>
+    <lastmod>2020-05-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/ggcharts/</loc>
+    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/package/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
   </url>
   
@@ -103,11 +123,6 @@
   </url>
   
   <url>
-    <loc>/tags/base/</loc>
-    <lastmod>2020-03-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/posts/getting-r-to-print-english-error-messages/</loc>
     <lastmod>2020-03-21T00:00:00+00:00</lastmod>
   </url>
@@ -125,11 +140,6 @@
   <url>
     <loc>/</loc>
     <lastmod>2020-03-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/dplyr/</loc>
-    <lastmod>2020-03-08T22:01:16+01:00</lastmod>
   </url>
   
   <url>
@@ -210,6 +220,10 @@
   <url>
     <loc>/posts/when-things-go-wrong-how-to-amend-a-git-commit/</loc>
     <lastmod>2020-01-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2/</loc>
   </url>
   
 </urlset>

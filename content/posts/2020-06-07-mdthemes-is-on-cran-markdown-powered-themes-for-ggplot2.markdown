@@ -1,7 +1,7 @@
 ---
 title: '{mdthemes} is on CRAN: markdown powered themes for {ggplot2}'
 author: Thomas Neitmann
-date: '2020-06-07'
+date: '2020-06-14 18:00'
 slug: mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2
 categories:
   - R
@@ -16,9 +16,9 @@ images: ~
 
 
 
-I'm very pleased to announce that `{mdthemes}`—my second R package—is now available from CRAN. `{mdthemes}` adds support for rendering text as markdown to the themes from `{ggplot2}`, `{ggthemes}`, `{hrbrthemes}`, `{tvthemes}` and `{cowplot}`. It contains 55 themes in total. All themes start with `md_` followed by the name of the original theme, e.g. `md_theme_bw()`.
+I'm very pleased to announce that `{mdthemes}`—my second (public) R package—is now available from CRAN. `{mdthemes}` adds support for rendering text as markdown to the themes from `{ggplot2}`, `{ggthemes}`, `{hrbrthemes}`, `{tvthemes}` and `{cowplot}`. It contains 55 themes in total. All themes start with `md_` followed by the name of the original theme, e.g. `md_theme_bw()`.
 
-I've been meaning to put this package on CRAN for quite some time. However, before submitting I had to wait until `{ggtext}`—which does all the hard work for `{mdthemes}`—was available from CRAN. Fortunately, `{ggtext}` was accepted recently so I could go ahead with submitting `{mdthemes}`. Five days later it got accepted without any comments. Quite a pleasant experience.
+I've been meaning to put this package on CRAN for quite some time. However, before submitting I had to wait until `{ggtext}`—which does all the hard work for `{mdthemes}`—was available from CRAN. Fortunately, `{ggtext}` was accepted recently so I could go ahead with submitting `{mdthemes}`. 10 days and one re-submission later it finally got accepted.
 
 To motivate the use of `{mdthemes}` let's say you'd like to use `theme_minimal()` but want a bold title rather then the plain default one. With vanilla `{ggplot2}` you'd have to rely on using `theme()`.
 
@@ -148,10 +148,11 @@ md_theme_minimal
 ```
 
 ```
-function(...) {
-  as_md_theme(ggplot2::theme_minimal(...))
+function (...) 
+{
+    as_md_theme(ggplot2::theme_minimal(...))
 }
-<bytecode: 0x000000001a0ef880>
+<bytecode: 0x000000001876b9d8>
 <environment: namespace:mdthemes>
 ```
 
@@ -175,6 +176,6 @@ line_chart +
 
 <img src="/posts/2020-06-07-mdthemes-is-on-cran-markdown-powered-themes-for-ggplot2_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
-Is `{mdthemes}` missing your favorite theme(s)? Please let me know by opening an issue on [GitHub](https://github.com/thomas-neitmann/mdthemes/issues). I'm more than happy to add it.
+While this is a nice workaround, I'd encourage you to let me know if `{mdthemes}` is missing your favorite theme(s)? To do so, please open an issue on [GitHub](https://github.com/thomas-neitmann/mdthemes/issues). I'm more than happy to add more themes.
 
 That's it. Make sure to `install.packages("mdthemes")` and if you enjoy using the package please star in on [GitHub](https://github.com/thomas-neitmann/mdthemes). Thank you!
