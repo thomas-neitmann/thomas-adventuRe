@@ -6,13 +6,13 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Mon, 15 Jun 2020 12:00:00 +0000</lastBuildDate>
+		<lastBuildDate>Mon, 15 Jun 2020 00:00:00 +0000</lastBuildDate>
 		<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
 		
 		<item>
 			<title>How does the pipe operator actually work?</title>
 			<link>/posts/how-does-the-pipe-operator-actually-work/</link>
-			<pubDate>Mon, 15 Jun 2020 12:00:00 +0000</pubDate>
+			<pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
 			
 			<guid>/posts/how-does-the-pipe-operator-actually-work/</guid>
 			<description>&lt;p&gt;I think it&amp;rsquo;s fair to say that the pipe operator &lt;code&gt;%&amp;gt;%&lt;/code&gt; from the &lt;code&gt;{magrittr}&lt;/code&gt; package—made famous by its use in &lt;code&gt;{dplyr}&lt;/code&gt;—revolutionized &lt;code&gt;R&lt;/code&gt;. Using &lt;code&gt;%&amp;gt;%&lt;/code&gt; you can chain together multiple functions to create pipelines for your data. That way you can write highly expressive code and mitigate the need to define intermediate variables for each step of you data processing. But how does &lt;code&gt;%&amp;gt;%&lt;/code&gt; actually work? If you think about it, &lt;code&gt;%&amp;gt;%&lt;/code&gt; does something quite astonishing: it applies the function on its right to the expression of its left. Achieving this is not really straightforward which is why I decided to write this post.&lt;/p&gt;
