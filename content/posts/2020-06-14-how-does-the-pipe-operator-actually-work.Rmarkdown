@@ -1,7 +1,7 @@
 ---
 title: How does the pipe operator actually work?
 author: Thomas Neitmann
-date: '2020-06-16'
+date: '2020-06-15T12:00:00'
 slug: how-does-the-pipe-operator-actually-work
 categories:
   - R
