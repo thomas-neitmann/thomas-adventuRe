@@ -1,0 +1,105 @@
+---
+title: Understanding Non-Standard Evaluation
+author: Thomas Neitmann
+date: '2021-01-05'
+slug: understanding-non-standard-evaluation
+categories:
+  - R
+  - article
+tags: []
+toc: no
+images: ~
+---
+
+Non-standard evaluation or NSE for short is a phrase that often pops up in discussions about the R programming language. But what exactly does NSE mean? To answer this question, I will first talk about its opposite, i.e. *standard** evaluation (no, it's no called non-NSE).
+
+Let's take the example of selecting a single column from a data frame. In base R you can do that using either `[[` or `$`. The former uses standard evaluation semantics whereas the latter uses NSE.
+
+When using `[[` you have to pass a string inside the brackets. In the most simple case you use a string *literal*.
+
+```{r}
+data(iris)
+head(iris[["Species"]])
+```
+But you can also pass a *symbol* inside `[[`. This symbol will be *evaluated* to a *value* (which better be a string or number otherwise you'll get an error).
+
+```{r}
+var <- "Species"
+head(iris[[var]])
+```
+
+No surprise so far. Next, let's take a look at the behavior of `$`. Just like `[[` you can pass a string literal to `$`.
+
+```{r}
+head(iris$"Species")
+```
+
+However, you'll likely never do that in practice because with `$` you don't have to. Instead, you can pass a symbol on the right-hand side of `$`.
+
+```{r}
+head(iris$Species)
+```
+
+This is very convenient when you are writing code interactively in the console as it requires two less keystrokes. Now what happens if we pass `var` defined above on the right-hand of `$`?
+
+```{r}
+head(iris$var)
+```
+Didn't expect that? You are not alone! This is the part where I see lots of beginning R programmers struggle. Remember, the symbol `var` holds the value `"Species"`. Using standard evaluation semantics R would evaluate `var` to its value. However, when using `$` that's *not* the case because `$` uses NSE. Instead, `$` looks for a column named `var` inside the `iris` data frame. Since there is no such column, you get `NULL` as result (I'd prefer an error but that's just the way things are).
+
+Apart from `Species`, the `iris` data frame also contains a column named `Sepal.Length`. Based upon what we discussed so far you can select that column either using `iris[["Sepal.Length"]]` or `iris$Sepal.Length`. But what if there's a variable called `Sepal.Length` in the global environment?
+
+```{r}
+Sepal.Length <- "Species"
+```
+
+What will be the result of `iris[[Sepal.Length]]` and what will be the result of `iris$Sepal.Length`?
+
+Let's start with the first one. When using `[[` the symbol `Sepal.Length` is evaluated to its value `"Species"`. Thus, in this case `iris[[Sepal.Length]]` is the same as `iris[["Species"]]`.
+
+```{r}
+head(iris[[Sepal.Length]])
+```
+
+On the other hand when using `iris$Sepal.Length`, R doesn't care if there's a variable named `Sepal.Length` in the global environment. The very first thing it does, is to look for a variable names `Sepal.Length` in the `iris` data frame and sure enough there is.
+
+```{r}
+head(iris$Sepal.Length)
+```
+
+
+## Writing your own NSE functions
+
+So, how does this NSE work? Like, if you want to do it yourself and create your own NSE function. Let's explore that by writing our own version of `$`. The two ingredients we need are `substitute()` and `eval()`.
+
+```{r}
+`%$%` <- function(lhs, rhs) {
+  eval(substitute(rhs), envir = lhs, enclos = parent.frame())
+}
+head(iris%$%Species)
+```
+There's quite a chance that this looks like total gibberish to you, so let's take it step-by-step.
+
+First of all, if you want to create a binary operator in R yourself you have to enclose it inside `%`. That doesn't look too nice but that's just R's syntax. Since `%$%` is not a syntactic name, i.e. one that starts with a `.` or letter and contains only letters, numbers, `_` or `.`, you have to wrap it inside backticks when defining it. But note that the backticks are *not* needed when actually using the operator.
+
+The parameter names `lhs` and `rhs` are just abbreviations for left-hand side and right-hand side, respectively. I think these are appropriate names given how you use the operator.
+
+Next, onto `substitute()`. What does this function actually do? Usually, when you pass an argument to a function, that argument is evaluated to a value.
+
+```{r}
+me <- "Thomas"
+look_inside <- function(x) x
+look_inside(me)
+```
+
+By using `substitute()` you can avoid evaluating the argument and instead look at the *expression* that has been passed as argument. So if you pass a symbol to
+
+```{r}
+look_outside <- function(x) substitute(x)
+look_outside(me)
+```
+
+```{r}
+look_outside(subset(iris, Species == "setosa"))
+```
+
