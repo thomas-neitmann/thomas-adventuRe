@@ -1,4 +1,4 @@
-baseURL = "https://thomasadventure.blog/"
+baseURL = "/"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "Thomas’ adventuRe"
