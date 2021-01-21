@@ -1,4 +1,4 @@
-baseURL = "https://thomasadventure.blog/"
+baseURL = "/"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "Thomas’ adventuRe"
@@ -56,6 +56,10 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
   # Social Icons
   # Check https://github.com/Track3/hermit#social-icons for more info.
+  [[params.social]]
+    name = "youtube"
+    url = "https://www.youtube.com/channel/UCdJ5y9mqgXLeGzxP7u1C8nA"
+
   [[params.social]]
     name = "linkedin"
     url = "https://linkedin.com/in/thomasneitmann"
