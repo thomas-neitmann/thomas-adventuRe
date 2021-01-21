@@ -99,7 +99,7 @@ head(iris[[Sepal.Length]])
 ## Levels: setosa versicolor virginica
 ```
 
-On the other hand when using `iris$Sepal.Length`, R simply doesn't care if there exists a variable named `Sepal.Length` in the global environment. Instead, the very first thing it does, is to look for a variable named `Sepal.Length` inside the `iris` data frame and sure enough there is one. Put differently: even though you call `iris$Sepal.Length` in the global environment and in the very same environment there's a symbol named `Sepal.Length` bound to a value, R bypasses that and instead treats the data frame itself as an environment and evaluates `Sepal.Length` there. Since that does not follow R's standard evaluation semantics at all this process is called non-standard evaluation.
+On the other hand when using `iris$Sepal.Length`, R simply doesn't care if there exists a variable named `Sepal.Length` in the global environment. Instead, the very first thing it does, is to look for a variable named `Sepal.Length` inside the `iris` data frame and sure enough there is one.
 
 
 ```r
@@ -110,4 +110,6 @@ head(iris$Sepal.Length)
 ## [1] 5.1 4.9 4.7 4.6 5.0 5.4
 ```
 
-If you understood what we've covered so far, you just made a big step forward on your journey towards mastering R. But wait there's more to come! In part 2 of this post I will show you how to implement a NSE function yourself. By doing that you'll deepen your understanding even further and will learn about some of R's internals that give you the super power to write packages such as {dplyr}. Stay tuned!
+So, even though you call `iris$Sepal.Length` in the global environment and in the very same environment there's a symbol named `Sepal.Length` bound to a value, R just bypasses that. Instead, it treats the data frame *itself* as an environment and if you evaluate `Sepal.Length` there you get back the contents of that column. Now that does not follow R's standard evaluation semantics at all which is why this process is called non-standard evaluation.
+
+If you understood what we've covered so far, you just made a big step forward on your journey towards mastering R. But wait, there's more to come! In part 2 of this post I will show you how to implement a NSE function yourself. By doing that you'll deepen your understanding even further and will learn about some of R's internals that give you the super power to write packages such as {dplyr}. Stay tuned!
