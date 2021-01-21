@@ -17,41 +17,71 @@ Let's take the example of selecting a single column from a data frame. In base R
 
 When using `[[` you have to pass a string inside the brackets. In the most simple case you use a string *literal*.
 
-```{r}
+
+```r
 data(iris)
 head(iris[["Species"]])
 ```
 
+```
+## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
+```
+
 But you can also pass a *symbol* inside `[[`. This symbol will be *evaluated* to a *value* (which better be a string or number otherwise you'll get an error).
 
-```{r}
+
+```r
 var <- "Species"
 head(iris[[var]])
 ```
 
+```
+## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
+```
+
 No surprise so far. Next, let's take a look at the behavior of `$`. Just like `[[` you can pass a string literal to `$`.
 
-```{r}
+
+```r
 head(iris$"Species")
+```
+
+```
+## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
 ```
 
 However, you'll likely never do that in practice because with `$` you don't have to. Instead, you can pass a symbol on the right-hand side of `$`.
 
-```{r}
+
+```r
 head(iris$Species)
+```
+
+```
+## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
 ```
 
 This is very convenient when you are writing code interactively in the console as it requires two less keystrokes. Now what happens if we pass `var` defined above on the right-hand side of `$`?
 
-```{r}
+
+```r
 head(iris$var)
+```
+
+```
+## NULL
 ```
 
 Didn't expect that? You are not alone! This is the point where I see lots of beginning R programmers struggle. Remember, the symbol `var` holds the value `"Species"`. Using standard evaluation semantics R would evaluate `var` to its value. However, when using `$` that's *not* the case because `$` uses NSE. Instead, `$` looks for a column named `var` inside the `iris` data frame. Since there is no such column, you get `NULL` as result (I'd prefer an error but that's just the way things are).
 
 Apart from `Species`, the `iris` data frame also contains a column named `Sepal.Length`. Based upon what we discussed so far, you can select that column either using `iris[["Sepal.Length"]]` or `iris$Sepal.Length`. But what happens if there's a variable called `Sepal.Length` in the global environment?
 
-```{r}
+
+```r
 Sepal.Length <- "Species"
 ```
 
@@ -59,14 +89,25 @@ What will be the result of `iris[[Sepal.Length]]` and what will `iris$Sepal.Leng
 
 Let's start with the first one. When using `[[` the symbol `Sepal.Length` is evaluated to its value `"Species"`. Thus, in this case `iris[[Sepal.Length]]` is the same as `iris[["Species"]]`.
 
-```{r}
+
+```r
 head(iris[[Sepal.Length]])
+```
+
+```
+## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
 ```
 
 On the other hand when using `iris$Sepal.Length`, R simply doesn't care if there exists a variable named `Sepal.Length` in the global environment. Instead, the very first thing it does, is to look for a variable named `Sepal.Length` inside the `iris` data frame and sure enough there is one. Put differently: even though you call `iris$Sepal.Length` in the global environment and in the very same environment there's a symbol named `Sepal.Length` bound to a value, R bypasses that and instead treats the data frame itself as an environment and evaluates `Sepal.Length` there. Since that does not follow R's standard evaluation semantics at all this process is called non-standard evaluation.
 
-```{r}
+
+```r
 head(iris$Sepal.Length)
+```
+
+```
+## [1] 5.1 4.9 4.7 4.6 5.0 5.4
 ```
 
 If you understood what we've covered so far, you just made a big step forward on your journey towards mastering R. But wait there's more to come! In part 2 of this post I will show you how to implement a NSE function yourself. By doing that you'll deepen your understanding even further and will learn about some of R's internals that give you the super power to write packages such as {dplyr}. Stay tuned!
