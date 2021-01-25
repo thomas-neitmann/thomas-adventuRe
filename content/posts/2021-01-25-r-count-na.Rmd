@@ -1,11 +1,11 @@
 ---
-title: The right way to check for NAs in R
+title: Counting Missing Values (NA) in R
 author: Thomas Neitmann
-date: '2020-02-03'
-slug: the-right-way-to-check-for-nas
+date: '2021-01-25'
+slug: r-count-na
 categories:
   - R
-  - bytesized
+  - article
 tags:
   - base
 toc: no
@@ -35,10 +35,16 @@ sum(is.na(x))
 
 Confused why you can sum `TRUE` and `FALSE` values? R automatically converts `logical` vectors to `integer` vectors when using arithmetic functions. In the process `TRUE` gets turned to `1` and `FALSE` gets converted to `0`. Thus, `sum(is.na(x))` gives you the total number of missing values in `x`.
 
-To get the percentage of missing values you can proceed by dividing the result of the previous operation by the total length of the input vector.
+To get the proportion of missing values you can proceed by dividing the result of the previous operation by the length of the input vector.
 
 ```{r}
 sum(is.na(x)) / length(x)
+```
+
+Look careful at the code above. Does that "formula" look somehow familiar? Summing up all elements in a vector and dividing by the total numbers of elements, that's calculating the arithmetic mean! So, instead of using `sum()` and `length()` we can simply use `mean()` to get the proportion of `NA`s in a vector.
+
+```{r}
+mean(is.na(x))
 ```
 
 Enough of vectors, though, let's look at counting missing values in a data frame. To illustrate the concepts let me first add some missing values to the `mtcars` dataset.
@@ -52,15 +58,17 @@ mtcars[sample(1:nrow(mtcars), 5), sample(1:ncol(mtcars), 3)] <- NA
 The `is.na()` function is generic and has a method for data frames so you can directly pass it a data frame as input.
 
 ```{r}
-is.na(mtcars)
+na <- is.na(mtcars)
+na[1:15, 1:7]
 ```
 
-As you can see the result is a *matrix* of `logical` values. Getting the total count of `NA`s then is simple because `sum()` works with matrices as well as vectors.
+As you can see the result is a *matrix* of `logical` values. Getting the total number of `NA`s then is simple because `sum()` works with matrices as well as vectors.
 
 ```{r}
 sum(is.na(mtcars))
 ```
-Arguably, though, the overall number of missing values in a dataset is a rather crude measure. It gets much more interesting if we look at missing values across variables and records in the dataset. That enables you to detect patterns that might inform your future modeling decisions.
+
+Arguably, though, the total number of missing values in a dataset is a rather crude measure. It gets much more interesting if we look at missing values across variables and records in the dataset. That enables detecting patterns that might inform future modeling decisions.
 
 Counting `NA`s across either rows or columns can be achieved by using the `apply()` function. This function takes three arguments: `X` is the input matrix, `MARGIN` is an integer, and `FUN` is the function to apply to each row or column. `MARGIN = 1` means to apply the function across rows and `MARGIN = 2` across columns.
 
@@ -69,7 +77,13 @@ apply(X = is.na(mtcars), MARGIN = 1, FUN = sum)
 apply(X = is.na(mtcars), MARGIN = 2, FUN = sum)
 ```
 
-To finish up this post, let's have a quick look at how to visualize missing data. There are a lot of different packages for that purpose but I really like the `{heatmaply}` package which generates an interactive visuals in form of a heatmap.
+If you want to get the proportion of missing values per row or column just change the `FUN` argument to `mean`.
+
+```{r}
+apply(X = is.na(mtcars), MARGIN = 1, FUN = mean)
+```
+
+To finish up this post, let's have a quick look at how to visualize missing data. There are a lot of different packages for that purpose out there but I really like the `{heatmaply}` package which generates an interactive heatmap.
 
 ```{r}
 heatmaply::heatmaply_na(mtcars)
