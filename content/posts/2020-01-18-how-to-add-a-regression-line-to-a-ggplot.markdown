@@ -1,11 +1,11 @@
 ---
-title: How to add a regression line to a ggplot?
+title: How to Add a Regression Line to a ggplot?
 author: Thomas Neitmann
-date: '2020-01-18'
-slug: how-to-add-a-regression-line-to-a-ggplot
+date: '2021-01-26'
+slug: ggplot-regression-line
 categories:
   - R
-  - bytesized
+  - article
 tags:
   - ggplot2
   - datavisualization
@@ -13,50 +13,63 @@ toc: no
 images: ~
 ---
 
+Linear regression is arguably the most widely used statistical model out there. It's simple and gives easily interpretable results. Since linear regression essentially fits a line to a set of points it can also be readily visualized. This post focuses on how to do that in R using the `{ggplot2}` package.
+
+Let's start off by creating a scatter plot of weight (`wt`) vs. horse power (`hp`) of cars in the infamous `mtcars` dataset.
+
 
 ```r
 library(ggplot2)
 data(mtcars)
-```
-
-
-### Step 1
-
-
-```r
-p <- ggplot(mtcars, aes(hp, wt)) +
+p <- ggplot(mtcars, aes(wt, hp)) +
   geom_point()
 p
 ```
 
-<img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_scatter_plot-1.png" width="672" />
 
-### Step 2
+There's an obvious positive trend visible: the heavier the car the higher its horse power.
+
+Next, let's add a smoother to make this trend even more apparent.
 
 
 ```r
 p + geom_smooth()
 ```
 
-<img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/unnamed-chunk-3-1.png" width="672" />
-
-### Step 3
+<img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_scatter_plot_with_loess_smoother-1.png" width="672" />
+By default, `geom_smooth()` adds a LOESS smoother to the data. That's not what we're after, though. To make `geom_smooth()` draw a linear regression line we have to set the `method` parameter to `lm` which is short for "linear model".
 
 
 ```r
 p + geom_smooth(method = "lm")
 ```
 
-<img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/unnamed-chunk-4-1.png" width="672" />
-
-### Putting it all together
+<img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_scatter_plot_with_linear_regression_line-1.png" width="672" />
+The gray shading around the line represents the 95% confidence interval. You can change the confidence interval level by setting changing the `level` parameter. A value of `0.8` represents a 80% confidence interval.
 
 
 ```r
-ggplot(mtcars, aes(hp, wt)) +
-  geom_point() +
-  geom_smooth(method = "lm")
+p + geom_smooth(method = "lm", level = 0.8)
 ```
 
-<img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_linear_regression_line_confidence_interval-1.png" width="672" />
 
+If you do not want to show the confidence interval band at all, set the `se` parameter to `FALSE`.
+
+
+```r
+p + geom_smooth(method = "lm", se = FALSE)
+```
+
+<img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_linear_regression_line_without_confidence_interval-1.png" width="672" />
+Sometimes a line is not a good fit to the data but a polynomial would be. So, how to add a polynomial regression line to a plot? To do so, we will still have to use `geom_smooth()` with `method = "lm"` but in addition specify the `formula` parameter. By default, `formula` is set to `y ~ x` (read: `y` as a function of `x`). To draw a polynomial of degree `n` you have to change the formula to `y ~ poly(x, n)`. Here's an example fitting a 2nd degree (quadratic) polynomial regression line.
+
+
+```r
+ggplot(mtcars, aes(wt, disp)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2))
+```
+
+<img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_polynomial_regression_line-1.png" width="672" />
