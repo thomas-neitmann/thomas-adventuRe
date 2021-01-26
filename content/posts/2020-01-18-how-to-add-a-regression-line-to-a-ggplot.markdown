@@ -28,7 +28,7 @@ p
 
 <img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_scatter_plot-1.png" width="672" />
 
-There's an obvious positive trend visible: the heavier the car the higher its horse power.
+There's an obvious positive trend visible: the heavier a car is the higher its horse power tend to be.
 
 Next, let's add a smoother to make this trend even more apparent.
 
@@ -38,7 +38,8 @@ p + geom_smooth()
 ```
 
 <img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_scatter_plot_with_loess_smoother-1.png" width="672" />
-By default, `geom_smooth()` adds a LOESS smoother to the data. That's not what we're after, though. To make `geom_smooth()` draw a linear regression line we have to set the `method` parameter to `lm` which is short for "linear model".
+
+By default, `geom_smooth()` adds a LOESS smoother to the data. That's not what we're after, though. To make `geom_smooth()` draw a linear regression line we have to set the `method` parameter to `"lm"` which is short for "linear model".
 
 
 ```r
@@ -46,7 +47,8 @@ p + geom_smooth(method = "lm")
 ```
 
 <img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_scatter_plot_with_linear_regression_line-1.png" width="672" />
-The gray shading around the line represents the 95% confidence interval. You can change the confidence interval level by setting changing the `level` parameter. A value of `0.8` represents a 80% confidence interval.
+
+The gray shading around the line represents the 95% confidence interval. You can change the confidence interval level by changing the `level` parameter. A value of `0.8` represents a 80% confidence interval.
 
 
 ```r
@@ -55,7 +57,7 @@ p + geom_smooth(method = "lm", level = 0.8)
 
 <img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_linear_regression_line_confidence_interval-1.png" width="672" />
 
-If you do not want to show the confidence interval band at all, set the `se` parameter to `FALSE`.
+If you don't want to show the confidence interval band at all, set the `se` parameter to `FALSE`.
 
 
 ```r
@@ -63,13 +65,16 @@ p + geom_smooth(method = "lm", se = FALSE)
 ```
 
 <img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_linear_regression_line_without_confidence_interval-1.png" width="672" />
+
 Sometimes a line is not a good fit to the data but a polynomial would be. So, how to add a polynomial regression line to a plot? To do so, we will still have to use `geom_smooth()` with `method = "lm"` but in addition specify the `formula` parameter. By default, `formula` is set to `y ~ x` (read: `y` as a function of `x`). To draw a polynomial of degree `n` you have to change the formula to `y ~ poly(x, n)`. Here's an example fitting a 2nd degree (quadratic) polynomial regression line.
 
 
 ```r
-ggplot(mtcars, aes(wt, disp)) +
+ggplot(mtcars, aes(qsec, hp)) +
   geom_point() +
   geom_smooth(method = "lm", formula = y ~ poly(x, 2))
 ```
 
 <img src="/posts/2020-01-18-how-to-add-a-regression-line-to-a-ggplot_files/figure-html/ggplot2_polynomial_regression_line-1.png" width="672" />
+
+Now it's your turn! Start a new R session, load some data, and create a ggplot with a linear regression line. Happy programming!
