@@ -29,17 +29,17 @@ First of, though, let's review the different ways you can merge datasets. Borrow
 
 In a left join involving dataset `L` and dataset `R` the finale table---let's call it `LR`---will contain *all* records from dataset `A` but only those records from dataset `B` whose key (ID) is contained in `B`. Thus, if `A` has 10 records then `AB` will have 10 records as well.
 
-![](img/left_join-extra.gif)
+![](/img/left_join-extra.gif)
 
 ### Right Join
 
-![](img/right_join.gif)
+![](/img/right_join.gif)
 
 ### Inner Join
 
-![](img/inner_join.gif)
+![](/img/inner_join.gif)
 
 ### Full Join
 
-![](img/full_join.gif)
+![](/img/full_join.gif)
 
