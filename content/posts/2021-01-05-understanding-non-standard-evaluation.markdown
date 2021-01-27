@@ -1,7 +1,7 @@
 ---
 title: 'Understanding Non-Standard Evaluation. Part 1: The Basics'
 author: Thomas Neitmann
-date: '2021-01-21'
+date: '2021-01-27'
 slug: understanding-nse-part1
 categories:
   - R
@@ -85,9 +85,9 @@ Apart from `Species`, the `iris` data frame also contains a column named `Sepal.
 Sepal.Length <- "Species"
 ```
 
-What will be the result of `iris[[Sepal.Length]]` and what will `iris$Sepal.Length` return?
+What will `iris[[Sepal.Length]]` and `iris$Sepal.Length` return, respectively? Before you read on, **pause** and think about it. With what we've covered so far you should be able to answer that question correctly. If you are still unsure, head back to the top and read the preceding paragraphs once again.
 
-Let's start with the first one. When using `[[` the symbol `Sepal.Length` is evaluated to its value `"Species"`. Thus, in this case `iris[[Sepal.Length]]` is the same as `iris[["Species"]]`.
+Let's start with `iris[[Sepal.Length]]`. When using `[[` the symbol `Sepal.Length` is evaluated to its value `"Species"`. Thus, in this case `iris[[Sepal.Length]]` is the same as `iris[["Species"]]`.
 
 
 ```r
