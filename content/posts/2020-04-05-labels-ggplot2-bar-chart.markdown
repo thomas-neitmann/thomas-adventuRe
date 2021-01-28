@@ -1,5 +1,5 @@
 ---
-title: Adding labels to a ggplot2 bar chart
+title: Adding Labels to a {ggplot2} Bar Chart
 author: Thomas Neitmann
 date: '2020-04-06'
 slug: labels-ggplot2-bar-chart
@@ -46,7 +46,7 @@ chart <- dreaded_lang %>%
   print()
 ```
 
-<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/ggplot2_bar_chart-1.png" width="672" />
 
 To add an annotation to the bars you'll have to use either `geom_text()` or `geom_label()`. I will start off with the former. Both require the `label` aesthetic which tells `ggplot2` which text to actually display. In addition, both functions require the `x` and `y` aesthetics but these are already set when using `bar_chart()` so I won't bother setting them explicitly after this first example.
 
@@ -56,7 +56,7 @@ chart +
   geom_text(aes(x = language, y = pct, label = pct))
 ```
 
-<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/ggplot2_bar_chart_label_center-1.png" width="672" />
 
 By default the labels are center-aligned directly at the `y` value. You will never want to leave it like that because it's quite hard to read. To left-align the labels set the `hjust` parameter to `0` or `"left"`.
 
@@ -66,7 +66,7 @@ chart +
   geom_text(aes(label = pct, hjust = "left"))
 ```
 
-<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/ggplot2_bar_chart_label_outside-1.png" width="672" />
 
 That's still not ideal I would say. Let's move the labels a bit further away from the bars by setting `hjust` to a negative number and increase the axis limits to improve the legibility of the label of the top most bar.
 
@@ -77,7 +77,7 @@ chart +
   ylim(NA, 100)
 ```
 
-<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/ggplot2_bar_chart_label_outside2-1.png" width="672" />
 
 Alternatively, you may want to have the labels inside the bars.
 
@@ -87,7 +87,7 @@ chart +
   geom_text(aes(label = pct, hjust = 1))
 ```
 
-<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/ggplot2_bar_chart_label_inside-1.png" width="672" />
 
 Again, a bit close to the end of the bars. By increasing the `hjust` value the labels can be moved further to the left. In addition, black on blue is quite hard to read so let's change the text color to white. Notice that this happens outside of `aes()`.
 
@@ -97,7 +97,7 @@ chart +
   geom_text(aes(label = pct, hjust = 1.2), color = "white")
 ```
 
-<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/ggplot2_bar_chart_label_inside_colored-1.png" width="672" />
 
 Next, let's try `geom_label()` for once to see how it's different from `geom_text()`.
 
@@ -107,7 +107,7 @@ chart +
   geom_label(aes(label = pct, hjust = 1.2))
 ```
 
-<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/ggplot2_bar_chart_geom_label-1.png" width="672" />
 
 I am not a fan of this look and will stick to `geom_text()` for the final plot.
 
@@ -138,7 +138,7 @@ dreaded_lang %>%
   )
 ```
 
-<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/ggplot2_bar_chart_label_stackoverflow_developer_survey-1.png" width="672" />
 
 Notice how easy it was to highlight a single bar thanks to [`ggcharts`](https://thomas-neitmann.github.io/ggcharts/index.html). In addition, I used my [`mdthemes`](https://github.com/thomas-neitmann/mdthemes) package which provides themes that interpret text as markdown. That way is was super easy to get the subtitle in *italics*. Furthermore, I removed the axis labels and grid lines. In my opinion you should **_never_** have an axis and labels in the same plot.
 
@@ -168,4 +168,4 @@ biomedicalrevenue %>%
   )
 ```
 
-<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/ggplot2_column_chart_label-1.png" width="672" />
