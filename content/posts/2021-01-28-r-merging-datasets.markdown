@@ -1,5 +1,5 @@
 ---
-title: All You Need To Know About Merging Datasets in R
+title: All You Need To Know About Merging (Joining) Datasets in R
 author: Thomas Neitmann
 date: '2021-02-01'
 slug: r-merging-datasets
