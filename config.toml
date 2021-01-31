@@ -80,6 +80,11 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     weight = 10
 
   [[menu.main]]
+    name = "Videos
+    url = "videos/"
+    weight = 20
+
+  [[menu.main]]
     name = "About"
     url = "about/"
-    weight = 20
+    weight = 30
