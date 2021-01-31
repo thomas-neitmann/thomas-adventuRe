@@ -7,12 +7,27 @@ In January 2021 I started my [YouTube channel](https://www.youtube.com/channel/U
 
 Below you'll find the first few videos of the series. Make sure to [subscribe to the channel](https://www.youtube.com/channel/UCdJ5y9mqgXLeGzxP7u1C8nA?sub_confirmation=1) to never miss a new video.
 
+
+## Select columns with `select()`
+
 <div class="video-container"><iframe src="https://www.youtube.com/embed/-dOEQ0AlpX4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+
+## Arrange rows with `arrange()`
 
 <div class="video-container"><iframe src="https://www.youtube.com/embed/fallS4JeYVE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
-<div class="video-container"><iframe src="https://www.youtube.com/embed/tQK88DG3X7A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+## Filter rows with `filter()`
+
+<div class="video-container"><iframe src="https://www.youtube.com/embed/6KWhm_Stcp8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+
+## Aesthetic Mappings
 
 <div class="video-container"><iframe src="https://www.youtube.com/embed/MUTv2iimTes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
-<div class="video-container"><iframe src="https://www.youtube.com/embed/6KWhm_Stcp8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+## First Steps
+
+<div class="video-container"><iframe src="https://www.youtube.com/embed/tQK88DG3X7A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
