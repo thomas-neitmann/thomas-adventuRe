@@ -95,6 +95,18 @@ chart +
 
 I am not a fan of this look and will stick to `geom_text()` for the final plot.
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 As the data in the plot represents percentages it's best practice to have the labels include the percentage sign. In addition, let's highlight our favorite language `R` and add title, footnotes etc.
 
 ```{r ggplot2_bar_chart_label_stackoverflow_developer_survey}

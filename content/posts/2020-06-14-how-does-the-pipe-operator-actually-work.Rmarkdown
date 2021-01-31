@@ -35,6 +35,18 @@ Before I start, though, a word of caution and a disclaimer. First, I will cover 
 
 Take a deep breath. I understand that this might look frightening. But don't worry, I will walk you through it step-by-step.
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 Let's start with the very first line. `lhs` is short for left-hand side and `rhs`—as you might guess—stands for right-hand side. So, `%>%` is defined as a function of something to its left and something to its right. If you've ever used `%>%` this should make sense. But isn't `%>%` an operator rather than a function? Yes and no. `%>%` is an operator but it also is a function. In fact, every operator in `R` be it `*`, `+` or `%*%` is a function. That's why you can use `%>%` like any other function, e.g.
 
 ```{r}
@@ -197,5 +209,17 @@ As stated initially, this is not the same as `%>%` in `{magrittr}`. The followin
 ```
 
 For `{magrittr}`'s `%>%`, `.` is a special symbol that acts as a placeholder for `lhs`. This is useful when a function takes the data not as its first argument as is the case with `gsub()`. The pipe I wrote in this post is not that 'smart' and always places its `lhs` as the first argument of `rhs`. Nevertheless, the `%>%` presented here is functional. `{dplyr}` could use this pipe operator and everything would work just fine. In fact, the `{poorman}` package—a base `R` clone of `{dplyr}`—uses more-or-less this definition fo `%>%`.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 If you have any questions please ask them in the comments below (if you are reading this on R-bloggers make sure to click [here](https://thomasadventure.blog/posts/how-does-the-pipe-operator-actually-work/)). I did my best to explain the concepts I presented in an understandable way but I'm sure my explanations lack in some points. And don't be shy. Certainly someone else has the same question as you and will benefit from you asking it (and me providing a hopefully helpful answer).

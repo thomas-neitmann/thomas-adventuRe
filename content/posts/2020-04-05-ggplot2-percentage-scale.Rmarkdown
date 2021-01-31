@@ -80,6 +80,18 @@ bar_chart(cyl2, cyl, pct) +
 
 However, notice that suddenly all labels are printed with one decimal place. I think that's undesireable given that the labels are all whole numbers.
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 To change this the `percent_format()` function has a paramter called `accuracy`.
 
 ```{r}
