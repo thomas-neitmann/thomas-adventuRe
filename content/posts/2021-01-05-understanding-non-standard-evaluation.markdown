@@ -78,6 +78,18 @@ head(iris$var)
 
 Didn't expect that? You are not alone! This is the point where I see lots of beginning R programmers struggle. Remember, the symbol `var` holds the value `"Species"`. Using standard evaluation semantics R would evaluate `var` to its value. However, when using `$` that's *not* the case because `$` uses NSE. Instead, `$` looks for a column named `var` inside the `iris` data frame. Since there is no such column, you get `NULL` as result (I'd prefer an error but that's just the way things are).
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 Apart from `Species`, the `iris` data frame also contains a column named `Sepal.Length`. Based upon what we discussed so far, you can select that column either using `iris[["Sepal.Length"]]` or `iris$Sepal.Length`. But what happens if there's a variable called `Sepal.Length` in the global environment?
 
 
@@ -111,5 +123,17 @@ head(iris$Sepal.Length)
 ```
 
 So, even though you call `iris$Sepal.Length` in the global environment and in the very same environment there's a symbol named `Sepal.Length` bound to a value, R just bypasses that. Instead, it treats the data frame *itself* as an environment and if you evaluate `Sepal.Length` there you get back the contents of that column. Now that does not follow R's standard evaluation semantics at all which is why this process is called non-standard evaluation.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 If you understood what we've covered so far, you just made a big step forward on your journey towards mastering R. But wait, there's more to come! In part 2 of this post I will show you how to implement a NSE function yourself. By doing that you'll deepen your understanding even further and will learn about some of R's internals that give you the super power to write packages such as {dplyr}. Stay tuned!
