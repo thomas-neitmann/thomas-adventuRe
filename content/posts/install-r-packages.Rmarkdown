@@ -1,0 +1,81 @@
+---
+title: The Comprehensive Guide to Installing R Packages from CRAN, Bioconductor, GitHub and Co.
+author: Thomas Neitmann
+date: '2021-01-31'
+slug: install-r-packages
+categories:
+  - R
+  - article
+tags:
+  - base
+  - package
+toc: true
+images: ~
+---
+
+One of the primary reasons for R's popularity is its extensive package ecosystem. On R's main package repository CRAN alone you have over 10,000 packages available to choose from. Yet, when you first install R you only get a very limited set of core packages "out of the box". Any further packages that you'd like to use you have to install yourself. How to do that is the topic of this article.
+
+## Installing from CRAN
+
+Installing packages from the [Comprehensive R Archive Network](https://cran.r-project.org/) (CRAN) couldn't be easier! Simply type `install.packages()` with the name of your desired package in quotes as first argument. In case you want to install the {dplyr} package you would need to type this.
+
+```{r, eval=FALSE}
+install.packages("dplyr")
+```
+
+
+## Installing from Bioconductor
+
+In order to install R packages from [Bioconductor](https://www.bioconductor.org/)---a repository specifically designed for bioinformatics packages---you first need to install the {BiocManager} package from CRAN.
+
+```{r, eval=FALSE}
+install.packages("BiocManager")
+```
+
+Once {BiocManager} has been successfully installed, you can install any package from Bioconductor using the `BiocManager::install()` function, e.g.
+
+```{r, eval=FALSE}
+BiocManager::install("ArrayTools")
+```
+
+
+## Installing from GitHub
+
+While CRAN is still the most popular repository for R packages, you will find quite a lot of packages that are only available from GitHub. Furthermore, if you'd liked to try out the latest versions of popular packages such as {ggplot2} and {tidyr} you will have to install their development versions from GitHub.
+
+Before you can install any package from GitHub, you need to install the {remotes} package from CRAN.
+
+```{r, eval=FALSE}
+install.packages("remotes")
+```
+
+Now you can install any package from GitHub by providing `username/repository` as argument to `remotes::install_github()`. For example to install the latest development version of {ggplot2} from GitHub run
+
+```{r, eval=FALSE}
+remotes::install_github("tidyverse/ggplot2")
+```
+
+
+## Installing from Other Sources
+
+The {remotes} package can install R packages from many other sources including Gitlab, SVN and Bitbucket. Here's a list of all `install_*()` functions the package contains.
+
+```{r}
+grep(
+  pattern = "^install_",
+  x = getNamespaceExports("remotes"),
+  value = TRUE
+)
+```
+
+
+## Installing a Specifc Package Version
+
+By default, `install.packages()` and co. install the latest version of a package. In order to make sure that 
+
+```{r, eval=FALSE}
+remotes::install_version("dplyr", "0.8.5")
+```
+
+Another approach is to make use to use of MRAN's (Microsoft R Archive Network) daily CRAN snapshots. 
+
