@@ -26,6 +26,6 @@ With that thought in mind I decided to record myself solving the exercises in th
 
 Here's a little teaser for you to see what the videos are like.
 
-<div class="embed-container"><iframe src="https://www.youtube.com/embed/fallS4JeYVE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/fallS4JeYVE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 So far I've uploaded 5 videos. The first 3 unfortunately turned out quite poor on the audio side. I've invested in a decent microphone since then, though, so these initial hurdles have been overcome. I plan to eventually cover *all* exercises in the book---that is if **you** think it's valuable. If so, please make sure to [subscribe to the channel](https://www.youtube.com/channel/UCdJ5y9mqgXLeGzxP7u1C8nA?sub_confirmation=1) and tell your friends about it. Looking forward to seeing you over there!
