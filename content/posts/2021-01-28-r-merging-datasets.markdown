@@ -54,6 +54,18 @@ By using a full join the resulting dataset contains all rows from `L` and all ro
 
 Enough of the theory, let's explore how to actually perform a merge in R. First of, the {base} way. In {base} R you use a single function to perform all merge types covered above. Conveniently, it is called `merge()`.
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 To illustrate the concepts I will use two fictitious datasets of a clinical trial. One table contains demographic information and the other one adverse events recorded throughout the course of the trial. Note that patient `P2` has a record in `demographics` but not in `adverse_events` and that `P4` is contained in `adverse_events` but not in `demographics`.
 
 
@@ -294,5 +306,17 @@ show_dplyr("
 ```
 
 By the way, there's also the {dbplyr} package which translates your {dplyr} code into SQL. That way you don't actually need to learn SQL in order to query a database.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 In this articles we've covered the four most common ways of joining tables and how to implement them in R using {base}, {dpyr} and SQL via {tidyselect}. Armed with this knowledge you should be able to confidently merge any datasets you come across in R.
