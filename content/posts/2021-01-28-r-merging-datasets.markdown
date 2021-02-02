@@ -307,16 +307,4 @@ show_dplyr("
 
 By the way, there's also the {dbplyr} package which translates your {dplyr} code into SQL. That way you don't actually need to learn SQL in order to query a database.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 In this articles we've covered the four most common ways of joining tables and how to implement them in R using {base}, {dpyr} and SQL via {tidyselect}. Armed with this knowledge you should be able to confidently merge any datasets you come across in R. If you do get stuck feel free to ask a question in the comments below.
