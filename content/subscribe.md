@@ -1,7 +1,9 @@
 ---
 date: "2021-02-03"
-title: Subscribe
+title: Subscribe to My Newsletter
 ---
+
+Sign up to get my latest R blog posts and other R goodies directly to your inbox.
 
 <form style="border:1px solid #ccc;padding:3px;text-align:center;" action="https://tinyletter.com/thomasadventure" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/thomasadventure', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
   <p>
