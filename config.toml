@@ -1,4 +1,4 @@
-baseURL = "https://thomasadventure.blog/"
+baseURL = "/"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "Thomas’ adventuRe"
@@ -88,3 +88,8 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     name = "About"
     url = "about/"
     weight = 30
+
+  [[menu.main]]
+    name = "Subscribe"
+    url = "subscribe/"
+    weight = 40

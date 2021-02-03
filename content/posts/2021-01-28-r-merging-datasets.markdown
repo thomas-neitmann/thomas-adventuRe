@@ -185,7 +185,7 @@ merge(
 ```
 
 
-## The {dplyr} way
+## The {dplyr} Way
 
 Unlike {base} R---which uses a single function to perform the different merge types---{dplyr} provides one function for each type of join. And fortunately they are named just as you'd expect: `left_join()`, `right_join()`, `inner_join()` and `full_join()`. Personally I'm a big fan of this interface and thus tend to use {dplyr} for joining datasets much more often than {base}.
 
@@ -243,7 +243,7 @@ right_join(demographics, adverse_events2, by = c("id" = "pat_id"))
 ```
 
 
-## The SQL way
+## The SQL Way
 
 When it comes to merging tables there's no way one cannot mention the structured query language (SQL). There are several R packages available from CRAN to directly send SQL queries from R to a database. The {tidyquery} package does something different, though. It takes the SQL query you provide the `query()` function as input, translates it to {dplyr} code and then executes this {dplyr} code to produce the final result.
 
@@ -285,7 +285,7 @@ query("select * from demographics full join adverse_events using(id)")
 ## 5 P4  NA    <NA>  Tachycardia 2021-01-27
 ```
 
-For simple queries---like joining tables---this is probably overkill given {dplyr}'s interface is so similar to SQL. However, if you are a SQL wizard and write more complex queries, {tidyselect} can be a great way to become proficient in {dplyr} as it can actually show you the translated {dplyr} code.
+For simple queries---like joining tables---this is probably overkill given {dplyr}'s interface is so similar to SQL. However, if you are a SQL wizard and write more complex queries, {tidyquery} can be a great way to become proficient in {dplyr} as it can actually show you the translated {dplyr} code.
 
 
 ```r
@@ -307,16 +307,4 @@ show_dplyr("
 
 By the way, there's also the {dbplyr} package which translates your {dplyr} code into SQL. That way you don't actually need to learn SQL in order to query a database.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
-In this articles we've covered the four most common ways of joining tables and how to implement them in R using {base}, {dpyr} and SQL via {tidyselect}. Armed with this knowledge you should be able to confidently merge any datasets you come across in R. If you do get stuck feel free to ask a question in the comments below.
+In this articles we've covered the four most common ways of joining tables and how to implement them in R using {base}, {dpyr} and SQL via {tidyquery}. Armed with this knowledge you should be able to confidently merge any datasets you come across in R. If you do get stuck feel free to ask a question in the comments below.
