@@ -10,7 +10,7 @@ Sign up to get my latest R blog posts and other R goodies directly to your inbox
     <label for="tlemail">Enter your email address</label>
   </p>
   <p>
-    <input type="text" style="width:140px" name="email" id="tlemail" />
+    <input type="text" style="width:200px" name="email" id="tlemail" />
   </p>
     <input type="hidden" value="1" name="embed"/>
     <input type="submit" value="Subscribe" style="color:#494F5C;" />
