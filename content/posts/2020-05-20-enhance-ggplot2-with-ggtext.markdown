@@ -1,5 +1,5 @@
 ---
-title: Enhance your {ggplot2} data visualizations with {ggtext}
+title: Enhance Your {ggplot2} Data Visualizations with {ggtext}
 author: Thomas Neitmann
 date: '2020-05-20'
 slug: enhance-ggplot2-with-ggtext
@@ -16,7 +16,7 @@ I am super exciting to share with you my recent "discovery" of the [`{ggtext}`](
 
 I had looked for a solution to color individual words in the title of a `{ggplot2}` data visualization and `{ggtext}` provided me with a great solution for doing just that (and more).
 
-So, how does it work? Have a look at this example:
+So, how does it work? Have a look at this example.
 
 
 ```r
@@ -48,7 +48,7 @@ plot
 
 Inside `theme()` I set `plot.title = ggtext::element_markdown()`. This has the effect that the plot title I created using `ggtitle()` is interpreted as markdown/HTML. That made it possible to have the title of the plot act as a legend by coloring the appropriate keywords.
 
-To color words you have to wrap them inside a `<span>` tag and use inline CSS to specify the color. In general with will look like this:
+To color words you have to wrap them inside a `<span>` tag and use inline CSS to specify the color. In general this should look something like this:
 
 ```HTML
 <span style = 'color:color name or hex code'>Text you want to color</span>
@@ -64,10 +64,10 @@ Quite a neat solution, isn't it?
 
 While you need to revert to HTML for coloring the text you can use markdown for making individual words bold (e.g. `**Roche**`), italics (e.g. `*overtook*`) and so forth. I love the flexibility this offers.
 
-The `{ggtext}` package is not available from CRAN, yet, but you can install it from GitHub.
+The `{ggtext}` package is available from CRAN. You can install it running this code.
 
 ```r
-remotes::install_github("wilkelab/ggtext")
+install.packages("ggtext")
 ```
 
 Setting individual theme elements to `ggtext::element_markdown()` can add quite a bit of boilerplate code to your plot. That's why I decided to create the [`{mdthemes}`](https://github.com/thomas-neitmann/mdthemes) package which provides themes that interpret text as markdown out of the box. Let's contrast a "normal" theme with an `md_theme`. First, have a look at what happens if I add `theme_minimal()` to the plot I just created.
@@ -115,8 +115,8 @@ plot + mdthemes::as_md_theme(theme_minimal())
 
 <img src="/posts/2020-05-20-enhance-ggplot2-with-ggtext_files/figure-html/as_mdt_theme_example-1.png" width="672" />
 
-Just like [`{ggtext}`](https://wilkelab.org/ggtext/), the [`{mdthemes}`](https://github.com/thomas-neitmann/mdthemes) package is currently only available from GitHub. You can install it by copy-pasting this code into your `R` console.
+Just like [`{ggtext}`](https://wilkelab.org/ggtext/), the [`{mdthemes}`](https://github.com/thomas-neitmann/mdthemes) package is available from CRAN. You can install it by copy-pasting this code into your `R` console.
 
 ```r
-remotes::install_github("thomas-neitmann/mdthemes")
+install.packages("mdthemes")
 ```
