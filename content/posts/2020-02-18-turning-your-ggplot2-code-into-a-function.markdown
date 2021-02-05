@@ -59,6 +59,8 @@ scatter_plot(mtcars, "hp", "mpg")
 
 Well, no error this time but that most likely did not produce what you expected.
 
+<a target="_blank"  href="https://www.amazon.com/gp/product/331924275X/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=331924275X&linkCode=as2&tag=07075-20&linkId=77ed1cd1e91cea9ef42c6b604b8d85e5"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=331924275X&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=07075-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=07075-20&l=am2&o=1&a=331924275X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+
 The key to making this work is to tell `R`  somehow that it should look for the `x` and `y` arguments inside data. How can you achieve this? Using `{{ }}` (speak curly-curly) from the `rlang` package.
 
 
