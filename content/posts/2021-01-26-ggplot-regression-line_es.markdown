@@ -22,13 +22,16 @@ Se podría decir que la regresión lineal es el modelo estadístico más utiliza
 
 Comenzamos creando un gráfico de dispersión de las variables *weight* (`wt`) vs. *horse power* (`hp`) del conjunto de datos `mtcars`.
 
-```{r ggplot2_scatter_plot}
+
+```r
 library(ggplot2)
 data(mtcars)
 p <- ggplot(mtcars, aes(wt, hp)) +
   geom_point()
 p
 ```
+
+<img src="/posts/2021-01-26-ggplot-regression-line_es_files/figure-html/ggplot2_scatter_plot-1.png" width="672" />
 
 <!-- There's an obvious positive trend visible: the heavier a car is the higher its horse power tend to be. -->
 
@@ -38,43 +41,58 @@ Es obvio que hay una relación positiva visible: mientras más pesado es un coch
 
 A continuación añadimos una línea de suavizado para que esa tendencia sea todavía más visible
 
-```{r ggplot2_scatter_plot_with_loess_smoother, message=FALSE}
+
+```r
 p + geom_smooth()
 ```
+
+<img src="/posts/2021-01-26-ggplot-regression-line_es_files/figure-html/ggplot2_scatter_plot_with_loess_smoother-1.png" width="672" />
 
 <!-- By default, `geom_smooth()` adds a LOESS smoother to the data. That's not what we're after, though. To make `geom_smooth()` draw a linear regression line we have to set the `method` parameter to `"lm"` which is short for "linear model". -->
 
 Por defecto, `geom_smooth()` añade un suavizado LOESS a los datos, aunque esto no es lo que queremos. Para que `geom_smooth()` dibuje una recta de regresión lineal tenemos que establecer el parámetro `method`a `"lm"`, que es la abreviatura de "modelo lineal".
 
-```{r ggplot2_scatter_plot_with_linear_regression_line, message=FALSE}
+
+```r
 p + geom_smooth(method = "lm")
 ```
+
+<img src="/posts/2021-01-26-ggplot-regression-line_es_files/figure-html/ggplot2_scatter_plot_with_linear_regression_line-1.png" width="672" />
 
 <!-- The gray shading around the line represents the 95% confidence interval. You can change the confidence interval level by changing the `level` parameter. A value of `0.8` represents a 80% confidence interval. -->
 
 El sombreado gris alrededor de la línea representa el intervalo de confianza al 95%. El nivel del intervalo de confianza se puede modificar cambiando el parámetro `level`. Un valor de 0.8 representa un intervalo de confianza del 80%.
 
-```{r ggplot2_linear_regression_line_confidence_interval, message=FALSE}
+
+```r
 p + geom_smooth(method = "lm", level = 0.8)
 ```
+
+<img src="/posts/2021-01-26-ggplot-regression-line_es_files/figure-html/ggplot2_linear_regression_line_confidence_interval-1.png" width="672" />
 
 <!-- If you don't want to show the confidence interval band at all, set the `se` parameter to `FALSE`. -->
 
 Para que no se muestre el intervalo de confianza se debe establecer el parámetro `se` a `FALSE`
 
-```{r ggplot2_linear_regression_line_without_confidence_interval, message=FALSE}
+
+```r
 p + geom_smooth(method = "lm", se = FALSE)
 ```
+
+<img src="/posts/2021-01-26-ggplot-regression-line_es_files/figure-html/ggplot2_linear_regression_line_without_confidence_interval-1.png" width="672" />
 
 <!-- Sometimes a line is not a good fit to the data but a polynomial would be. So, how to add a polynomial regression line to a plot? To do so, we will still have to use `geom_smooth()` with `method = "lm"` but in addition specify the `formula` parameter. By default, `formula` is set to `y ~ x` (read: `y` as a function of `x`). To draw a polynomial of degree `n` you have to change the formula to `y ~ poly(x, n)`. Here's an example fitting a 2nd degree (quadratic) polynomial regression line. -->
 
 En algunas ocasiones una recta no se adapta correctamente a los datos pero un ajuste polinómico sí. Entonces, ¿cómo se añade una línea de regresión polinómica al gráfico? Para esto se usa igualmente `geom_smooth()` con el parámetro `method = "lm"`pero además se debe especificar el parámetro `formula`. El valor por defecto de `formula`es `y ~ x` (se lee: `y` en función de `x`). Para dibujar un polinomio de grado `n` se cambia la fórmula a `y ~ poly(x, n)`. A continuación se muestra un ejemplo de ajuste con una curva de regresión polinómica de 2º grado (ajuste cuadrático)
 
-```{r ggplot2_polynomial_regression_line}
+
+```r
 ggplot(mtcars, aes(qsec, hp)) +
   geom_point() +
   geom_smooth(method = "lm", formula = y ~ poly(x, 2))
 ```
+
+<img src="/posts/2021-01-26-ggplot-regression-line_es_files/figure-html/ggplot2_polynomial_regression_line-1.png" width="672" />
 
 <!-- Now it's your turn! Start a new R session, load some data, and create a ggplot with a linear regression line. Happy programming! -->
 
