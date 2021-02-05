@@ -57,6 +57,8 @@ Notice also that inside of `scale_color_manual()` I set `guide = "none"`. This r
 
 Quite a neat solution, isn't it?
 
+<a target="_blank"  href="https://www.amazon.com/gp/product/1491978600/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1491978600&linkCode=as2&tag=07075-20&linkId=cf413d9b2e8866f8c5f86d35d3bed2ab"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=1491978600&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=07075-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=07075-20&l=am2&o=1&a=1491978600" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+
 While you need to revert to HTML for coloring the text you can use markdown for making individual words bold (e.g. `**Roche**`), italics (e.g. `*overtook*`) and so forth. I love the flexibility this offers.
 
 The `{ggtext}` package is not available from CRAN, yet, but you can install it from GitHub.
