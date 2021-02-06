@@ -21,7 +21,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 `Rmarkdown` is a great tool for creating data-driven reports that have to be updated on a regular basis. To communicate to stakeholders that the report is indeed up to date it's important to display the current date below the title.
 
-An obvious solution to display the current date is to update the date field in the YAML header manually before knitting. But this is both error prone and you are likely to forget about it. Instead you can dislay the current date in an automatic way using the method below.
+An obvious solution to display the current date is to update the date field in the YAML header manually before knitting. But this is both error prone and you are likely to forget about it. Instead you can display the current date in an automatic way using the method below.
 
 ```{r, eval=FALSE}
 ---
