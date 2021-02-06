@@ -2,13 +2,12 @@
 title: ¿Cómo Añadir una Recta de Regresión a un ggplot?
 author: Thomas Neitmann
 date: '2021-01-26'
-slug: ggplot-regression-line
+slug: ggplot-recta-de-regresion
 categories:
   - R
   - article
 tags:
   - ggplot2
-  - datavisualization
   - visualizaciondedatos
 toc: no
 images: ~
@@ -68,7 +67,7 @@ p + geom_smooth(method = "lm", se = FALSE)
 
 <!-- Sometimes a line is not a good fit to the data but a polynomial would be. So, how to add a polynomial regression line to a plot? To do so, we will still have to use `geom_smooth()` with `method = "lm"` but in addition specify the `formula` parameter. By default, `formula` is set to `y ~ x` (read: `y` as a function of `x`). To draw a polynomial of degree `n` you have to change the formula to `y ~ poly(x, n)`. Here's an example fitting a 2nd degree (quadratic) polynomial regression line. -->
 
-En algunas ocasiones una recta no se adapta correctamente a los datos pero un ajuste polinómico sí. Entonces, ¿cómo se añade una línea de regresión polinómica al gráfico? Para esto se usa igualmente `geom_smooth()` con el parámetro `method = "lm"`pero además se debe especificar el parámetro `formula`. El valor por defecto de `formula`es `y ~ x` (se lee: `y` en función de `x`). Para dibujar un polinomio de grado `n` se cambia la fórmula a `y ~ poly(x, n)`. A continuación se muestra un ejemplo de ajuste con una curva de regresión polinómica de 2º grado (ajuste cuadrático)
+En algunas ocasiones una recta no se adapta correctamente a los datos pero un ajuste polinómico sí. Entonces, ¿cómo se añade una línea de regresión polinómica al gráfico? Para esto se usa igualmente `geom_smooth()` con el parámetro `method = "lm"`pero además se debe especificar el parámetro `formula`. El valor por defecto de `formula` es `y ~ x` (se lee: `y` en función de `x`). Para dibujar un polinomio de grado `n` se cambia la fórmula a `y ~ poly(x, n)`. A continuación se muestra un ejemplo de ajuste con una curva de regresión polinómica de 2º grado (ajuste cuadrático)
 
 ```{r ggplot2_polynomial_regression_line}
 ggplot(mtcars, aes(qsec, hp)) +
