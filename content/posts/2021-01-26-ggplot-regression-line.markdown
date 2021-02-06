@@ -13,6 +13,8 @@ toc: no
 images: ~
 ---
 
+*<small>This article is also available in [Spanish](/es/posts/ggplot-recta-de-regresion).</small>*
+
 Linear regression is arguably the most widely used statistical model out there. It's simple and gives easily interpretable results. Since linear regression essentially fits a line to a set of points it can also be readily visualized. This post focuses on how to do that in R using the `{ggplot2}` package.
 
 Let's start off by creating a scatter plot of weight (`wt`) vs. horse power (`hp`) of cars in the infamous `mtcars` dataset.
