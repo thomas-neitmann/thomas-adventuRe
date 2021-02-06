@@ -2,7 +2,7 @@
 title: Cómo hacer que R devuelva errores en inglés
 author: Thomas Neitmann
 date: '2020-03-21'
-slug: getting-r-to-print-english-error-messages
+slug: que-r-devuelva-errores-en-ingles
 categories:
   - R
   - bytesized
@@ -19,7 +19,7 @@ Si vives en un país de habla no inglesa, como es mi caso, segúramente te apare
 ```
 
 ```
-## Error in 1 + "r": nicht numerisches Argument für binären Operator
+## Error in 1 + "r": argumento no-numérico para operador binario
 ```
 
 Esto es un problema, ya que limita el número de resultados de tu búsqueda en Google. ¿Has leído alguna vez un post en stackoverflow que no sea en inglés? Yo no.
@@ -65,3 +65,4 @@ Esto abrirá el fichero `.Rprofile` del directorio "home" del usuario, es decir 
 ```{r, eval=FALSE}
 usethis::edit_r_profile(scope = "project")
 ```
+Post traducido del original inglés por [@dernapo](https://twitter.com/dernapo)
