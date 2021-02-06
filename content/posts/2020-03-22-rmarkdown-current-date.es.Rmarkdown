@@ -1,5 +1,5 @@
 ---
-title: Always display the current date in an Rmarkdown report
+title: Mostrar la fecha actual automáticamente en un informe Rmarkdown
 author: Thomas Neitmann
 date: '2020-03-22'
 slug: rmarkdown-current-date
