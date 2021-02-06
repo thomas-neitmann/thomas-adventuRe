@@ -40,7 +40,7 @@ Genial!
 
 El único problema es que la próxima vez que inicies una nueva sesión de `R` el cambio se revertirá. Para mantener el cambio incluye `Sys.setenv(lang = "en_US")` a tu fichero `.Rprofile`.
 
-¿Nunca has oído hablar del fichero `.Rprofile`? Es básicamente un script de `R` que si ---existe---se ejecutará cada vez que inicies `R`. Así que es perfecto para cambiar el idioma.
+¿Nunca has oído hablar del fichero `.Rprofile`? Es básicamente un script de `R` que si---existe---se ejecutará cada vez que inicies `R`. Así que es perfecto para cambiar el idioma.
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- B -->
@@ -65,4 +65,5 @@ Esto abrirá el fichero `.Rprofile` del directorio "home" del usuario, es decir 
 ```{r, eval=FALSE}
 usethis::edit_r_profile(scope = "project")
 ```
-Post traducido del original inglés por [@dernapo](https://twitter.com/dernapo)
+
+Post traducido del original inglés por [@dernapo](https://twitter.com/dernapo).
