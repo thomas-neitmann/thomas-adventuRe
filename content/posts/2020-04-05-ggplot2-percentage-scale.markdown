@@ -32,12 +32,10 @@ cyl <- mtcars %>%
 ```
 
 ```
-## # A tibble: 3 x 3
-##     cyl     n   pct
-##   <dbl> <int> <dbl>
-## 1     4    11  34.4
-## 2     6     7  21.9
-## 3     8    14  43.8
+##   cyl  n    pct
+## 1   4 11 34.375
+## 2   6  7 21.875
+## 3   8 14 43.750
 ```
 
 To create a bar chart displaying these data I will use my [`ggcharts`](https://thomas-neitmann.github.io/ggcharts/index.html) package which provides a high-level interface to produce plots using `ggplot2`.
@@ -106,6 +104,18 @@ bar_chart(cyl2, cyl, pct) +
 <img src="/posts/2020-04-05-ggplot2-percentage-scale_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 However, notice that suddenly all labels are printed with one decimal place. I think that's undesireable given that the labels are all whole numbers.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 To change this the `percent_format()` function has a paramter called `accuracy`.
 

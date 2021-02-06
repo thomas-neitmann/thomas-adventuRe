@@ -1,4 +1,4 @@
-baseURL = "https://thomasadventure.blog/"
+baseURL = "/"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "Thomas’ adventuRe"
@@ -12,7 +12,13 @@ copyright = "This work is licensed under a Creative Commons Attribution-NonComme
 enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
 googleAnalytics = "UA-161564352-1"
 disqusShortname = "thomas-adventure"
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+ignoreFiles = ["\\.knit\\.md$", "\\.tmp.html$", "\\.utf8\\.md$", "\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+
+[languages]
+  [languages.en]
+    weight = 1
+  [languages.es]
+    weight = 2
 
 [author]
   name = "Thomas Neitmann"
@@ -88,3 +94,13 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     name = "About"
     url = "about/"
     weight = 30
+
+  [[menu.main]]
+    name = "Subscribe"
+    url = "subscribe/"
+    weight = 40
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

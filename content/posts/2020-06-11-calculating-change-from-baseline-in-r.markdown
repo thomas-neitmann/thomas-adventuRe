@@ -61,6 +61,18 @@ trial_data_chg <- trial_data %>%
 
 First, it's important to arrange the data of each subject in increasing order of `AVISITN`. Next, I grouped the data by `USUBJID` such that `AVAL[1L]` refers to the baseline value of each subject. Finally, I subtracted the baseline value from the value measured at each visit.
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 Let's have a look at the result to see whether this actually did what I said it would do.
 
 
@@ -309,6 +321,18 @@ No issues were found!
 ```
 
 Again a minimal change. Just pass a `list` of variables to split by to the `INDICES` argument of `by()`.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 Yet another way to calculate change from baseline is via merging. This methods works regardless of whether or not baseline records are missing. First, create a new `data.frame` by subsetting only the baseline records. Next, left-join this new `data.frame` with the original one. Finally, subtract the baseline value from the other values as usual. Here's how you can do that using `{dplyr}`.
 

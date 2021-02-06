@@ -1,0 +1,78 @@
+---
+title: Cómo hacer que R devuelva errores en inglés
+author: Thomas Neitmann
+date: '2020-03-21'
+slug: que-r-devuelva-errores-en-ingles
+categories:
+  - R
+  - bytesized
+tags:
+  - base
+toc: no
+images: ~
+---
+
+Si vives en un país de habla no inglesa, como es mi caso, segúramente te aparecerán mensajes de error en tu idioma cuando las cosas van mal en `R`.
+
+
+```r
+1 + "r"
+```
+
+```
+## Error in 1 + "r": argumento no-numérico para operador binario
+```
+
+Esto es un problema, ya que limita el número de resultados de tu búsqueda en Google. ¿Has leído alguna vez un post en stackoverflow que no sea en inglés? Yo no.
+
+Entonces, ¿cómo decirle a `R` que *no* traduzca los mensajes de error? Diciéndole a `R` que cambie tu idioma a inglés.
+
+
+```r
+Sys.setenv(lang = "en_US")
+```
+
+Tu próximo error se mostrará en inglés.
+
+
+```r
+1 + "r"
+```
+
+```
+## Error in 1 + "r": non-numeric argument to binary operator
+```
+
+Genial!
+
+El único problema es que la próxima vez que inicies una nueva sesión de `R` el cambio se revertirá. Para mantener el cambio incluye `Sys.setenv(lang = "en_US")` a tu fichero `.Rprofile`.
+
+¿Nunca has oído hablar del fichero `.Rprofile`? Es básicamente un script de `R` que si---existe---se ejecutará cada vez que inicies `R`. Así que es perfecto para cambiar el idioma.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+La forma más sencilla para crearlo o editarlo es usando la librería `{usethis}` (la tendrás que instalar si no la tienes aún).
+
+
+```r
+usethis::edit_r_profile()
+```
+
+Esto abrirá el fichero `.Rprofile` del directorio "home" del usuario, es decir `~/.Rprofile`. Este fichero se ejecutará en cada sesión de R que comiences *salvo* que tengas otro fichero `.Rprofile` en el directorio de tu proyecto en RStudio. Si ese es el caso, entonces usa este código para editar este fichero `.Rprofile` en particular.
+
+
+```r
+usethis::edit_r_profile(scope = "project")
+```
+
+Post traducido del original inglés por [@dernapo](https://twitter.com/dernapo).

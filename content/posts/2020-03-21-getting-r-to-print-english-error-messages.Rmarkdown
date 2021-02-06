@@ -12,6 +12,8 @@ toc: no
 images: ~
 ---
 
+*<small>This article is also available in [Spanish](/es/posts/que-r-devuelva-errores-en-ingles).</small>*
+
 If you live in a non-English locale---such as I do---you'll likely receive error messages in your locale language when things go wrong in `R`.
 
 ```{r, eval=FALSE}
@@ -41,6 +43,18 @@ Great!
 The only problem with this approach is that the next time you start a new `R` session this change will be reverted. To make this change persistent add `Sys.setenv(lang = "en_US")` to your `.Rprofile` file.
 
 Never heard of `.Rprofile`? It's basically an `R` script that---if present---gets executed whenever you start `R`. That makes it perfect for the purpose of changing your locale.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 The easiest way to edit or create this file is by using the `{usethis}` package (make sure to install it if you haven't already).
 
