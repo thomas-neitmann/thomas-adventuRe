@@ -245,7 +245,7 @@ This is a common error when using R on Windows. It is typically followed by the 
 When you do answer `no` R will install the previous version of the package for which pre-complied binaries are available rather than the latest version which is only available from source. This is typically the case in the first few days after a new package version has been published on CRAN. Should that still not work try to explicitly install the previous version of the package using `remotes::install_version()` as described above.
 
 
-## Failed to Create Lock Directory
+### Failed to Create Lock Directory
 
 This error occurs when your last package installation attempt has interrupted abnormally, e.g. when you hit Ctrl-C to terminate it.
 
