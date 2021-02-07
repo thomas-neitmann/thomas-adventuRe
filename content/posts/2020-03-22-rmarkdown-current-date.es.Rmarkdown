@@ -2,7 +2,7 @@
 title: Mostrar la fecha actual automáticamente en un informe Rmarkdown
 author: Thomas Neitmann
 date: '2020-03-22'
-slug: rmarkdown-current-date
+slug: rmarkdown-actualizar-fecha
 categories:
   - bytesized
   - R
@@ -28,7 +28,7 @@ Una solución obvia para mostrar la fecha actual sería modificar manualmente el
 
 ```{r, eval=FALSE}
 ---
-title: "Super Important Report"
+title: "Informe Superimportante"
 author: "Thomas Neitmann"
 date: `r Sys.Date()`
 ---
@@ -51,10 +51,10 @@ Sin embargo, hay que tener cuidado con el formato de la fecha. `Sys.Date()` devu
 ¿Cómo podemos hacerlo? Usando la función `format()`. He aquí algunos ejemplos.
 
 ```{r}
-current_date <- Sys.Date()
-format(current_date, "%d.%m.%Y")
-format(current_date, "%d. %B %Y")
-format(current_date, "%m/%d/%Y")
+fecha_actual <- Sys.Date()
+format(fecha_actual, "%d.%m.%Y")
+format(fecha_actual, "%d. %B %Y")
+format(fecha_actual, "%m/%d/%Y")
 ```
 
 <!-- After deciding which format to use make sure to wrap `Sys.Date()` inside of `format()` in your YAML header. -->

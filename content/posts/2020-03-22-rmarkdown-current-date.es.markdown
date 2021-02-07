@@ -2,7 +2,7 @@
 title: Mostrar la fecha actual automáticamente en un informe Rmarkdown
 author: Thomas Neitmann
 date: '2020-03-22'
-slug: rmarkdown-current-date
+slug: rmarkdown-actualizar-fecha
 categories:
   - bytesized
   - R
@@ -26,7 +26,7 @@ Una solución obvia para mostrar la fecha actual sería modificar manualmente el
 
 ```r
 ---
-title: "Super Important Report"
+title: "Informe Superimportante"
 author: "Thomas Neitmann"
 date: `r Sys.Date()`
 ---
@@ -39,7 +39,7 @@ Cuando se compila (**knit**) el documento `Rmarkdown`, la función `Sys.Date()` 
 
 ```r
 Sys.Date()
-## [1] "2021-02-06"
+## [1] "2021-02-07"
 ```
 
 <!-- A caveat is the date format, though. `Sys.Date()` returns the current date in ISO 8601 format, i.e. `yyyy-mm-dd`. Your audience is likely not used to this format so you might want to use a date format that's common in your locale. -->
@@ -52,13 +52,13 @@ Sin embargo, hay que tener cuidado con el formato de la fecha. `Sys.Date()` devu
 
 
 ```r
-current_date <- Sys.Date()
-format(current_date, "%d.%m.%Y")
-## [1] "06.02.2021"
-format(current_date, "%d. %B %Y")
-## [1] "06. febrero 2021"
-format(current_date, "%m/%d/%Y")
-## [1] "02/06/2021"
+fecha_actual <- Sys.Date()
+format(fecha_actual, "%d.%m.%Y")
+## [1] "07.02.2021"
+format(fecha_actual, "%d. %B %Y")
+## [1] "07. febrero 2021"
+format(fecha_actual, "%m/%d/%Y")
+## [1] "02/07/2021"
 ```
 
 <!-- After deciding which format to use make sure to wrap `Sys.Date()` inside of `format()` in your YAML header. -->
