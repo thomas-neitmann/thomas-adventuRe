@@ -12,7 +12,13 @@ copyright = "This work is licensed under a Creative Commons Attribution-NonComme
 enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
 googleAnalytics = "UA-161564352-1"
 disqusShortname = "thomas-adventure"
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+ignoreFiles = ["\\.knit\\.md$", "\\.tmp.html$", "\\.utf8\\.md$", "\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+
+[languages]
+  [languages.en]
+    weight = 1
+  [languages.es]
+    weight = 2
 
 [author]
   name = "Thomas Neitmann"
@@ -93,3 +99,8 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     name = "Subscribe"
     url = "subscribe/"
     weight = 40
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
