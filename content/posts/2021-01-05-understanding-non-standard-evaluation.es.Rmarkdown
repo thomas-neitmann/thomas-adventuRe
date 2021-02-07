@@ -2,7 +2,7 @@
 title: 'Entendiendo la Evaluación No Estándar. Parte 1: Lo Básico'
 author: Thomas Neitmann
 date: '2021-01-27'
-slug: understanding-nse-part1
+slug: entendiendo-evaluacion-no-estandar-parte1
 categories:
   - R
   - article
@@ -98,3 +98,5 @@ Entonces, aunque llames a `iris$Sepal.Length` en el entorno global, y en el mism
 </script>
 
 Si entendiste lo que hemos cubierto hasta ahora, acabas de dar un gran paso hacia adelante en tu viaje hacia el dominio de R. Pero espera, ¡hay más por venir! En la parte 2 de esta publicación, te mostraré cómo implementar una función NSE por tí mismo. Al hacer eso, profundizarás aún más tu comprensión y aprenderás sobre algunos de los componentes internos de R que le dan el superpoder para escribir paquetes como {dplyr}. ¡Mantente atento!
+
+*Este post ha sido traducido desde el original en inglés por [\@francisco_yira](https://twitter.com/francisco_yira).*
