@@ -20,6 +20,7 @@ images: ~
 An obvious solution to display the current date is to update the `date` field in the YAML header manually before knitting. But this is both error prone and you are likely to forget about it. Instead you can automatically display the current date by placing an inline R chunk containing a call to `Sys.Date()` as the value of the `date` field.
 
 
+
 ```r
 ---
 title: "Super Important Report"
@@ -33,7 +34,7 @@ When knitting the `Rmarkdown` document `Sys.Date()` will be evaluated and displa
 
 ```r
 Sys.Date()
-## [1] "2021-02-05"
+## [1] "2021-02-06"
 ```
 
 A caveat is the date format, though. `Sys.Date()` returns the current date in ISO 8601 format, i.e. `yyyy-mm-dd`. Your audience is likely not used to this format. You should use a date format that's common in your locale or standard within your organization.
@@ -53,11 +54,11 @@ How to achieve that? Using the `format()` function. Here are some examples.
 ```r
 current_date <- Sys.Date()
 format(current_date, "%d.%m.%Y")
-## [1] "05.02.2021"
+## [1] "06.02.2021"
 format(current_date, "%d. %B %Y")
-## [1] "05. Februar 2021"
+## [1] "06. febrero 2021"
 format(current_date, "%m/%d/%Y")
-## [1] "02/05/2021"
+## [1] "02/06/2021"
 ```
 
 After deciding which format to use make sure to wrap `Sys.Date()` inside of `format()` in your YAML header.
