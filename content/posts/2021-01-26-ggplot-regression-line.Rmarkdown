@@ -13,7 +13,7 @@ toc: no
 images: ~
 ---
 
-*<small>This article is also available in [Spanish](/es/posts/ggplot-recta-de-regresion).</small>*
+*<small>This article is also available in [Spanish](/es/posts/ggplot-recta-de-regresion) and [Italian](/it/posts/ggplot-retta-di-regressione).</small>*
 
 Linear regression is arguably the most widely used statistical model out there. It's simple and gives easily interpretable results. Since linear regression essentially fits a line to a set of points it can also be readily visualized. This post focuses on how to do that in R using the `{ggplot2}` package.
 

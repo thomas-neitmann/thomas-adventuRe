@@ -115,5 +115,5 @@ heatmaply::heatmaply_na(mtcars)
 
 Genial, ¿no?
 
-Post traducido al español por [Jacobo de la Cuesta](https://twitter.com/idontknomics)
+*<small>Post traducido al español por [Jacobo de la Cuesta](https://twitter.com/idontknomics).</small>*
 

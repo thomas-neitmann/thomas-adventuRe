@@ -13,6 +13,8 @@ toc: no
 images: ~
 ---
 
+*<small>This post is also available in [Spanish](/es/posts/rmarkdown-actualizar-fecha).</small>*
+
 ```{r, include=FALSE}
 Sys.setlocale("LC_TIME", "German")
 knitr::opts_chunk$set(collapse = TRUE)

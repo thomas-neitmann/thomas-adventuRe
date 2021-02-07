@@ -66,4 +66,4 @@ Esto abrirá el fichero `.Rprofile` del directorio "home" del usuario, es decir 
 usethis::edit_r_profile(scope = "project")
 ```
 
-Post traducido del original inglés por [@dernapo](https://twitter.com/dernapo).
+*<small>Post traducido del original inglés por [@dernapo](https://twitter.com/dernapo).</small>*

@@ -56,7 +56,7 @@ fecha_actual <- Sys.Date()
 format(fecha_actual, "%d.%m.%Y")
 ## [1] "07.02.2021"
 format(fecha_actual, "%d. %B %Y")
-## [1] "07. febrero 2021"
+## [1] "07. Februar 2021"
 format(fecha_actual, "%m/%d/%Y")
 ## [1] "02/07/2021"
 ```
@@ -68,10 +68,10 @@ Una vez que hayas decidido qué formato utilizar, incluye `Sys.Date()` dentro de
 
 ```r
 ---
-title: "Super Important Report"
+title: "Informe Superimportantet"
 author: "Thomas Neitmann"
 date: `r format(Sys.Date(), "%d. %B %Y")`
 ---
 ```
 
-Este artículo ha sido traducido del original en inglés por Gustavo Zapata Wainberg.
+*<small>Este artículo ha sido traducido del original en inglés por Gustavo Zapata Wainberg.</small>*

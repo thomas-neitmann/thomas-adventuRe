@@ -63,10 +63,10 @@ Una vez que hayas decidido qué formato utilizar, incluye `Sys.Date()` dentro de
 
 ```{r, eval=FALSE}
 ---
-title: "Super Important Report"
+title: "Informe Superimportantet"
 author: "Thomas Neitmann"
 date: `r format(Sys.Date(), "%d. %B %Y")`
 ---
 ```
 
-Este artículo ha sido traducido del original en inglés por Gustavo Zapata Wainberg.
+*<small>Este artículo ha sido traducido del original en inglés por Gustavo Zapata Wainberg.</small>*

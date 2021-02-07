@@ -12,6 +12,8 @@ toc: no
 images: ~
 ---
 
+*<small>This post is also available in [Spanish](/es/posts/r-contar-na).</small>*
+
 To check for missing values in `R` you might be tempted to use the equality operator `==` with your vector on one side and `NA` on the other. Don't!
 
 If you insist, you'll get a useless results.
