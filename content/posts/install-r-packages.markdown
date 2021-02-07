@@ -1,7 +1,7 @@
 ---
 title: The Comprehensive Guide to Installing R Packages from CRAN, Bioconductor, GitHub and Co.
 author: Thomas Neitmann
-date: '2021-01-31'
+date: '2021-02-08'
 slug: install-r-packages
 categories:
   - R
@@ -88,8 +88,8 @@ grep(
 ```
 
 ```
-##  [1] "install_gitlab"    "install_url"       "install_github"   
-##  [4] "install_dev"       "install_git"       "install_version"  
+##  [1] "install_gitlab"    "install_url"       "install_github"
+##  [4] "install_dev"       "install_git"       "install_version"
 ##  [7] "install_bioc"      "install_deps"      "install_bitbucket"
 ## [10] "install_cran"      "install_local"     "install_svn"
 ```
@@ -162,7 +162,7 @@ old_libraries <- .libPaths()
 ```
 
 ```
-## [1] "C:/Users/neitmant/Documents/blog2/library"        
+## [1] "C:/Users/neitmant/Documents/blog2/library"
 ## [2] "C:/Users/neitmant/AppData/Roaming/R-3.6.3/library"
 ```
 
