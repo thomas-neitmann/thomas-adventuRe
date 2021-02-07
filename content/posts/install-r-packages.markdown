@@ -58,6 +58,18 @@ BiocManager::install("ArrayTools")
 
 While CRAN is still by far the most popular repository for R packages, you will find quite a lot of packages that are only available from [GitHub](https://github.com/). Furthermore, if you'd liked to try out the latest development versions of popular packages such as {ggplot2} and {tidyr} you will have to install them from GitHub.
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 Before you can install any package from GitHub, you need to install the {remotes} package from CRAN.
 
 
@@ -88,8 +100,8 @@ grep(
 ```
 
 ```
-##  [1] "install_gitlab"    "install_url"       "install_github"
-##  [4] "install_dev"       "install_git"       "install_version"
+##  [1] "install_gitlab"    "install_url"       "install_github"   
+##  [4] "install_dev"       "install_git"       "install_version"  
 ##  [7] "install_bioc"      "install_deps"      "install_bitbucket"
 ## [10] "install_cran"      "install_local"     "install_svn"
 ```
@@ -129,6 +141,18 @@ Any subsequent call to `install.packages()` will make use of this globally set o
 
 The `install.packages()` function has a `type` parameter that controls whether a package is installed from pre-complied binaries or from source. The former is the default on Windows and some macOS versions while on Linux it's the latter. So what's the difference?
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 When `type = "binary"`, `install.packages()` will attempt to download a pre-compiled version of the requested package for the operating system (OS) you are working on. Pre-complied means that the package has been complied on another machine with the same OS as yours and subsequently uploaded to CRAN. This is very convenient because not having to compile packages yourself has a huge advantage: it's (much) faster. If you've ever tried to install the {tidyverse} from source you will know what I mean. It's no overstatement when I say that you should take a long coffee break after entering `install.packages("tidyverse", type = "source")`.
 
 Are there advantages to installing packages from source? In theory yes. You could set certain compiler flags to optimize the code and link to more performant libraries, e.g. multi-threaded BLAS/LAPACK linear algebra libraries. However, that is provided you know what you are doing. I assume that 99.9% of my readers don't and I include myself to that list. So in short, install from pre-compiled binaries unless they are not available for your OS.
@@ -162,7 +186,7 @@ old_libraries <- .libPaths()
 ```
 
 ```
-## [1] "C:/Users/neitmant/Documents/blog2/library"
+## [1] "C:/Users/neitmant/Documents/blog2/library"        
 ## [2] "C:/Users/neitmant/AppData/Roaming/R-3.6.3/library"
 ```
 
@@ -198,6 +222,18 @@ Yet another potential source for this issue is that you attempted to install a B
 ### Updating Loaded Packages
 
 This is a very annoying error. The error message itself is rather self-explanatory. You have already called `library()` with one of the packages you are attempting to install. Often, though, it's not obvious which package is causing the problem. You may have called `library(dplyr)` at the start of your session and are now trying to install another package that depends on `{dplyr}`. This package likely requires a specific version of `{dplyr}`. You might have version `0.8.1` installed but `1.0.0` is required. In such cases R will automatically try to install the most recent version of `{dplyr}`. But if that package is already loaded you'll get the `Updating loaded packages` error.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 When you encounter this error the first thing you should do is restart your R session and try to install again without loading any packages. If you still get the same error you likely have a `library(pkg)` call in your `.Rprofile` file or you load saved objects into your workspace when starting R. I'd highly recommend to do neither of those. As a next step I'd recommend to close any currently active R session. Then go to your terminal---or CMD on Windows---and type `R --vanilla`. This will start an R session that will ignore your `.Rprofile` and doesn't restore any saved objects. You are starting from a clean state so to say. Installing the package should now work.
 
