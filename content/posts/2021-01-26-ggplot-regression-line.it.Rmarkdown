@@ -78,3 +78,5 @@ ggplot(mtcars, aes(qsec, hp)) +
 <!-- Now it's your turn! Start a new R session, load some data, and create a ggplot with a linear regression line. Happy programming! -->
 
 Ora è il tuo turno! Apri una nuova sessione in R, carica dei dati e crea un ggplot con una retta di regressione lineare. Buona programmazione!
+
+Questo post è stato tradotto dall'inglese da [Stefano Anzani](https://github.com/stefanoanzani)
