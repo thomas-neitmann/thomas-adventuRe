@@ -1,0 +1,119 @@
+---
+title: Contando valores faltantes (NA) en R
+author: Thomas Neitmann
+date: '2021-01-25'
+slug: r-contar-na
+categories:
+  - R
+  - article
+tags:
+  - base
+toc: no
+images: ~
+---
+
+Para verificar valores faltantes (también llamados valores perdidos) en `R` podrás estar tentado a usar el operador `==` con tu vector a un lado y `NA` al otro. ¡No lo hagas!
+
+Si insistes, obtendrás un resultado inútil.
+
+```{r}
+x <- c(1, 5, NA, 3, NA)
+x == NA
+```
+
+Mejor usa la función `is.na()`.
+
+```{r}
+is.na(x)
+```
+
+Armados con este conocimiento, exploremos cómo obtener algunos valores descriptivos básicos acerca de valores faltantes en tus datos. Primero, para contar el número total de `NA` en un vector, simplemente puedes sumar el número de valores verdaderos resultantes de `is.na()` con la función `sum()`.
+
+```{r}
+sum(is.na(x))
+```
+
+Puede que estés confundido sobre cómo es posible sumar valores verdaderos (`TRUE`) y falsos (`FALSE`) en R. De manera automática, R convierte los vectores lógicos (`logical`) a vectores de números enteros (`integer`) al aplicar funciones aritméticas. En dicho proceso, `TRUE` se vuelve `1` y `FALSE`, `0`. De ese modo, `sum(is.na(x))` devuelve el total de valores faltantes en el vector `x`.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+Para obtener la proporción de valores faltantes, puedes dividir el resultado de la operación anterior por la longitud del vector de entrada.
+
+```{r}
+sum(is.na(x)) / length(x)
+```
+
+Ahora, si miras con detenimiento el código anterior es posible que esa fórmula te resulte familiar. ¡Sumar todos los elementos de un vector y dividirlos por el número total de elementos es calcular la media aritmética! Entonces, en lugar de usar `sum()` y `length()`, simplemente podemos calcular la media con la función `mean()` para obtener la proporción de `NA` en un vector.
+
+```{r}
+mean(is.na(x))
+```
+
+Pero suficiente de vectores. Miremos ahora cómo contar valores faltantes en un marco o tabla (en inglés data frame). Para ilustrar estos conceptos, agreguemos primero valores faltantes al juego de datos `mtcars`.
+
+```{r}
+data(mtcars)
+set.seed(1)
+mtcars[sample(1:nrow(mtcars), 5), sample(1:ncol(mtcars), 3)] <- NA
+```
+
+La función `is.na()` es una función genérica y tiene métodos para data frames, por lo que puedes ingresar directamente una tabla como entrada.
+
+```{r}
+na <- is.na(mtcars)
+na[1:15, 1:7]
+```
+
+Como puedes ver, el resultado es una *matriz* de valores lógicos (`logical`). Obtener el número total de `NA` es fácil, porque `sum()` funciona tanto con matrices como con vectores.
+
+```{r}
+sum(is.na(mtcars))
+```
+
+Sin embargo, podría decirse que el número total de valores faltantes en un conjunto de datos es una medida algo burda. Resulta mucho más interesante si examinamos los valores que faltan a través de las variables y los registros del juego de datos. Ello permite detectar patrones que podrían informar futuras decisiones de modelización.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+Contar `NA` a lo largo de filas o columnas puede hacerse usando la función `apply()`. Dicha función recibe tres argumentos: `X` es la matriz de entrada, `MARGIN` es un entero y `FUN` es la función que será aplicada a cada fila o columna. `MARGIN = 1` ejecuta la función a las filas de una tabla, mientras que `MARGIN = 2` lo hace a las columnas.
+
+```{r}
+apply(X = is.na(mtcars), MARGIN = 1, FUN = sum)
+apply(X = is.na(mtcars), MARGIN = 2, FUN = sum)
+```
+
+Si quieres calcular la proporción de valores faltantes por fila o columna, solo debes cambiar el argumento `FUN` por `mean`.
+
+```{r}
+apply(X = is.na(mtcars), MARGIN = 1, FUN = mean)
+```
+
+Para finalizar, echemos un vistazo a cómo visualizar los datos faltantes. Hay muchos paquetes para ese propósito; a mi personalmente me gusta el paquete `{heatmaply}`, el cual puede generar mapas de calor (en inglés heatmaps) interactivos
+
+```{r}
+heatmaply::heatmaply_na(mtcars)
+```
+
+Genial, ¿no?
+
+*<small>Post traducido al español por [Jacobo de la Cuesta](https://twitter.com/idontknomics).</small>*
+

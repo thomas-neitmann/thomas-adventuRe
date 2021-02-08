@@ -12,6 +12,8 @@ toc: no
 images: ~
 ---
 
+*<small>This article is also available in [Spanish](/es/posts/que-r-devuelva-errores-en-ingles).</small>*
+
 If you live in a non-English locale---such as I do---you'll likely receive error messages in your locale language when things go wrong in `R`.
 
 ```{r, eval=FALSE}
