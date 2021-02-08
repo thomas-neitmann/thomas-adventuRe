@@ -11,6 +11,8 @@ toc: no
 images: ~
 ---
 
+*<small>This article is also available in [Chinese](/zh/posts/understanding-nse-part1).</small>*
+
 Non-standard evaluation---or NSE for short---is one of those technical terms R wizards like to throw around in discussions about the language. But what exactly does NSE mean? To answer that question and demystify the concept, I will first talk about its opposite, i.e. *standard* evaluation (no, it's not called non-NSE 😉).
 
 Let's take the example of selecting a single column from a data frame. In base R you can do that using either `[[` or `$`. The former uses standard evaluation semantics whereas the latter uses NSE.
