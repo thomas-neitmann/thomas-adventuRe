@@ -17,34 +17,63 @@ images: ~
 
 使用`[[`的时候，我们需要在里面输入字符串。我们通常使用的是一串*文字*字符。
 
-```{r}
+
+```r
 data(iris)
 head(iris[["Species"]])
 ```
 
+```
+## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
+```
+
 此外，我们也可以在`[[`内输入*对象名*。这个对象名会被*求值*（这个值最好是一串字符或者数值，否则会出现异常）。
 
-```{r}
+
+```r
 var <- "Species"
 head(iris[[var]])
 ```
 
+```
+## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
+```
+
 前面的介绍不足为奇。接下来，我们来谈谈`$`的行为。类似`[[`，我们可以在`$`右侧输入一串字符。
 
-```{r}
+
+```r
 head(iris$"Species")
+```
+
+```
+## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
 ```
 
 但是，在现实中，你可能永远不会这样做，因为有了`$`我们就不必这样做了。相反，我们可以在`$`右侧直接输入对象名。
 
-```{r}
+
+```r
 head(iris$Species)
+```
+
+```
+## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
 ```
 
 这样做可以节省两次键入，因此大大方便了我们在控制台编辑交互式代码。那么，如果我们将前面定义好的`var`输入到`$`右侧，会怎么样呢？
 
-```{r}
+
+```r
 head(iris$var)
+```
+
+```
+## NULL
 ```
 
 没有想到吧？你并不是唯一一个对此感到意外的人。我身边的很多R初学者都对此感到困惑。请记住，对象`var`的值为`"Species"`。使用标准化求值语义时，R会对`var`求值。而`$`利用的是非标准化求值，因此在使用`$`的时候，情况不一样。`$`会在数据`iris`中查找名为`var`的列。因为这个数据内没有这样命名的列，所以结果显示`NULL`（我个人认为结果显示为异常更好些，不过无妨）。
@@ -63,7 +92,8 @@ head(iris$var)
 
 除了`Species`，`iris`数据还包含了一个名为`Sepal.Length`的列。正如前面所说，我们有两种方式来选择这一列，通过`iris[["Sepal.Length"]]`或者`iris$Sepal.Length`。可是，如果我们的运行环境中已经存在一个名为`Sepal.Length`的变量，会怎么样呢？
 
-```{r}
+
+```r
 Sepal.Length <- "Species"
 ```
 
@@ -72,14 +102,25 @@ Sepal.Length <- "Species"
 先来看`iris[[Sepal.Length]]`。当我们使用`[[`时，对象名`Sepal.Length`被求值为`"Species"`。因此，在这种情况下，`iris[[Sepal.Length]]`与 `iris[["Species"]]`的结果是一致的。
 
 
-```{r}
+
+```r
 head(iris[[Sepal.Length]])
+```
+
+```
+## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
 ```
 
 再来看`iris$Sepal.Length`。 R根本不关心运行环境中是否存在名为`Sepal.Length`的变量。相反，它的第一反应是在数据`iris`中查找名为`Sepal.Length`的变量，嗯，确实有一个。
 
-```{r}
+
+```r
 head(iris$Sepal.Length)
+```
+
+```
+## [1] 5.1 4.9 4.7 4.6 5.0 5.4
 ```
 
 因此，即便你的运行环境中存在一个名为`Sepal.Length`的对象并且这一对象已经被赋予了某个值，当你执行`iris$Sepal.Length`的时候，R会直接绕过这个值。相反，它把数据*本身*视作运行环境，当对`Sepal.Length`求值时，你就会得到那一列的内容。这个过程完全不遵循R的标准化求值语义，这就是它被称为非标准化求值的原因。

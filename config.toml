@@ -17,10 +17,12 @@ ignoreFiles = ["\\.knit\\.md$", "\\.tmp.html$", "\\.utf8\\.md$", "\\.Rmd$", "\\.
 [languages]
   [languages.en]
     weight = 1
-  [languages.es]
+  [languages.zh]
     weight = 2
-  [languages.it]
+  [languages.es]
     weight = 3
+  [languages.it]
+    weight = 4
 
 [author]
   name = "Thomas Neitmann"
