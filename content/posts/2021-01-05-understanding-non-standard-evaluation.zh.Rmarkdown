@@ -1,5 +1,5 @@
 ---
-title: 'Understanding Non-Standard Evaluation. Part 1: The Basics'
+title: '认识非标准化求值 第一部分：基础知识'
 author: Thomas Neitmann
 date: '2021-01-27'
 slug: understanding-nse-part1
@@ -96,5 +96,5 @@ head(iris$Sepal.Length)
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
-如果你已经掌握了到目前为止我们所讨论的内容，那么恭喜你，你在掌握R的道路上向前迈进了一大步。但是，前方还有很多内容在等着你！在这系列文章的第二篇，我会示范如何执行非标准化求值。通过自己进行非标准化求值，你将进一步加深对R的理解，也会更加了解R的内部结构，这将帮助你写出像{dplyr}那样强大的功能包。敬请期待！
+如果你已经掌握了到目前为止我们所讨论的内容，那么恭喜你，你在掌握R的道路上向前迈进了一大步。但是，前方还有很多内容在等着你！在这系列文章的第二篇，我会示范如何执行非标准化求值。通过自己进行非标准化求值，你将进一步加深对R的理解，也会更加了解R的内部结构，这将帮助你写出像{dplyr}那样强大的功能包。敬请期待！（本文由林诗敏译自英文。）
 
