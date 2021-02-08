@@ -1,5 +1,5 @@
 ---
-title: Transformar el Eje a Escala Porcentual en ggplot2
+title: Transformar el Eje a Escala Porcentual en {ggplot2}
 author: Thomas Neitmann
 date: '2020-04-05'
 slug: ggplot2-escala-porcentual
@@ -214,8 +214,4 @@ remotes::install_github("thomas-neitmann/scalesextra")
 <!-- Please test `scale_y_pct()` (and its sister `scale_x_pct()`) and let me know what you think in the comments. Should you find a bug (which is likely given the early stage of development), please open an issue on [GitHub](https://github.com/thomas-neitmann/scalesextra/issues). -->
 
 Por favor, prueba `scale_y_pct()` (y su hermana `scale_x_pct()`) y dime lo que opinas de ellas en los comentarios. Si encuentras algún error (lo que es muy probable dado que está en una fase de desarrollo temprana), por favor abre un *issue* en [GitHub](https://github.com/thomas-neitmann/scalesextra/issues).  
-  
-    
-*Este artículo ha sido traducido del original en inglés por Gustavo Zapata Wainberg.*   
-
-
+*<small>Este artículo ha sido traducido del original en inglés por Gustavo Zapata Wainberg.</small>*   
