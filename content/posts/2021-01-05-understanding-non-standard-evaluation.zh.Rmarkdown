@@ -1,0 +1,100 @@
+---
+title: 'Understanding Non-Standard Evaluation. Part 1: The Basics'
+author: Thomas Neitmann
+date: '2021-01-27'
+slug: understanding-nse-part1
+categories:
+  - R
+  - article
+tags: []
+toc: no
+images: ~
+---
+
+非标准化求值（Non-standard evaluation），英文缩写为NSE，是行家们在谈论R语言时喜欢使用的一个术语。那么非标准化求值到底是什么意思呢？要回答这个问题，揭开这一概念的神秘面纱，我先为大家介绍与之相对的一个概念，那就是标准化求值（是的，它不叫非-非标准化求值😉）。
+
+以从数据中选取一列为例。在`base R`中，我们可以通过`[[`或`$`来实现。前者使用的是标准化求值语义，而后者使用的则是非标准化求值。
+
+使用`[[`的时候，我们需要在里面输入字符串。我们通常使用的是一串*文字*字符。
+
+```{r}
+data(iris)
+head(iris[["Species"]])
+```
+
+此外，我们也可以在`[[`内输入*对象名*。这个对象名会被*求值*（这个值最好是一串字符或者数值，否则会出现异常）。
+
+```{r}
+var <- "Species"
+head(iris[[var]])
+```
+
+前面的介绍不足为奇。接下来，我们来谈谈`$`的行为。类似`[[`，我们可以在`$`右侧输入一串字符。
+
+```{r}
+head(iris$"Species")
+```
+
+但是，在现实中，你可能永远不会这样做，因为有了`$`我们就不必这样做了。相反，我们可以在`$`右侧直接输入对象名。
+
+```{r}
+head(iris$Species)
+```
+
+这样做可以节省两次键入，因此大大方便了我们在控制台编辑交互式代码。那么，如果我们将前面定义好的`var`输入到`$`右侧，会怎么样呢？
+
+```{r}
+head(iris$var)
+```
+
+没有想到吧？你并不是唯一一个对此感到意外的人。我身边的很多R初学者都对此感到困惑。请记住，对象`var`的值为`"Species"`。使用标准化求值语义时，R会对`var`求值。而`$`利用的是非标准化求值，因此在使用`$`的时候，情况不一样。`$`会在数据`iris`中查找名为`var`的列。因为这个数据内没有这样命名的列，所以结果显示`NULL`（我个人认为结果显示为异常更好些，不过无妨）。
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+除了`Species`，`iris`数据还包含了一个名为`Sepal.Length`的列。正如前面所说，我们有两种方式来选择这一列，通过`iris[["Sepal.Length"]]`或者`iris$Sepal.Length`。可是，如果我们的运行环境中已经存在一个名为`Sepal.Length`的变量，会怎么样呢？
+
+```{r}
+Sepal.Length <- "Species"
+```
+
+`iris[[Sepal.Length]]`与`iris$Sepal.Length`分别会得到什么结果呢？在你继续阅读之前，停下来，思考这个问题。 根据此前我们所讨论过的内容，你应该能够正确回答这个问题。如果你不是很确定的话，请回到顶部，再次阅读前面的段落。
+
+先来看`iris[[Sepal.Length]]`。当我们使用`[[`时，对象名`Sepal.Length`被求值为`"Species"`。因此，在这种情况下，`iris[[Sepal.Length]]`与 `iris[["Species"]]`的结果是一致的。
+
+
+```{r}
+head(iris[[Sepal.Length]])
+```
+
+再来看`iris$Sepal.Length`。 R根本不关心运行环境中是否存在名为`Sepal.Length`的变量。相反，它的第一反应是在数据`iris`中查找名为`Sepal.Length`的变量，嗯，确实有一个。
+
+```{r}
+head(iris$Sepal.Length)
+```
+
+因此，即便你的运行环境中存在一个名为`Sepal.Length`的对象并且这一对象已经被赋予了某个值，当你执行`iris$Sepal.Length`的时候，R会直接绕过这个值。相反，它把数据*本身*视作运行环境，当对`Sepal.Length`求值时，你就会得到那一列的内容。这个过程完全不遵循R的标准化求值语义，这就是它被称为非标准化求值的原因。
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+如果你已经掌握了到目前为止我们所讨论的内容，那么恭喜你，你在掌握R的道路上向前迈进了一大步。但是，前方还有很多内容在等着你！在这系列文章的第二篇，我会示范如何执行非标准化求值。通过自己进行非标准化求值，你将进一步加深对R的理解，也会更加了解R的内部结构，这将帮助你写出像{dplyr}那样强大的功能包。敬请期待！
+
