@@ -4,7 +4,6 @@ author: Thomas Neitmann
 date: '2021-02-08'
 slug: install-r-packages
 categories:
-  - R
   - article
 tags:
   - base
@@ -12,7 +11,6 @@ tags:
 toc: true
 images: ~
 ---
-
 
 
 

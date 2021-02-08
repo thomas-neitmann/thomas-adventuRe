@@ -4,7 +4,6 @@ author: Thomas Neitmann
 date: '2021-02-08'
 slug: install-r-packages
 categories:
-  - R
   - article
 tags:
   - base
@@ -17,7 +16,6 @@ images: ~
 knitr::opts_knit$set(root.dir = '../..')
 options(repos = "https://cran.rstudio.com/")
 ```
-
 
 One of the primary reasons for R's popularity is its extensive package ecosystem. On R's main package repository CRAN alone you have over 10,000 packages available to choose from. Yet, when you first install R you only get a very limited set of core packages "out of the box". Any further packages that you'd like to use you have to install yourself. How to do that is the topic of this article.
 
