@@ -24,7 +24,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 <!-- An obvious solution to display the current date is to update the date field in the YAML header manually before knitting. But this is both error prone and you are likely to forget about it. Instead you can dislay the current date in an automatic way using the method below. -->
 
-Una solución obvia para mostrar la fecha actual sería modificar manualmente el campo de la fecha en el encabezado YAML antes de compilar el informe (**knit**). Pero esto puede conllevar errores y es probable que se te olvide actualizarlo. En cambio, puedes mostrar la fecha actualizada automáticamente usando el método a continuación.
+Una solución obvia para mostrar la fecha actual sería modificar manualmente el campo de la fecha en el encabezado YAML antes de compilar el informe (*knit*). Pero esto puede conllevar errores y es probable que se te olvide actualizarlo. En cambio, puedes mostrar la fecha actualizada automáticamente usando el método a continuación.
 
 ```{r, eval=FALSE}
 ---
@@ -36,7 +36,7 @@ date: `r Sys.Date()`
 
 <!-- When knitting the `Rmarkdown` document `Sys.Date()` will be evaluated and display the current date. -->
 
-Cuando se compila (**knit**) el documento `Rmarkdown`, la función `Sys.Date()` será evaluada y mostrará la fecha actual.
+Cuando se compila (*knit*) el documento `Rmarkdown`, la función `Sys.Date()` será evaluada y mostrará la fecha actual.
 
 ```{r}
 Sys.Date()
@@ -63,7 +63,7 @@ Una vez que hayas decidido qué formato utilizar, incluye `Sys.Date()` dentro de
 
 ```{r, eval=FALSE}
 ---
-title: "Informe Superimportantet"
+title: "Informe Superimportante"
 author: "Thomas Neitmann"
 date: `r format(Sys.Date(), "%d. %B %Y")`
 ---

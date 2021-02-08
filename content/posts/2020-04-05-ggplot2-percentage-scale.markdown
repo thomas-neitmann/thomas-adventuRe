@@ -117,7 +117,7 @@ However, notice that suddenly all labels are printed with one decimal place. I t
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
-To change this the `percent_format()` function has a paramter called `accuracy`.
+To change this the `percent_format()` function has a parameter called `accuracy`.
 
 
 ```r
