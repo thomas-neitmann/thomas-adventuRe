@@ -3,6 +3,8 @@ date: "2021-01-21"
 title: About
 ---
 
+<img src="/img/portrait.jfif" class="portrait" align="left" width="40%"/>
+
 Hi there!
 
 My name is Thomas Neitmann. I am an `R` enthusiast currently working for Swiss pharmaceutical company [Roche](https://www.roche.com/) as a Statistical Programmer Analyst for late-phase clinical trials in neuroscience indications.

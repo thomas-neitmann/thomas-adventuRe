@@ -289,3 +289,7 @@ input[type="submit"] {
     cursor: pointer;
     margin-bottom: 0.5em;
 }
+
+.portrait {
+  padding-right: 15px;
+}
