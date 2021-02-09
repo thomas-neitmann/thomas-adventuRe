@@ -240,9 +240,11 @@ background-color: #FF6600
 }
 
 .popout {
-    background: #ebedef;
-    padding-top: 15px;
-    padding-bottom: 5px;
+  border-radius: 5px;
+  background: #ebedef;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  margin-bottom: 1em;
 }
 
 label {
