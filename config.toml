@@ -17,12 +17,91 @@ ignoreFiles = ["\\.knit\\.md$", "\\.tmp.html$", "\\.utf8\\.md$", "\\.Rmd$", "\\.
 [languages]
   [languages.en]
     weight = 1
+    [[languages.en.menu.main]]
+      name = "Posts"
+      url = "posts/"
+      weight = 10
+
+    [[languages.en.menu.main]]
+      name = "Videos"
+      url = "videos/"
+      weight = 20
+
+    [[languages.en.menu.main]]
+      name = "About"
+      url = "about/"
+      weight = 30
+
+    [[languages.en.menu.main]]
+      name = "Subscribe"
+      url = "subscribe/"
+      weight = 40
+
   [languages.zh]
     weight = 2
+    [[languages.zh.menu.main]]
+      name = "Posts"
+      url = "posts/"
+      weight = 10
+
+    [[languages.zh.menu.main]]
+      name = "Videos"
+      url = "../videos/"
+      weight = 20
+
+    [[languages.zh.menu.main]]
+      name = "About"
+      url = "../about/"
+      weight = 30
+
+    [[languages.zh.menu.main]]
+      name = "Subscribe"
+      url = "../subscribe/"
+      weight = 40
+
   [languages.es]
     weight = 3
+    [[languages.es.menu.main]]
+      name = "Posts"
+      url = "posts/"
+      weight = 10
+
+    [[languages.es.menu.main]]
+      name = "Videos"
+      url = "../videos/"
+      weight = 20
+
+    [[languages.es.menu.main]]
+      name = "About"
+      url = "../about/"
+      weight = 30
+
+    [[languages.es.menu.main]]
+      name = "Subscribe"
+      url = "../subscribe/"
+      weight = 40
+
   [languages.it]
     weight = 4
+    [[languages.it.menu.main]]
+      name = "Posts"
+      url = "posts/"
+      weight = 10
+
+    [[languages.it.menu.main]]
+      name = "Videos"
+      url = "../videos/"
+      weight = 20
+
+    [[languages.it.menu.main]]
+      name = "About"
+      url = "../about/"
+      weight = 30
+
+    [[languages.it.menu.main]]
+      name = "Subscribe"
+      url = "../subscribe/"
+      weight = 40
 
 [author]
   name = "Thomas Neitmann"
@@ -81,28 +160,6 @@ ignoreFiles = ["\\.knit\\.md$", "\\.tmp.html$", "\\.utf8\\.md$", "\\.Rmd$", "\\.
   [[params.social]]
     name = "twitter"
     url = "https://twitter.com/thomas_neitmann"
-
-[menu]
-
-  [[menu.main]]
-    name = "Posts"
-    url = "posts/"
-    weight = 10
-
-  [[menu.main]]
-    name = "Videos"
-    url = "videos/"
-    weight = 20
-
-  [[menu.main]]
-    name = "About"
-    url = "about/"
-    weight = 30
-
-  [[menu.main]]
-    name = "Subscribe"
-    url = "subscribe/"
-    weight = 40
 
 [markup]
   [markup.goldmark]
