@@ -70,7 +70,8 @@ Suficiente teoría de momento. Veamos como se realiza una fusión en la práctic
 Para demostrar los conceptos, utilizaré dos tablas sobre un ensayo clínico ficticio. Una de las tablas contiene información demográfica y la otras efectos adversos observados durante el desarrollo del ensayo. Nótese que el paciente `P2` tiene un registro en `demographics` pero no en `adverse_events`; y que  `P4` aparece en  `adverse_events` pero no en `demographics`.
 
 
-```{r}
+
+```r
 demographics <- data.frame(
   id = c("P1", "P2", "P3"),
   age = c(40, 54, 47),
@@ -87,7 +88,8 @@ adverse_events <- data.frame(
 
 Por defecto, `merge()` efectúa una unión interna, de tal manera que sólo los pacientes que aparecen *a la vez* en las tablas `demographics` y  `adverse_events` acabarán en la tabla final.
 
-```{r}
+
+```r
 merge(
   x = demographics,
   y = adverse_events,
@@ -95,15 +97,34 @@ merge(
 )
 ```
 
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P3  47     BRA Constipation 2020-11-29
+```
+
 Para realizar una unión por la izquierda, el parámetro `all.x` debe igualarse a `TRUE`. Para una unión a la derecha, debe procederse del mismo modo con el parámetro  `all.y`.
 
-```{r}
+
+```r
 merge(
   x = demographics,
   y = adverse_events,
   by = "id",
   all.x = TRUE
 )
+```
+
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P2  54     JPN         <NA>       <NA>
+## 4 P3  47     BRA Constipation 2020-11-29
+```
+
+```r
 merge(
   x = demographics,
   y = adverse_events,
@@ -112,10 +133,19 @@ merge(
 )
 ```
 
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P3  47     BRA Constipation 2020-11-29
+## 4 P4  NA    <NA>  Tachycardia 2021-01-27
+```
+
 Finalmente, se logra una unión completa cuando los dos parámetros, `all.x` y  `all.y`, son definidos como 
 `TRUE` o con  `all = TRUE`.
 
-```{r}
+
+```r
 merge(
   x = demographics,
   y = adverse_events,
@@ -124,9 +154,19 @@ merge(
 )
 ```
 
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P2  54     JPN         <NA>       <NA>
+## 4 P3  47     BRA Constipation 2020-11-29
+## 5 P4  NA    <NA>  Tachycardia 2021-01-27
+```
+
 En las dos tablas de ejemplo que creé, la clave común fue llamada apropiadamente `id` en ambas tablas. Pero no es necesario que sea así. Si las tablas tienen diferentes nombres de sus variables cómunes ID, se pueden especificar individualmente utilizando  `by.x` y  `by.y` de `merge()`.
 
-```{r}
+
+```r
 adverse_events2 <- adverse_events
 colnames(adverse_events2)[1L] <- "pat_id"
 merge(
@@ -138,22 +178,71 @@ merge(
 )
 ```
 
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P2  54     JPN         <NA>       <NA>
+## 4 P3  47     BRA Constipation 2020-11-29
+## 5 P4  NA    <NA>  Tachycardia 2021-01-27
+```
+
 
 ## Usando {dplyr}
 
 Al contrario que R {base}, que utiliza una sola función para realizar distintos tipos de fusión, {dplyr} tiene una función para cada tipo de fusión. Y afortunadamente sus nombre son tal cual se esperaría: `left_join()`,  `right_join()`, `inner_join()` y `full_join()` (del inglés izquierda, derecha, interna y completa, respectivamente). Personalmente soy un fan de este tipo de interfaz, y por ello tiendo a usar  {dplyr} más a menudo que  {base}.
 
-```{r, message=FALSE}
+
+```r
 library(dplyr)
 left_join(demographics, adverse_events, by = "id")
+```
+
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P2  54     JPN         <NA>       <NA>
+## 4 P3  47     BRA Constipation 2020-11-29
+```
+
+```r
 inner_join(demographics, adverse_events, by = "id")
+```
+
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P3  47     BRA Constipation 2020-11-29
+```
+
+```r
 full_join(demographics, adverse_events, by = "id")
+```
+
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P2  54     JPN         <NA>       <NA>
+## 4 P3  47     BRA Constipation 2020-11-29
+## 5 P4  NA    <NA>  Tachycardia 2021-01-27
 ```
 
 En caso de que el nombre de las variables ID de las dos tablas no coincida, tendrás que pasar un vector nombrado como argumento de  `by`. Nombre y valor corresponden con la clave en la primera y segunda tabla, respectivamente.
 
-```{r}
+
+```r
 right_join(demographics, adverse_events2, by = c("id" = "pat_id"))
+```
+
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P3  47     BRA Constipation 2020-11-29
+## 4 P4  NA    <NA>  Tachycardia 2021-01-27
 ```
 
 
@@ -161,16 +250,48 @@ right_join(demographics, adverse_events2, by = c("id" = "pat_id"))
 
 Cuando se trata de fusionar tablas, no hay más remedio que aludir a lenguaje de consultas structuradas (SQL). Hay varios paquetes de R disponibles en CRAN que sirven para enviar consultas SQL desde R a una base de datos. Sin embargo, el paquete  {tidyquery} hace algo diferente. Toma la consulta SQL que le das como entrada a  la función  `query()`, la traduce a código {dplyr} y ejecuta la secuencia  {dplyr} para producir el resultado final.
 
-```{r}
+
+```r
 library(tidyquery)
 query("select * from demographics right join adverse_events using(id)")
+```
+
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P3  47     BRA Constipation 2020-11-29
+## 4 P4  NA    <NA>  Tachycardia 2021-01-27
+```
+
+```r
 query("select * from demographics inner join adverse_events using(id)")
+```
+
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P3  47     BRA Constipation 2020-11-29
+```
+
+```r
 query("select * from demographics full join adverse_events using(id)")
+```
+
+```
+##   id age country         term onset_date
+## 1 P1  40     GER     Headache 2020-12-03
+## 2 P1  40     GER  Neutropenia 2021-01-03
+## 3 P2  54     JPN         <NA>       <NA>
+## 4 P3  47     BRA Constipation 2020-11-29
+## 5 P4  NA    <NA>  Tachycardia 2021-01-27
 ```
 
 Para consultas sencillas, tales como fusionar tablas, es posible que esto sea un exceso, dado que la interfaz de  {dplyr} es muy similar a SQL. Sin embargo, si eres un experto en  SQL y estás acostumbrado a hacer un uso más completo, {tidyquery}  puede ser un muy buen método para convertirse en experto en  {dplyr}, ya que te muestra el código traducido a {dplyr}.
 
-```{r}
+
+```r
 show_dplyr("
   select dm.id, dm.age, ae.term
   from demographics as dm
@@ -178,6 +299,13 @@ show_dplyr("
   using(id)
   where term <> 'Headache'
 ")
+```
+
+```
+## demographics %>%
+##   left_join(adverse_events, by = "id", suffix = c(".dm", ".ae"), na_matches = "never") %>%
+##   filter(term != "Headache") %>%
+##   select(id, age, term)
 ```
 
 Por cierto, el paquete  {dbplyr} traduce tu código  {dplyr} a SQL. De este modo no necesitas en realidad aprender SQL para consultar una base de datos.

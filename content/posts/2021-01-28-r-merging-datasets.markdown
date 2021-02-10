@@ -15,6 +15,8 @@ toc: no
 images: ~
 ---
 
+*<small>This article is also available in [Spanish](/es/posts/r-fusionando-tablas-datos).</small>*
+
 Merging---also known as joining---two datasets by one or more common ID variables (keys) is a common task for any data scientist. If you get the merge wrong you can create some serious damage to your downstream analysis so you'd better make sure you're doing the right thing! In order to do so, I'll walk you through three different approaches to joining tables in R: the {base} way, the {dplyr} way and the SQL way (yes, you can use SQL in R).
 
 ## Types of Merges
