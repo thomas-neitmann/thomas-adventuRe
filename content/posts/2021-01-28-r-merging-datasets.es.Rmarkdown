@@ -1,8 +1,8 @@
 ---
-title: Todo lo que necesitas saber sobre fusionar datos en R
+title: Todo lo que necesitas saber sobre fusionar tablas de datos en R
 author: Thomas Neitmann
 date: '2021-02-01'
-slug: r-merging-datasets
+slug: r-fusionando-tablas-datos
 categories:
   - R
   - article
@@ -183,3 +183,8 @@ show_dplyr("
 Por cierto, el paquete  {dbplyr} traduce tu código  {dplyr} a SQL. De este modo no necesitas en realidad aprender SQL para consultar una base de datos.
 
 En este artículo hemos visto los cuatro modos más habituales de fusionar tablas y cómo implementarlos en R utilizando {base}, {dpyr} y SQL vía {tidyquery}. Teniendo este conocimiento, deberías ser capaz de fusionar con confianza cualquier conjunto de datos que te encuentres en R. Si te atascas, no obstante, no dudes en preguntar en los comentarios aquí abajo.
+
+
+This article has been kindly translated by Guzmán Díaz https://github.com/guzman-diaz.
+
+Artículo traducido por Guzmán Díaz https://github.com/guzman-diaz.
