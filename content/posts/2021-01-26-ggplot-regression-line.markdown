@@ -15,6 +15,18 @@ images: ~
 
 *<small>This article is also available in [Spanish](/es/posts/ggplot-recta-de-regresion) and [Italian](/it/posts/ggplot-retta-di-regressione).</small>*
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 Linear regression is arguably the most widely used statistical model out there. It's simple and gives easily interpretable results. Since linear regression essentially fits a line to a set of points it can also be readily visualized. This post focuses on how to do that in R using the `{ggplot2}` package.
 
 Let's start off by creating a scatter plot of weight (`wt`) vs. horse power (`hp`) of cars in the infamous `mtcars` dataset.

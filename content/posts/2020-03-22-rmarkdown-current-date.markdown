@@ -35,19 +35,22 @@ When knitting the `Rmarkdown` document `Sys.Date()` will be evaluated and displa
 
 ```r
 Sys.Date()
-## [1] "2021-02-07"
+## [1] "2021-02-11"
 ```
 
 A caveat is the date format, though. `Sys.Date()` returns the current date in ISO 8601 format, i.e. `yyyy-mm-dd`. Your audience is likely not used to this format. You should use a date format that's common in your locale or standard within your organization.
 
-<div style="text-align: center;">
-  <div style="display: inline-block; margin-right: 5px;">
-    <a target="_blank"  href="https://www.amazon.com/gp/product/1138359335/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1138359335&linkCode=as2&tag=07075-20&linkId=f3a9aad7be50442e2fc3e943bbad565e"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=1138359335&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=07075-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=07075-20&l=am2&o=1&a=1138359335" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-  </div>
-  <div style="display: inline-block; margin-right: 5px;">
-    <a target="_blank"  href="https://www.amazon.com/gp/product/0367563835/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=0367563835&linkCode=as2&tag=07075-20&linkId=1859cbd3dcf8c1e0330f8a770f6cc7ac"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=0367563835&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=07075-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=07075-20&l=am2&o=1&a=0367563835" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-  </div>
-</div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 How to achieve that? Using the `format()` function. Here are some examples.
 
@@ -55,11 +58,11 @@ How to achieve that? Using the `format()` function. Here are some examples.
 ```r
 current_date <- Sys.Date()
 format(current_date, "%d.%m.%Y")
-## [1] "07.02.2021"
+## [1] "11.02.2021"
 format(current_date, "%d. %B %Y")
-## [1] "07. Februar 2021"
+## [1] "11. Februar 2021"
 format(current_date, "%m/%d/%Y")
-## [1] "02/07/2021"
+## [1] "02/11/2021"
 ```
 
 After deciding which format to use make sure to wrap `Sys.Date()` inside of `format()` in your YAML header.
@@ -80,7 +83,7 @@ Notice that when I requested the full month name to be displayed by using `forma
 Sys.setlocale("LC_TIME", "Spanish")
 ## [1] "Spanish_Spain.1252"
 format(current_date, "%d. %B %Y")
-## [1] "07. febrero 2021"
+## [1] "11. febrero 2021"
 ```
 
 It's not sufficient to put this line of code in the first code chunk of your `Rmarkdown` document. Instead you have to place it directly inside the `date` field of the YAML header. Pay attention to the semicolon between `Sys.setlocale()` and `format()`.

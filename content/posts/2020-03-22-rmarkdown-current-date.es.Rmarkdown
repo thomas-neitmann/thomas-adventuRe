@@ -48,6 +48,10 @@ Sys.Date()
 
 Sin embargo, hay que tener cuidado con el formato de la fecha. `Sys.Date()` devuelve la fecha actual con el formato ISO 8601 (`yyyy-mm-dd`). Es probable que tus lectores no estén acostumbrados a este formato y, por lo tanto, quieras utilizar el formato que se usa en tu región.
 
+```{r echo=FALSE, results='asis'}
+cat(readLines("../../layouts/partials/google-ads.html"), sep = "\n")
+```
+
 ¿Cómo podemos hacerlo? Usando la función `format()`. He aquí algunos ejemplos.
 
 ```{r}
