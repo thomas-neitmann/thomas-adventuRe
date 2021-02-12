@@ -1,9 +1,10 @@
 ---
 title: The Comprehensive Guide to Installing R Packages from CRAN, Bioconductor, GitHub and Co.
 author: Thomas Neitmann
-date: '2021-02-08'
+date: '2021-02-12'
 slug: install-r-packages
 categories:
+  - R
   - article
 tags:
   - base
