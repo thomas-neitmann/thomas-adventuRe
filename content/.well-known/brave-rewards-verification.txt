@@ -1,4 +1,0 @@
-This is a Brave Rewards publisher verification file.
-
-Domain: thomasadventure.blog
-Token: ff4da3d87b2e8bfc9971f7aff940b70440a143d3260daa824001b86d6b0c34ec
