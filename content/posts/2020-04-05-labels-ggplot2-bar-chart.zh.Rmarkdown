@@ -1,0 +1,167 @@
+---
+title: 为{ggplot2}条形图添加标签
+author: Thomas Neitmann
+date: '2020-04-06'
+slug: labels-ggplot2-bar-chart
+categories:
+  - R
+  - bytesized
+tags:
+  - datavisualization
+  - ggplot2
+  - ggcharts
+toc: no
+images: ~
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+
+我经常看到带有标签值的条形图。那么在本文中，我将向您展示如果使用`ggplot2`创建带有标签的条形图。。
+
+本文所使用的数据来自于[2019 Stackoverflow Developer Survey](https://insights.stackoverflow.com/survey/2019#most-loved-dreaded-and-wanted)。
+为了更简便的绘图我将使用我编写的[`ggcharts`](https://thomas-neitmann.github.io/ggcharts/index.html)包中的`bar_chart()`函数。它可以输出一个`ggplot`对象的结果，然后可以使用`ggplot2`中的函数进一步自定义图像。
+
+
+```{r ggplot2_bar_chart}
+library(dplyr)
+library(ggplot2)
+library(ggcharts)
+
+dreaded_lang <- tibble::tribble(
+  ~language, ~pct,
+  "VBA", 75.2,
+  "Objective-C", 68.7,
+  "Assembly", 64.4,
+  "C", 57.5,
+  "PHP", 54.2,
+  "Erlang", 52.6,
+  "Ruby", 49.7,
+  "R", 48.3,
+  "C++", 48.0,
+  "Java", 46.6
+)
+
+chart <- dreaded_lang %>%
+  bar_chart(language, pct) %>%
+  print()
+```
+
+当需要在条形图中添加注释时，你可以使用`geom_text()` 或者 `geom_label()`。这两个函数都需要x和y的坐标值，它将告诉`ggplot2`在哪里显示文本。但是在`bar_chart()`中x和y都是已经设置好了，因此第一个示例之后，我将不再赘述。
+
+```{r ggplot2_bar_chart_label_center}
+chart +
+  geom_text(aes(x = language, y = pct, label = pct))
+```
+
+默认情况下，标签是以y值居中对齐的。 此种对齐方式浏览起来不够美观。 如果要使标签左对齐，可以将`hjust`参数设置为`0`或`"left"`。
+
+```{r ggplot2_bar_chart_label_outside}
+chart +
+  geom_text(aes(label = pct, hjust = "left"))
+```
+
+不过我认为这还是不够理想，所以继续通过把`hjust`设置为负数，让标签与条形保持距离；同时增加y轴与条形头部之间的距离，使得图像更加美观。
+
+```{r ggplot2_bar_chart_label_outside2}
+chart +
+  geom_text(aes(label = pct, hjust = -0.2)) +
+  ylim(NA, 100)
+```
+
+
+另外，你也可以将标签至于条形之中。
+
+```{r ggplot2_bar_chart_label_inside}
+chart +
+  geom_text(aes(label = pct, hjust = 1))
+```
+
+同样，在条形的末端，通过增加`hjust`的值，标签可以进一步向左移动。 另外，蓝底黑字很难阅读，我们将文本颜色更改为白色。 请注意，`color`是在`aes（）`之外定义的。
+
+```{r ggplot2_bar_chart_label_inside_colored}
+chart +
+  geom_text(aes(label = pct, hjust = 1.2), color = "white")
+```
+
+接下来，我们使用一次`geom_label()`来观察一下与`geom_text()`的不同之处。
+
+```{r ggplot2_bar_chart_geom_label}
+chart +
+  geom_label(aes(label = pct, hjust = 1.2))
+```
+
+我不太喜欢`geom_label()`生成的结果，所以我还是会使用`geom_text()`
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+由于图中的数据代表百分比，因此最好的做法是给标签也添加百分比符号。另外，我们还可以突出显示我们喜欢的语言`R`，并为绘图添加标题，脚注等。
+
+```{r ggplot2_bar_chart_label_stackoverflow_developer_survey}
+dreaded_lang %>%
+  mutate(label = sprintf("%1.1f%%", pct)) %>%
+  bar_chart(language, pct, highlight = "R", bar_color = "black") +
+  geom_text(aes(label = label, hjust = -0.1), size = 5) +
+  scale_y_continuous(
+    limits = c(0, 100),
+    expand = expansion()
+  ) +
+  labs(
+    x = NULL,
+    y = "Developers Who are Developing with the Language but<br>Have not Expressed Interest in Continuing to Do so",
+    title = "Top 10 Most Dreaded Programming Languages",
+    subtitle = "*R Placed 8th*",
+    caption = "Source: Stackoverflow Developer Survey 2019"
+  ) +
+  mdthemes::md_theme_classic(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+```
+
+
+
+可以看到，要突出显示某个单个条形栏时，使用[`ggcharts`](https://thomas-neitmann.github.io/ggcharts/index.html)是非常容易实现的。此外，我还使用了 [`mdthemes`](https://github.com/thomas-neitmann/mdthemes)包，它可以将文本设置成markdown的主题。这样，就可以很容易的使用*italics*字体。 除此之外，我还删除了坐标轴标签和网格线。 我认为在这张张图中，最好不要有x坐标轴和标签。
+
+最后，在本文结束之际，让我们快速浏览一下如何为垂直的条形图添加标签。其过程基本是相同的，只不过你需要使用`vjust`来调整标签的位置，而非`hjust`。
+
+```{r ggplot2_column_chart_label}
+data("biomedicalrevenue")
+
+biomedicalrevenue %>%
+  filter(company == "Novartis") %>%
+  mutate(label = sprintf("$%1.2f B.", revenue)) %>%
+  column_chart(year, revenue) +
+  geom_text(aes(label = label, vjust = -1)) +
+  theme(
+    axis.text.y = element_blank(),
+    panel.grid.major.y = element_blank()
+  ) +
+  scale_x_continuous(
+    name = "Fiscal Year",
+    breaks = 2011:2018
+  ) +
+  scale_y_continuous(
+    name = "Revenue (Billion USD)",
+    limits = c(0, 70),
+    expand = expansion()
+  )
+```
