@@ -145,3 +145,4 @@ remotes::install_github("thomas-neitmann/scalesextra")
 你可以测试`scale_y_pct()` (以及`scale_x_pct()`)，如果有任何想法欢迎在评论中提出。此外，如果您发现任何错误（在早期开发的阶段），请在[GitHub](https://github.com/thomas-neitmann/scalesextra/issues)上发布。谢谢您的阅览！
 
 本篇博客由[Ivan Z](https://twitter.com/IvanZ_1900)翻译成中文，如您发现任何翻译上的错误请随时指正。非常感谢！
+This post was translated by [Ivan Z](https://twitter.com/IvanZ_1900)! 
