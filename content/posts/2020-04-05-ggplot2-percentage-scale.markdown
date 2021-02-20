@@ -13,7 +13,7 @@ toc: no
 images: ~
 ---
 
-*<small>This article is also available in [Spanish](/es/posts/ggplot2-escala-porcentual).</small>*
+*<small>This article is also available in [Chinese](/zh/posts/ggplot2-percentage-scale) and [Spanish](/es/posts/ggplot2-escala-porcentual).</small>*
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- B -->

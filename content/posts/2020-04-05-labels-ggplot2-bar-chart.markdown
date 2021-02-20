@@ -14,6 +14,8 @@ toc: no
 images: ~
 ---
 
+*<small>This article is also available in [Chinese](/zh/posts/labels-ggplot2-bar-chart).</small>*
+
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- B -->
 <ins class="adsbygoogle"
