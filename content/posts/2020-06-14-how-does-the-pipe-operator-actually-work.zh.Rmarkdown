@@ -1,0 +1,230 @@
+---
+title: Pipe究竟是怎么一回事
+author: Thomas Neitmann
+date: '2020-06-15'
+slug: how-does-the-pipe-operator-actually-work
+categories:
+  - R
+  - article
+tags: []
+toc: no
+images: ~
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = "")
+```
+
+`{maggrittr}`包里的pipe操作符:`%>%`，借助当红炸子鸡`{dplyr}`的流量出圈， 让R世界寰宇震惊。`%>%`的功能是把好几个函数串联起来形成一根管，让你写出很骚的码，又可以不用定义一大堆中间变量。所以`%>%`到底是什么工作原理呢？哦我的老伙计，想想看，把*左手边*表达式的结果输送到*右手边*去，`%>%`的姿势不说上天，最少也是低空飞行吧。所以此中有江湖鲜为人知的奇技淫巧（误）。 
+
+_进阶知识警告!_ 如果你还是R界萌新，可以先在别处补补课，回来再看。又及，为了方便讲述，下文_不会_展示花俏的`%>%`的真正代码，取而代之是一个大概实现95%功能的精(gao1)简(fang3)版。那么来看：
+
+```{r}
+`%>%` <- function(lhs, rhs) {
+  lhs <- substitute(lhs)
+  rhs <- substitute(rhs)
+  building_blocks <- c(
+    rhs[[1L]],
+    lhs,
+    as.list(rhs[-1L])
+  )
+  call <- as.call(building_blocks)
+  eval(call, envir = parent.frame())
+}
+```
+
+
+深呼一口气憋住。吓人吗？没关系，只有魔法才能对抗魔法。
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+我们看第一行。 `lhs`是*左手边*的意思，而`rhs`是……猜到没？*右手边*。显而易见，`%>%` 就是采取左手右手两边的值的一个函数。如果你用过的话就很好懂了。这里说到函数，所以`%>%`到底是函数还是操作符呢？其实是一回事。R里每个操作符都是函数，不管是`*`, `+`， 还是 `%*%`，任何操作符都可以用常规方式当作函数调用。（译注：不仅是操作符，`for`, `if`等控制结构关键字也可以仿效此法）所以，以下两行等效：
+
+```{r}
+`%>%`("This actually works!", print())
+"Just like this!" %>% print()
+```
+
+不过如果像第一行这样用的话就没意义了，虽然但是嘛，明白就好了。
+
+下面来看函数过程，就是给`{`和`}`包起来的这些代码。`substitute()`是干嘛的？通常情况下，当你给某个函数传递一个参数，这个参数接下来会被*求值*。
+
+```{r}
+identity <- function(x) {
+  x
+}
+y <- 1
+identity(y)
+identity(mean(1:10))
+```
+
+`substitute()`的作用就是把传递给这个参数的*表达式*(expression)捕捉下来。换句话说就是不求值而引用(quote)之。
+
+```{r}
+identity2 <- function(x) {
+  substitute(x)
+}
+identity2(y)
+identity2(mean(1:10))
+```
+
+不过这有啥意义呢？ 捕捉到表达式之后，你就可以随意玩弄它了；这才是`%>%`的价值所在。移步到第三行来看我是什么意思。
+
+```{r}
+`%>%` <- function(lhs, rhs) {
+  lhs <- substitute(lhs)
+  rhs <- substitute(rhs)
+  building_blocks <- c(
+    rhs[[1L]],
+    lhs,
+    as.list(rhs[-1L])
+  )
+  building_blocks
+}
+mtcars %>% subset(cyl == 4, select = c(hp, cyl))
+```
+
+啊，因缺思汀。看起来一个引用过的表达式可以当成表(list)一样用`[[`来求子集。当你手上有一个包含函数调用(call)（译注：原文有误，以译文为准）的表达式`expr`， `expr[[1L]]`返回给你函数名， `expr[-1L]`返回给你它的参数。
+
+```{r}
+expr <- identity2(mean(x = 1:10, na.rm = TRUE))
+expr[[1L]]
+expr[-1L]
+```
+
+慢着，`(1:10)(na.rm = TRUE)`看着怎么和一个调用差不多呢？因为确实就是。R会将每一个引用的表达式的首项认为函数名。为了绕过这个问题我用`as.list()`将其转化为一个表。
+
+```{r}
+as.list(expr[-1L])
+```
+
+回到`%>%`的定义上来，其实现在该有的都有了。
+
+```{r}
+mtcars %>% subset(cyl == 4, select = c(hp, cyl))
+```
+
+这个表的第一项是右手边调用的函数名；表的第二项是左手边的表达式，这一项会转化为右手边调用的第一个参数；下面第三项里的内容依次是右手边调用的其余参数。
+
+不过作为一个表是没鸟用的，我们用`as.call()`把它整个转化成一个调用，像这样：
+
+```{r}
+`%>%` <- function(lhs, rhs) {
+  lhs <- substitute(lhs)
+  rhs <- substitute(rhs)
+  building_blocks <- c(
+    rhs[[1L]],
+    lhs,
+    as.list(rhs[-1L])
+  )
+  call <- as.call(building_blocks)
+  call
+}
+mtcars %>% subset(cyl == 4, select = c(hp, cyl))
+```
+  
+现在`%>%` 返回的是我们想让它执行的代码。但是这些代码依然处于冰封状态。让俺手动用`eval()`给这货求个值。
+
+```{r}
+code <- mtcars %>% subset(cyl == 4, select = c(hp, cyl))
+eval(code)
+```
+
+这有点傻逼，应该直接在`%>%`里完成求值：
+
+```{r}
+`%>%` <- function(lhs, rhs) {
+  lhs <- substitute(lhs)
+  rhs <- substitute(rhs)
+  building_blocks <- c(rhs[[1L]], lhs, as.list(rhs[-1L]))
+  call <- as.call(building_blocks)
+  eval(call)
+}
+```
+
+细心的你或许已经发现这个和最开始的`%>%`的函数定义相比少了一颗痣。
+
+```{r}
+mtcars %>% subset(cyl == 4, select = c(hp, cyl))
+```
+
+运行起来好像没问题哦？ 天真了。我只要动动手指稍微操弄一下这个函数就崩了。你们啊，拿衣服！
+
+```{r, error=TRUE}
+`%>%` <- function(lhs, rhs) {
+  mtcars <- NULL
+  lhs <- substitute(lhs)
+  rhs <- substitute(rhs)
+  building_blocks <- c(rhs[[1L]], lhs, as.list(rhs[-1L]))
+  call <- as.call(building_blocks)
+  eval(call)
+}
+mtcars %>% subset(cyl == 4, select = c(hp, cyl))
+```
+
+默认情况下, `eval()`会在它自己的调用[环境(environment)](http://adv-r.had.co.nz/Environments.html)下找所需的变量，在我们的例子中这个环境是`%>%`的词汇域(lexical context)。如果找不到的话，就会沿着一条搜索路径(search path)向上寻找，直到全局环境(global environment)和附着(attach)的包。在上面的例子中， 我在本地定义了一个没用的`mtcars`，这样`eval()`永远也不会找到藏在`{datasets}`包里真正的`mtcars`。应该有的行为是，既然我们在全局环境下调用`%>%`， `eval()`就应该在全局环境里求值。其实只要改一个参数就可以解决了：
+
+
+```{r}
+`%>%` <- function(lhs, rhs) {
+  mtcars <- NULL
+  lhs <- substitute(lhs)
+  rhs <- substitute(rhs)
+  building_blocks <- c(rhs[[1L]], lhs, as.list(rhs[-1L]))
+  call <- as.call(building_blocks)
+  eval(call, envir = parent.frame())
+}
+mtcars %>% subset(cyl == 4, select = c(hp, cyl))
+```
+
+`parent.frame()` 返回的是`%>%`的调用环境。在这个例子里就是全局环境。这就对了：
+
+```{r}
+`%>%` <- function(lhs, rhs) {
+  lhs <- substitute(lhs)
+  rhs <- substitute(rhs)
+  building_blocks <- c(
+    rhs[[1L]],
+    lhs,
+    as.list(rhs[-1L])
+  )
+  call <- as.call(building_blocks)
+  eval(call, envir = parent.frame())
+}
+```
+
+刚才已经说了，这里给您提供的`%>%`是一个高仿，不是`{magrittr}`里面的正版。除非使用正版，下面这段代码会崩。
+
+```{r error=TRUE}
+"error_message" %>%
+  gsub(pattern = "_", replacement = " ", x = .)
+```
+
+怎么回事呢? 原版里，`.`是代表左手边的一个特殊符号，主要用在左手边的值不应该出现在右手边函数的第一个参数的时候。那么高仿毕竟是高仿，这个细节由于成本原因就没有做上去。山寨了`{dplyr}`的`{poorman}`包里面配带的`%>%`和我们这个版本也基本大同小异，价格摆在那里就不要吹毛求疵了好伐。
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- B -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1597114514381206"
+     data-ad-slot="6037303850"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+这样就讲完了！
+
+各位读者如有疑问，请在下方评论区留言（任何语言都行，我们有谷歌翻译）。问问题允许没羞没臊，反正我们也没有节操。R-blogger读者请按[此](https://thomasadventure.blog/posts/how-does-the-pipe-operator-actually-work/)。 如果有解释不周全之处，有请各位大侠斧正。小弟在此先谢过。
