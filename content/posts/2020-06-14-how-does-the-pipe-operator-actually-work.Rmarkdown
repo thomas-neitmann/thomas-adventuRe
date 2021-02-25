@@ -171,7 +171,7 @@ This seems to work just fine. However, let me make a little change to make you a
 mtcars %>% subset(cyl == 4, select = c(hp, cyl))
 ```
 
-By default, `eval()` looks for the variables inside the expression given to it in the [environment](http://adv-r.had.co.nz/Environments.html) `eval()` itself is called. In this case that's the lexical scope of `%>%`. Only if the variable is not defined in the current environment it will go up all the way to the global environment and the attached packages. In this case that's the `{datasets}` package. Since I defined something named `mtcars` locally it will never look upward in the search path. If you think about it, if we call the `%>%` operator in the global environment, it should start looking for variables there, not inside its own body. To do so, I will make a little change to the definition of `%>%`.
+By default, `eval()` looks for the variables inside the expression given to it in the [environment](http://adv-r.had.co.nz/Environments.html) `eval()` itself is called. In this case that's the lexical context of `%>%`. Only if the variable is not defined in the current environment it will go up all the way to the global environment and the attached packages. In this case that's the `{datasets}` package. Since I defined something named `mtcars` locally it will never look upward in the search path. If you think about it, if we call the `%>%` operator in the global environment, it should start looking for variables there, not inside its own body. To do so, I will make a little change to the definition of `%>%`.
 
 ```{r}
 `%>%` <- function(lhs, rhs) {
