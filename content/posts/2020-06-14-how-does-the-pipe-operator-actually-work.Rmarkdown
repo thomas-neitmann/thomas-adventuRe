@@ -10,7 +10,7 @@ tags: []
 toc: no
 images: ~
 ---
-
+ 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(comment = "")
 ```
@@ -67,7 +67,7 @@ identity(y)
 identity(mean(1:10))
 ```
 
-Using `substitute()` you can infer the actual *expression* that was passed to an argument. Put differently, you bypass evaluating the expression but instead *quote* it.
+Using `substitute()` you can capture the actual *expression* that was passed to an argument. Put differently, you bypass evaluating the expression but instead *quote* it.
 
 ```{r}
 identity2 <- function(x) {
@@ -93,7 +93,7 @@ Why is this useful? Because you can actually modify this quoted expression which
 mtcars %>% subset(cyl == 4, select = c(hp, cyl))
 ```
 
-This looks interesting. Apparently you can subset a quoted expression like a list using `[[`. When you have a quoted expression `expr` that involves a function, `expr[[1L]]` will get you the name of the function and `expr[-1L]` will get you the arguments of the function.
+This looks interesting. Apparently you can subset a quoted expression like a list using `[[`. When you have a quoted expression `expr` that is a function call, `expr[[1L]]` will get you the name of the function and `expr[-1L]` will get you the parameters supplied to the arguments of the function.
 
 ```{r}
 expr <- identity2(mean(x = 1:10, na.rm = TRUE))
@@ -171,7 +171,7 @@ This seems to work just fine. However, let me make a little change to make you a
 mtcars %>% subset(cyl == 4, select = c(hp, cyl))
 ```
 
-By default, `eval()` looks for the variables inside the expression given to it in the current [environment](http://adv-r.had.co.nz/Environments.html). In this case that's the environment of `%>%`. Only if the variable is not defined in the current environment it will go up one environment and look in the environment where the function was called. In this case that's the global environment. Since I defined `mtcars` locally it will never look in the global environment, though. If you think about it, if we use the `%>%` operator in the global environment it should always start to look there not inside its own environment. To do so, I will make a little change to the definition of `%>%`.
+By default, `eval()` looks for the variables inside the expression given to it in the [environment](http://adv-r.had.co.nz/Environments.html) `eval()` itself is called. In this case that's the lexical scope of `%>%`. Only if the variable is not defined in the current environment it will go up all the way to the global environment and the attached packages. In this case that's the `{datasets}` package. Since I defined something named `mtcars` locally it will never look upward in the search path. If you think about it, if we call the `%>%` operator in the global environment, it should start looking for variables there, not inside its own body. To do so, I will make a little change to the definition of `%>%`.
 
 ```{r}
 `%>%` <- function(lhs, rhs) {
