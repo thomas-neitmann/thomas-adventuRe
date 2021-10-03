@@ -35,18 +35,6 @@ sum(is.na(x))
 
 Puede que estés confundido sobre cómo es posible sumar valores verdaderos (`TRUE`) y falsos (`FALSE`) en R. De manera automática, R convierte los vectores lógicos (`logical`) a vectores de números enteros (`integer`) al aplicar funciones aritméticas. En dicho proceso, `TRUE` se vuelve `1` y `FALSE`, `0`. De ese modo, `sum(is.na(x))` devuelve el total de valores faltantes en el vector `x`.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 Para obtener la proporción de valores faltantes, puedes dividir el resultado de la operación anterior por la longitud del vector de entrada.
 
 ```{r}
@@ -81,18 +69,6 @@ sum(is.na(mtcars))
 ```
 
 Sin embargo, podría decirse que el número total de valores faltantes en un conjunto de datos es una medida algo burda. Resulta mucho más interesante si examinamos los valores que faltan a través de las variables y los registros del juego de datos. Ello permite detectar patrones que podrían informar futuras decisiones de modelización.
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 Contar `NA` a lo largo de filas o columnas puede hacerse usando la función `apply()`. Dicha función recibe tres argumentos: `X` es la matriz de entrada, `MARGIN` es un entero y `FUN` es la función que será aplicada a cada fila o columna. `MARGIN = 1` ejecuta la función a las filas de una tabla, mientras que `MARGIN = 2` lo hace a las columnas.
 

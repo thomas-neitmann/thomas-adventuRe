@@ -94,18 +94,6 @@ head(iris$var)
 
 Non è quello che ti aspettavi? Non sei il solo! Questo è il momento in cui noto molti programmatori di R alle prime armi avere delle difficoltà. Ricorda, il *simbolo* `var` contiene il valore `"Species"`. Usando la valutazione standard, R *valuterebbe* `var` al suo valore. Tuttavia quando si usa `$` questo non succede, poichè `$` usa la *NSE*. Invece `$` cerca una colonna con il nome `var` all'interno del data frame `iris`. Dal momento che questa colonna non esiste, si ottiene `NULL` come risultato (personalmente preferirei un errore, ma le cose stanno così).
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 <!--Apart from `Species`, the `iris` data frame also contains a column named `Sepal.Length`. Based upon what we discussed so far, you can select that column either using `iris[["Sepal.Length"]]` or `iris$Sepal.Length`. But what happens if there's a variable called `Sepal.Length` in the global environment?-->
 
 Oltre a `Species`, il data frame `iris` contiene anche una colonna chiamata `Sepal.Length`. In base a quanto abbiamo appena detto, si può selezionare quella colonna sia usando `iris[["Sepal.Length"]]` sia usando `iris$Sepal.Length`. Ma cosa succede quando abbiamo una variabile chiamata `Sepal.Length` nel *global environment*?
@@ -149,18 +137,6 @@ head(iris$Sepal.Length)
 <!--So, even though you call `iris$Sepal.Length` in the global environment and in the very same environment there's a symbol named `Sepal.Length` bound to a value, R just bypasses that. Instead, it treats the data frame *itself* as an environment and if you evaluate `Sepal.Length` there you get back the contents of that column. Now that does not follow R's standard evaluation semantics at all which is why this process is called non-standard evaluation.-->
 
 Quindi, anche se esegui il comando `iris$Sepal.Length` nel *global environment*, e in quello stesso *ambiente* esiste un *simbolo* con il nome `Sepal.Length` associato ad un valore, R lo ignora. Tratta invece il data frame *stesso* come se fosse un *ambiente*, e se valuti lì `Sepal.Length`, ottieni il contenuto di quella colonna. Questo non segue per nulla le regole di R sulla *valutazione standard*, dunque questo processo prende il nome di *valutazione non-standard*.
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 <!--If you understood what we've covered so far, you just made a big step forward on your journey towards mastering R. But wait, there's more to come! In part 2 of this post I will show you how to implement a NSE function yourself. By doing that you'll deepen your understanding even further and will learn about some of R's internals that give you the super power to write packages such as {dplyr}. Stay tuned!.-->
 

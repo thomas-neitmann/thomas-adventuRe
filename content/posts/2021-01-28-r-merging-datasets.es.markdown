@@ -16,7 +16,7 @@ images: ~
 ---
 
 Una tarea normal para cualquier científico de datos es fusionar dos conjuntos de datos utilizando una o más variables clave o ID. Si se hace de forma incorrecta, puede provocar problemas serios en análisis posteriores. ¡Mejor hacerlo bien desde el principio!
-Para ello, te guiaré por tres diferentes planteamientos útiles para fusionar tablas en R: el método {base}, mediante {dplyr} y usando SQL (sí, puedes usar SQL en R). 
+Para ello, te guiaré por tres diferentes planteamientos útiles para fusionar tablas en R: el método {base}, mediante {dplyr} y usando SQL (sí, puedes usar SQL en R).
 
 ## Tipos de fusion
 
@@ -29,7 +29,7 @@ Pero primero, veamos las diferentes maneras en las que se pueden fusiona conjunt
 
 ### Unión a la izquierda
 
-En una unión a la izquierda de dos tablas `L` y `R`, la tabla resultante (llamémosla `LR`) contendrá *todos* los registros de la tabla `L`, pero sólo los registros de `R` cuyas claves (ID) están incluidas en `L`. 
+En una unión a la izquierda de dos tablas `L` y `R`, la tabla resultante (llamémosla `LR`) contendrá *todos* los registros de la tabla `L`, pero sólo los registros de `R` cuyas claves (ID) están incluidas en `L`.
 
 ![A left join of two tables performed in R](/img/left-join-extra.gif)
 
@@ -54,18 +54,6 @@ En la unión completa, la tabla resultante contendrá todas las filas de `L` y t
 ## El método {base}
 
 Suficiente teoría de momento. Veamos como se realiza una fusión en la práctica en R. Primero con {base}. En {base} R utilizaremos una única función para llevar a cabo todas los tipos de fusión analizados más arriba. La función será `merge()`.
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 Para demostrar los conceptos, utilizaré dos tablas sobre un ensayo clínico ficticio. Una de las tablas contiene información demográfica y la otras efectos adversos observados durante el desarrollo del ensayo. Nótese que el paciente `P2` tiene un registro en `demographics` pero no en `adverse_events`; y que  `P4` aparece en  `adverse_events` pero no en `demographics`.
 
@@ -141,7 +129,7 @@ merge(
 ## 4 P4  NA    <NA>  Tachycardia 2021-01-27
 ```
 
-Finalmente, se logra una unión completa cuando los dos parámetros, `all.x` y  `all.y`, son definidos como 
+Finalmente, se logra una unión completa cuando los dos parámetros, `all.x` y  `all.y`, son definidos como
 `TRUE` o con  `all = TRUE`.
 
 

@@ -97,18 +97,6 @@ bar_chart(cyl2, cyl, pct) +
 
 Sin embargo, ahora todas las etiquetas se reflejan con un valor decimal. Creo que esto no es adecuado dado que las etiquetas son números enteros.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 <!-- To change this the `percent_format()` function has a paramter called `accuracy`. -->
 
 Para resolver esto, usamos la función `percent_format()` que tiene un parámetro llamado `accuracy`.

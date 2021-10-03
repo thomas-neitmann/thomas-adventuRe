@@ -37,13 +37,6 @@ x == NA</code></pre>
 <pre class="r"><code>sum(is.na(x))</code></pre>
 <pre><code>## [1] 2</code></pre>
 <p>Puede que estés confundido sobre cómo es posible sumar valores verdaderos (<code>TRUE</code>) y falsos (<code>FALSE</code>) en R. De manera automática, R convierte los vectores lógicos (<code>logical</code>) a vectores de números enteros (<code>integer</code>) al aplicar funciones aritméticas. En dicho proceso, <code>TRUE</code> se vuelve <code>1</code> y <code>FALSE</code>, <code>0</code>. De ese modo, <code>sum(is.na(x))</code> devuelve el total de valores faltantes en el vector <code>x</code>.</p>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1597114514381206" data-ad-slot="6037303850" data-ad-format="auto" data-full-width-responsive="true">
-</ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 <p>Para obtener la proporción de valores faltantes, puedes dividir el resultado de la operación anterior por la longitud del vector de entrada.</p>
 <pre class="r"><code>sum(is.na(x)) / length(x)</code></pre>
 <pre><code>## [1] 0.4</code></pre>
@@ -77,51 +70,44 @@ na[1:15, 1:7]</code></pre>
 <pre class="r"><code>sum(is.na(mtcars))</code></pre>
 <pre><code>## [1] 15</code></pre>
 <p>Sin embargo, podría decirse que el número total de valores faltantes en un conjunto de datos es una medida algo burda. Resulta mucho más interesante si examinamos los valores que faltan a través de las variables y los registros del juego de datos. Ello permite detectar patrones que podrían informar futuras decisiones de modelización.</p>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1597114514381206" data-ad-slot="6037303850" data-ad-format="auto" data-full-width-responsive="true">
-</ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 <p>Contar <code>NA</code> a lo largo de filas o columnas puede hacerse usando la función <code>apply()</code>. Dicha función recibe tres argumentos: <code>X</code> es la matriz de entrada, <code>MARGIN</code> es un entero y <code>FUN</code> es la función que será aplicada a cada fila o columna. <code>MARGIN = 1</code> ejecuta la función a las filas de una tabla, mientras que <code>MARGIN = 2</code> lo hace a las columnas.</p>
 <pre class="r"><code>apply(X = is.na(mtcars), MARGIN = 1, FUN = sum)</code></pre>
-<pre><code>##           Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
-##                   3                   3                   0                   0 
-##   Hornet Sportabout             Valiant          Duster 360           Merc 240D 
-##                   0                   0                   0                   0 
-##            Merc 230            Merc 280           Merc 280C          Merc 450SE 
-##                   0                   0                   3                   0 
-##          Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
-##                   0                   0                   0                   0 
-##   Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
-##                   0                   0                   0                   0 
-##       Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
-##                   0                   0                   3                   0 
-##    Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
-##                   0                   0                   0                   0 
-##      Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+<pre><code>##           Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive
+##                   3                   3                   0                   0
+##   Hornet Sportabout             Valiant          Duster 360           Merc 240D
+##                   0                   0                   0                   0
+##            Merc 230            Merc 280           Merc 280C          Merc 450SE
+##                   0                   0                   3                   0
+##          Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental
+##                   0                   0                   0                   0
+##   Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla
+##                   0                   0                   0                   0
+##       Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28
+##                   0                   0                   3                   0
+##    Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa
+##                   0                   0                   0                   0
+##      Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E
 ##                   3                   0                   0                   0</code></pre>
 <pre class="r"><code>apply(X = is.na(mtcars), MARGIN = 2, FUN = sum)</code></pre>
-<pre><code>##  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb 
+<pre><code>##  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb
 ##    0    0    0    5    0    0    5    0    5    0    0</code></pre>
 <p>Si quieres calcular la proporción de valores faltantes por fila o columna, solo debes cambiar el argumento <code>FUN</code> por <code>mean</code>.</p>
 <pre class="r"><code>apply(X = is.na(mtcars), MARGIN = 1, FUN = mean)</code></pre>
-<pre><code>##           Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
-##           0.2727273           0.2727273           0.0000000           0.0000000 
-##   Hornet Sportabout             Valiant          Duster 360           Merc 240D 
-##           0.0000000           0.0000000           0.0000000           0.0000000 
-##            Merc 230            Merc 280           Merc 280C          Merc 450SE 
-##           0.0000000           0.0000000           0.2727273           0.0000000 
-##          Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
-##           0.0000000           0.0000000           0.0000000           0.0000000 
-##   Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
-##           0.0000000           0.0000000           0.0000000           0.0000000 
-##       Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
-##           0.0000000           0.0000000           0.2727273           0.0000000 
-##    Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
-##           0.0000000           0.0000000           0.0000000           0.0000000 
-##      Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+<pre><code>##           Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive
+##           0.2727273           0.2727273           0.0000000           0.0000000
+##   Hornet Sportabout             Valiant          Duster 360           Merc 240D
+##           0.0000000           0.0000000           0.0000000           0.0000000
+##            Merc 230            Merc 280           Merc 280C          Merc 450SE
+##           0.0000000           0.0000000           0.2727273           0.0000000
+##          Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental
+##           0.0000000           0.0000000           0.0000000           0.0000000
+##   Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla
+##           0.0000000           0.0000000           0.0000000           0.0000000
+##       Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28
+##           0.0000000           0.0000000           0.2727273           0.0000000
+##    Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa
+##           0.0000000           0.0000000           0.0000000           0.0000000
+##      Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E
 ##           0.2727273           0.0000000           0.0000000           0.0000000</code></pre>
 <p>Para finalizar, echemos un vistazo a cómo visualizar los datos faltantes. Hay muchos paquetes para ese propósito; a mi personalmente me gusta el paquete <code>{heatmaply}</code>, el cual puede generar mapas de calor (en inglés heatmaps) interactivos</p>
 <pre class="r"><code>heatmaply::heatmaply_na(mtcars)</code></pre>

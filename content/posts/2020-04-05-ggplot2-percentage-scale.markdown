@@ -15,22 +15,7 @@ images: ~
 
 *<small>This article is also available in [Chinese](/zh/posts/ggplot2-percentage-scale) and [Spanish](/es/posts/ggplot2-escala-porcentual).</small>*
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
-
-
-
-When plotting a variable whose unit of measure is percent it's best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages. 
+When plotting a variable whose unit of measure is percent it's best practice to have the axis labels contain the percentage sign (%). This makes it obvious to anyone looking at the data visualization that they are dealing with percentages.
 
 To illustrate this let's create an example dataset.
 
@@ -118,18 +103,6 @@ bar_chart(cyl2, cyl, pct) +
 <img src="/posts/2020-04-05-ggplot2-percentage-scale_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 However, notice that suddenly all labels are printed with one decimal place. I think that's undesireable given that the labels are all whole numbers.
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 To change this the `percent_format()` function has a parameter called `accuracy`.
 

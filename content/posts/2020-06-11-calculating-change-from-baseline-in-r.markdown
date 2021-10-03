@@ -61,18 +61,6 @@ trial_data_chg <- trial_data %>%
 
 First, it's important to arrange the data of each subject in increasing order of `AVISITN`. Next, I grouped the data by `USUBJID` such that `AVAL[1L]` refers to the baseline value of each subject. Finally, I subtracted the baseline value from the value measured at each visit.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 Let's have a look at the result to see whether this actually did what I said it would do.
 
 
@@ -86,20 +74,20 @@ trial_data_chg %>%
 # A tibble: 2,100 x 4
    USUBJID          AVISIT    AVAL     CHG
    <chr>            <chr>    <dbl>   <dbl>
- 1 ABC123456.000001 Baseline 10.2   0     
- 2 ABC123456.000001 Week 4   11.3   1.08  
- 3 ABC123456.000001 Week 8   12.3   2.09  
- 4 ABC123456.000001 Week 12  13.5   3.31  
- 5 ABC123456.000001 Week 16  12.2   2.00  
+ 1 ABC123456.000001 Baseline 10.2   0
+ 2 ABC123456.000001 Week 4   11.3   1.08
+ 3 ABC123456.000001 Week 8   12.3   2.09
+ 4 ABC123456.000001 Week 12  13.5   3.31
+ 5 ABC123456.000001 Week 16  12.2   2.00
  6 ABC123456.000001 Week 20  10.2  -0.0213
- 7 ABC123456.000001 Week 24  12.3   2.09  
- 8 ABC123456.000002 Baseline  9.40  0     
- 9 ABC123456.000002 Week 4    9.14 -0.259 
-10 ABC123456.000002 Week 8    8.56 -0.838 
-11 ABC123456.000002 Week 12   8.59 -0.809 
-12 ABC123456.000002 Week 16   8.46 -0.942 
-13 ABC123456.000002 Week 20   8.78 -0.624 
-14 ABC123456.000002 Week 24   6.97 -2.43  
+ 7 ABC123456.000001 Week 24  12.3   2.09
+ 8 ABC123456.000002 Baseline  9.40  0
+ 9 ABC123456.000002 Week 4    9.14 -0.259
+10 ABC123456.000002 Week 8    8.56 -0.838
+11 ABC123456.000002 Week 12   8.59 -0.809
+12 ABC123456.000002 Week 16   8.46 -0.942
+13 ABC123456.000002 Week 20   8.78 -0.624
+14 ABC123456.000002 Week 24   6.97 -2.43
 # ... with 2,086 more rows
 ```
 
@@ -121,20 +109,20 @@ trial_data %>%
 # A tibble: 2,099 x 4
    USUBJID          AVISIT    AVAL    CHG
    <chr>            <chr>    <dbl>  <dbl>
- 1 ABC123456.000001 Week 4   11.3   0    
- 2 ABC123456.000001 Week 8   12.3   1.02 
- 3 ABC123456.000001 Week 12  13.5   2.24 
+ 1 ABC123456.000001 Week 4   11.3   0
+ 2 ABC123456.000001 Week 8   12.3   1.02
+ 3 ABC123456.000001 Week 12  13.5   2.24
  4 ABC123456.000001 Week 16  12.2   0.923
- 5 ABC123456.000001 Week 20  10.2  -1.10 
- 6 ABC123456.000001 Week 24  12.3   1.01 
- 7 ABC123456.000002 Baseline  9.40  0    
+ 5 ABC123456.000001 Week 20  10.2  -1.10
+ 6 ABC123456.000001 Week 24  12.3   1.01
+ 7 ABC123456.000002 Baseline  9.40  0
  8 ABC123456.000002 Week 4    9.14 -0.259
  9 ABC123456.000002 Week 8    8.56 -0.838
 10 ABC123456.000002 Week 12   8.59 -0.809
 11 ABC123456.000002 Week 16   8.46 -0.942
 12 ABC123456.000002 Week 20   8.78 -0.624
-13 ABC123456.000002 Week 24   6.97 -2.43 
-14 ABC123456.000003 Baseline  9.44  0    
+13 ABC123456.000002 Week 24   6.97 -2.43
+14 ABC123456.000003 Baseline  9.44  0
 # ... with 2,085 more rows
 ```
 
@@ -164,20 +152,20 @@ trial_data_chg2 %>%
 # A tibble: 2,099 x 4
    USUBJID          AVISIT    AVAL    CHG
    <chr>            <chr>    <dbl>  <dbl>
- 1 ABC123456.000001 Week 4   11.3  NA    
- 2 ABC123456.000001 Week 8   12.3  NA    
- 3 ABC123456.000001 Week 12  13.5  NA    
- 4 ABC123456.000001 Week 16  12.2  NA    
- 5 ABC123456.000001 Week 20  10.2  NA    
- 6 ABC123456.000001 Week 24  12.3  NA    
- 7 ABC123456.000002 Baseline  9.40  0    
+ 1 ABC123456.000001 Week 4   11.3  NA
+ 2 ABC123456.000001 Week 8   12.3  NA
+ 3 ABC123456.000001 Week 12  13.5  NA
+ 4 ABC123456.000001 Week 16  12.2  NA
+ 5 ABC123456.000001 Week 20  10.2  NA
+ 6 ABC123456.000001 Week 24  12.3  NA
+ 7 ABC123456.000002 Baseline  9.40  0
  8 ABC123456.000002 Week 4    9.14 -0.259
  9 ABC123456.000002 Week 8    8.56 -0.838
 10 ABC123456.000002 Week 12   8.59 -0.809
 11 ABC123456.000002 Week 16   8.46 -0.942
 12 ABC123456.000002 Week 20   8.78 -0.624
-13 ABC123456.000002 Week 24   6.97 -2.43 
-14 ABC123456.000003 Baseline  9.44  0    
+13 ABC123456.000002 Week 24   6.97 -2.43
+14 ABC123456.000003 Baseline  9.44  0
 # ... with 2,085 more rows
 ```
 
@@ -260,19 +248,19 @@ trial_data_mult_chg %>%
 # A tibble: 13 x 5
    USUBJID          AVISIT   PARAM       AVAL    CHG
    <chr>            <chr>    <chr>      <dbl>  <dbl>
- 1 ABC123456.000001 Week 4   Hemoglobin 11.3  NA    
- 2 ABC123456.000001 Week 8   Hemoglobin 12.3  NA    
- 3 ABC123456.000001 Week 12  Hemoglobin 13.5  NA    
- 4 ABC123456.000001 Week 16  Hemoglobin 12.2  NA    
- 5 ABC123456.000001 Week 20  Hemoglobin 10.2  NA    
- 6 ABC123456.000001 Week 24  Hemoglobin 12.3  NA    
- 7 ABC123456.000002 Baseline Hemoglobin  9.40  0    
+ 1 ABC123456.000001 Week 4   Hemoglobin 11.3  NA
+ 2 ABC123456.000001 Week 8   Hemoglobin 12.3  NA
+ 3 ABC123456.000001 Week 12  Hemoglobin 13.5  NA
+ 4 ABC123456.000001 Week 16  Hemoglobin 12.2  NA
+ 5 ABC123456.000001 Week 20  Hemoglobin 10.2  NA
+ 6 ABC123456.000001 Week 24  Hemoglobin 12.3  NA
+ 7 ABC123456.000002 Baseline Hemoglobin  9.40  0
  8 ABC123456.000002 Week 4   Hemoglobin  9.14 -0.259
  9 ABC123456.000002 Week 8   Hemoglobin  8.56 -0.838
 10 ABC123456.000002 Week 12  Hemoglobin  8.59 -0.809
 11 ABC123456.000002 Week 16  Hemoglobin  8.46 -0.942
 12 ABC123456.000002 Week 20  Hemoglobin  8.78 -0.624
-13 ABC123456.000002 Week 24  Hemoglobin  6.97 -2.43 
+13 ABC123456.000002 Week 24  Hemoglobin  6.97 -2.43
 ```
 
 ```r
@@ -285,13 +273,13 @@ trial_data_mult_chg %>%
 # A tibble: 7 x 5
   USUBJID          AVISIT   PARAM  AVAL    CHG
   <chr>            <chr>    <chr> <dbl>  <dbl>
-1 ABC123456.000300 Baseline WBC    9.75  0    
+1 ABC123456.000300 Baseline WBC    9.75  0
 2 ABC123456.000300 Week 4   WBC    8.88 -0.871
-3 ABC123456.000300 Week 8   WBC    8.57 -1.18 
-4 ABC123456.000300 Week 12  WBC    8.13 -1.62 
+3 ABC123456.000300 Week 8   WBC    8.57 -1.18
+4 ABC123456.000300 Week 12  WBC    8.13 -1.62
 5 ABC123456.000300 Week 16  WBC    8.87 -0.880
-6 ABC123456.000300 Week 20  WBC   12.7   2.95 
-7 ABC123456.000300 Week 24  WBC   12.0   2.20 
+6 ABC123456.000300 Week 20  WBC   12.7   2.95
+7 ABC123456.000300 Week 24  WBC   12.0   2.20
 ```
 
 That was easy. All I had to do was to add a second grouping variable, i.e. `PARAM`.
@@ -321,18 +309,6 @@ No issues were found!
 ```
 
 Again a minimal change. Just pass a `list` of variables to split by to the `INDICES` argument of `by()`.
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 Yet another way to calculate change from baseline is via merging. This methods works regardless of whether or not baseline records are missing. First, create a new `data.frame` by subsetting only the baseline records. Next, left-join this new `data.frame` with the original one. Finally, subtract the baseline value from the other values as usual. Here's how you can do that using `{dplyr}`.
 

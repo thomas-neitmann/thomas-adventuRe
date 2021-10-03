@@ -48,18 +48,6 @@ Sys.Date()
 
 Sin embargo, hay que tener cuidado con el formato de la fecha. `Sys.Date()` devuelve la fecha actual con el formato ISO 8601 (`yyyy-mm-dd`). Es probable que tus lectores no estén acostumbrados a este formato y, por lo tanto, quieras utilizar el formato que se usa en tu región.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 ¿Cómo podemos hacerlo? Usando la función `format()`. He aquí algunos ejemplos.
 
 

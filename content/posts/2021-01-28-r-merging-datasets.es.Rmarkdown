@@ -55,18 +55,6 @@ En la unión completa, la tabla resultante contendrá todas las filas de `L` y t
 
 Suficiente teoría de momento. Veamos como se realiza una fusión en la práctica en R. Primero con {base}. En {base} R utilizaremos una única función para llevar a cabo todas los tipos de fusión analizados más arriba. La función será `merge()`.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 Para demostrar los conceptos, utilizaré dos tablas sobre un ensayo clínico ficticio. Una de las tablas contiene información demográfica y la otras efectos adversos observados durante el desarrollo del ensayo. Nótese que el paciente `P2` tiene un registro en `demographics` pero no en `adverse_events`; y que  `P4` aparece en  `adverse_events` pero no en `demographics`.
 
 

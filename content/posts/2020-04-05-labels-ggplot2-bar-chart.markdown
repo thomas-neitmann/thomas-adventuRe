@@ -16,21 +16,6 @@ images: ~
 
 *<small>This article is also available in [Chinese](/zh/posts/labels-ggplot2-bar-chart).</small>*
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
-
-
-
 I often see bar charts where the bars are directly labeled with the value they represent. In this post I will walk you through how you can create such labeled bar charts using `ggplot2`.
 
 The data I will use comes from the [2019 Stackoverflow Developer Survey](https://insights.stackoverflow.com/survey/2019#most-loved-dreaded-and-wanted). To make creating the plot easier I will use the `bar_chart()` function from my [`ggcharts`](https://thomas-neitmann.github.io/ggcharts/index.html) package which outputs a `ggplot` that can be customized further using any `ggplot2` function.
@@ -124,18 +109,6 @@ chart +
 <img src="/posts/2020-04-05-labels-ggplot2-bar-chart_files/figure-html/ggplot2_bar_chart_geom_label-1.png" width="672" />
 
 I am not a fan of this look and will stick to `geom_text()` for the final plot.
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 As the data in the plot represents percentages it's best practice to have the labels include the percentage sign. In addition, let's highlight our favorite language `R` and add title, footnotes etc.
 

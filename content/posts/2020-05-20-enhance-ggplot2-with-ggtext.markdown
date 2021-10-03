@@ -60,18 +60,6 @@ Notice also that inside of `scale_color_manual()` I set `guide = "none"`. This r
 
 Quite a neat solution, isn't it?
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 While you need to revert to HTML for coloring the text you can use markdown for making individual words bold (e.g. `**Roche**`), italics (e.g. `*overtook*`) and so forth. I love the flexibility this offers.
 
 The `{ggtext}` package is available from CRAN. You can install it running this code.

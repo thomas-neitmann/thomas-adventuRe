@@ -42,18 +42,6 @@ El único problema es que la próxima vez que inicies una nueva sesión de `R` e
 
 ¿Nunca has oído hablar del fichero `.Rprofile`? Es básicamente un script de `R` que si---existe---se ejecutará cada vez que inicies `R`. Así que es perfecto para cambiar el idioma.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 La forma más sencilla para crearlo o editarlo es usando la librería `{usethis}` (la tendrás que instalar si no la tienes aún).
 
 ```{r, eval=FALSE}

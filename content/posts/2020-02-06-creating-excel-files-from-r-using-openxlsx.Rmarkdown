@@ -16,18 +16,6 @@ Yesterday I had to share data with some internal stakeholders in excel format. W
 
 So, I started `R`, read in the dataset, did some data wrangling and then wanted to write the data to a xlsx file. I heard great things about the `openxlsx` package so I used it for the first time. My initial attempt was using the `write.xlsx()` function. That certainly did the job but the resulting file didn't look how I like my excel files. I am a fan of a freezed top row with bold and centered column headers.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 I digged a bit into the `openxlsx` documentation and it turned out that the package can do all of this. Great!
 
 Here is the code I used (obviously not exporting the mtcars dataset):

@@ -78,18 +78,6 @@ head(iris$var)
 
 没有想到吧？你并不是唯一一个对此感到意外的人。我身边的很多R初学者都对此感到困惑。请记住，对象`var`的值为`"Species"`。使用标准化求值语义时，R会对`var`求值。而`$`利用的是非标准化求值，因此在使用`$`的时候，情况不一样。`$`会在数据`iris`中查找名为`var`的列。因为这个数据内没有这样命名的列，所以结果显示`NULL`（我个人认为结果显示为异常更好些，不过无妨）。
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 除了`Species`，`iris`数据还包含了一个名为`Sepal.Length`的列。正如前面所说，我们有两种方式来选择这一列，通过`iris[["Sepal.Length"]]`或者`iris$Sepal.Length`。可是，如果我们的运行环境中已经存在一个名为`Sepal.Length`的变量，会怎么样呢？
 
 
@@ -124,18 +112,6 @@ head(iris$Sepal.Length)
 ```
 
 因此，即便你的运行环境中存在一个名为`Sepal.Length`的对象并且这一对象已经被赋予了某个值，当你执行`iris$Sepal.Length`的时候，R会直接绕过这个值。相反，它把数据*本身*视作运行环境，当对`Sepal.Length`求值时，你就会得到那一列的内容。这个过程完全不遵循R的标准化求值语义，这就是它被称为非标准化求值的原因。
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 如果你已经掌握了到目前为止我们所讨论的内容，那么恭喜你，你在掌握R的道路上向前迈进了一大步。但是，前方还有很多内容在等着你！在这系列文章的第二篇，我会示范如何执行非标准化求值。通过自己进行非标准化求值，你将进一步加深对R的理解，也会更加了解R的内部结构，这将帮助你写出像{dplyr}那样强大的功能包。敬请期待！
 

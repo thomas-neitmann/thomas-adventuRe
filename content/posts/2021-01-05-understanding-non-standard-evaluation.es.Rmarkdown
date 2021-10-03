@@ -51,18 +51,6 @@ head(iris$var)
 
 Sin embargo, ese *no* es el caso al usar `$`, porque `$` usa ENE. En cambio, `$` busca una columna llamada `var` dentro del data frame `iris`. Como no existe tal columna, obtienes `NULL` como resultado (yo preferiría que se arrojara un error, pero así son las cosas).
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 Además de `Species`, el data frame `iris` también contiene una columna llamada `Sepal.Length`. Según lo que hemos discutido hasta ahora, puedes seleccionar esa columna ya sea usando `iris[["Sepal.Length"]]` o `iris$Sepal.Length`. Pero, ¿qué sucede si hay una variable llamada `Sepal.Length` en el entorno global?
 
 ```{r}
@@ -84,18 +72,6 @@ head(iris$Sepal.Length)
 ```
 
 Entonces, aunque llames a `iris$Sepal.Length` en el entorno global, y en el mismo entorno haya un símbolo llamado `Sepal.Length` vinculado a un valor, R simplemente lo omite. En cambio, trata al data frame en sí mismo como un entorno, y si evalúas `Sepal.Length` allí obtienes de vuelta el contenido de esa columna. Eso no sigue en absoluto la semántica de evaluación estándar de R, razón por la cual este proceso se llama evaluación no estándar.
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 Si entendiste lo que hemos cubierto hasta ahora, acabas de dar un gran paso hacia adelante en tu viaje hacia el dominio de R. Pero espera, ¡hay más por venir! En la parte 2 de esta publicación, te mostraré cómo implementar una función NSE por tí mismo. Al hacer eso, profundizarás aún más tu comprensión y aprenderás sobre algunos de los componentes internos de R que le dan el superpoder para escribir paquetes como {dplyr}. ¡Mantente atento!
 

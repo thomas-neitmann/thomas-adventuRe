@@ -13,18 +13,6 @@ toc: no
 images: ~
 ---
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 <!-- Linear regression is arguably the most widely used statistical model out there. It's simple and gives easily interpretable results. Since linear regression essentially fits a line to a set of points it can also be readily visualized. This post focuses on how to do that in R using the `{ggplot2}` package. -->
 
 La regressione lineare è forse il modello statistico più diffuso. È semplice e restituisce risultati facilmente interpretabili. Dal momento che la regressione lineare essenzialmente interpola una retta per un insieme di punti, può anche essere rappresentata facilmente. Questo post si concentra su come farlo in R usando il pacchetto `{ggplot2}`.

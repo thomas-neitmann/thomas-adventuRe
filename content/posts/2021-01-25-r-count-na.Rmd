@@ -37,18 +37,6 @@ sum(is.na(x))
 
 Confused why you can sum `TRUE` and `FALSE` values? R automatically converts `logical` vectors to `integer` vectors when using arithmetic functions. In the process `TRUE` gets turned to `1` and `FALSE` gets converted to `0`. Thus, `sum(is.na(x))` gives you the total number of missing values in `x`.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 To get the proportion of missing values you can proceed by dividing the result of the previous operation by the length of the input vector.
 
 ```{r}
@@ -83,18 +71,6 @@ sum(is.na(mtcars))
 ```
 
 Arguably, though, the total number of missing values in a dataset is a rather crude measure. It gets much more interesting if we look at missing values across variables and records in the dataset. That enables detecting patterns that might inform future modeling decisions.
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 Counting `NA`s across either rows or columns can be achieved by using the `apply()` function. This function takes three arguments: `X` is the input matrix, `MARGIN` is an integer, and `FUN` is the function to apply to each row or column. `MARGIN = 1` means to apply the function across rows and `MARGIN = 2` across columns.
 

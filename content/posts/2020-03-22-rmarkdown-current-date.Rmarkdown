@@ -40,10 +40,6 @@ Sys.Date()
 
 A caveat is the date format, though. `Sys.Date()` returns the current date in ISO 8601 format, i.e. `yyyy-mm-dd`. Your audience is likely not used to this format. You should use a date format that's common in your locale or standard within your organization.
 
-```{r echo=FALSE, results='asis'}
-cat(readLines("../../layouts/partials/google-ads.html"), sep = "\n")
-```
-
 How to achieve that? Using the `format()` function. Here are some examples.
 
 ```{r}

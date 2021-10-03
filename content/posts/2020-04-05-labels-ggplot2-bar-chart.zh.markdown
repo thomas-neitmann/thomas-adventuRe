@@ -114,19 +114,6 @@ chart +
 
 我不太喜欢`geom_label()`生成的结果，所以我还是会使用`geom_text()`
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
-
 由于图中的数据代表百分比，因此最好的做法是给标签也添加百分比符号。另外，我们还可以突出显示我们喜欢的语言`R`，并为绘图添加标题，脚注等。
 
 

@@ -122,18 +122,6 @@ bar_chart(cyl2, cyl, pct) +
 
 Sin embargo, ahora todas las etiquetas se reflejan con un valor decimal. Creo que esto no es adecuado dado que las etiquetas son números enteros.
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- B -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1597114514381206"
-     data-ad-slot="6037303850"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 <!-- To change this the `percent_format()` function has a paramter called `accuracy`. -->
 
 Para resolver esto, usamos la función `percent_format()` que tiene un parámetro llamado `accuracy`.
@@ -174,7 +162,7 @@ bar_chart(cyl2, cyl, pct) + scale_y_pct()
 
 Como puedes ver, los datos se escalan correctamente independientemente de que sean una fracción de 1 o un porcentaje. Además, en ningún caso se muestran los decimales puesto que todas las etiquetas son enteros.
 
-A `scale_y_pct()` se le pueden pasar cualquiera de los parámetros de `scale_y_continuous()`, p. ej. `breaks`. 
+A `scale_y_pct()` se le pueden pasar cualquiera de los parámetros de `scale_y_continuous()`, p. ej. `breaks`.
 
 
 
@@ -186,7 +174,7 @@ bar_chart(cyl, cyl, pct) + scale_y_pct(breaks = c(12.5, 30.75))
 
 <!-- Notice that the number of decimal places displayed is consistent for all labels and automatically determined from the value with the highest number of decimal places. Again, this does not happen automatically when using `percent_format()`. -->
 
-Nótese que el número de decimales que se muestran es consistente para todas las etiquetas y se determina automáticamente a partir del valor con el mayor número de decimales. Una vez más, esto no sucede automáticamente cuando se usa `percent_format()`.  
+Nótese que el número de decimales que se muestran es consistente para todas las etiquetas y se determina automáticamente a partir del valor con el mayor número de decimales. Una vez más, esto no sucede automáticamente cuando se usa `percent_format()`.
 
 
 
@@ -202,7 +190,7 @@ bar_chart(cyl, cyl, pct) +
 
 <!-- `scalesextra` is in very early development and thus only available from GitHub. You can install it by running these commands in you `R` console. -->
 
-`scalesextra` está en una fase muy precoz de desarrollo y por lo tanto sólo está dispobible en GitHub. Lo puedes instalar ejecutando los siguientes comandos en la consola de `R`  
+`scalesextra` está en una fase muy precoz de desarrollo y por lo tanto sólo está dispobible en GitHub. Lo puedes instalar ejecutando los siguientes comandos en la consola de `R`
 
 ```r
 if (!"remotes" %in% installed.packages()) {
@@ -213,5 +201,5 @@ remotes::install_github("thomas-neitmann/scalesextra")
 
 <!-- Please test `scale_y_pct()` (and its sister `scale_x_pct()`) and let me know what you think in the comments. Should you find a bug (which is likely given the early stage of development), please open an issue on [GitHub](https://github.com/thomas-neitmann/scalesextra/issues). -->
 
-Por favor, prueba `scale_y_pct()` (y su hermana `scale_x_pct()`) y dime lo que opinas de ellas en los comentarios. Si encuentras algún error (lo que es muy probable dado que está en una fase de desarrollo temprana), por favor abre un *issue* en [GitHub](https://github.com/thomas-neitmann/scalesextra/issues).  
-*<small>Este artículo ha sido traducido del original en inglés por Gustavo Zapata Wainberg.</small>*   
+Por favor, prueba `scale_y_pct()` (y su hermana `scale_x_pct()`) y dime lo que opinas de ellas en los comentarios. Si encuentras algún error (lo que es muy probable dado que está en una fase de desarrollo temprana), por favor abre un *issue* en [GitHub](https://github.com/thomas-neitmann/scalesextra/issues).
+*<small>Este artículo ha sido traducido del original en inglés por Gustavo Zapata Wainberg.</small>*
