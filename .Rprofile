@@ -1,3 +1,4 @@
+source("renv/activate.R")
 options(
   blogdown.author = "Thomas Neitmann",
   blogdown.ext = ".Rmarkdown",
